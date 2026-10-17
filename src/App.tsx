@@ -133,7 +133,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#FAF7F5] text-stone-800 font-sans">
+    <div className="relative min-h-screen bg-[#FAF7F5] text-stone-800 font-sans pb-20 sm:pb-0">
       <FloatingHearts />
 
       {/* Navigation */}

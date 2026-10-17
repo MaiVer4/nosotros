@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { MediaItem } from '../types';
 
 interface MediaLightboxProps {
@@ -19,6 +20,10 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
   hasPrev,
   hasNext,
 }) => {
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -29,77 +34,125 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, onPrev, onNext, hasPrev, hasNext]);
 
+  // Touch Swipe Gesture handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    const diffY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Horizontal swipe takes precedence if horizontal movement is greater
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 50 && hasPrev && onPrev) {
+        onPrev(); // Swipe right -> Previous
+      } else if (diffX < -50 && hasNext && onNext) {
+        onNext(); // Swipe left -> Next
+      }
+    } else {
+      if (diffY > 80) {
+        onClose(); // Swipe down -> Close
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   if (!media) return null;
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
-    >
-      {/* Close button */}
-      <button
-        type="button"
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
         onClick={onClose}
-        className="absolute top-4 right-4 p-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors z-10"
-        title="Cerrar (Esc)"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/92 backdrop-blur-xs select-none"
       >
-        <X className="w-6 h-6" />
-      </button>
-
-      {/* Prev button */}
-      {hasPrev && onPrev && (
+        {/* Close button */}
         <button
           type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onPrev();
-          }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors z-10"
+          onClick={onClose}
+          className="absolute top-3 right-3 sm:top-5 sm:right-5 p-3 rounded-full text-white/80 hover:text-white bg-black/40 hover:bg-black/60 transition-colors z-20"
+          title="Cerrar (Desliza hacia abajo o Esc)"
         >
-          <ChevronLeft className="w-8 h-8" />
+          <X className="w-6 h-6" />
         </button>
-      )}
 
-      {/* Next button */}
-      {hasNext && onNext && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onNext();
-          }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors z-10"
-        >
-          <ChevronRight className="w-8 h-8" />
-        </button>
-      )}
-
-      {/* Media content */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="relative max-w-4xl max-h-[85vh] flex flex-col items-center"
-      >
-        {media.type === 'video' ? (
-          <video
-            src={media.url}
-            controls
-            autoPlay
-            className="max-w-full max-h-[75vh] rounded-2xl shadow-2xl"
-          />
-        ) : (
-          <img
-            src={media.url}
-            alt={media.caption || 'Recuerdo'}
-            className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
-          />
+        {/* Prev button */}
+        {hasPrev && onPrev && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onPrev();
+            }}
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/80 hover:text-white bg-black/40 hover:bg-black/60 transition-colors z-20"
+            title="Anterior"
+          >
+            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+          </button>
         )}
 
-        {media.caption && (
-          <p className="mt-4 text-center text-sm font-handwriting text-rose-200 text-lg px-4 max-w-xl">
-            {media.caption}
+        {/* Next button */}
+        {hasNext && onNext && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onNext();
+            }}
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/80 hover:text-white bg-black/40 hover:bg-black/60 transition-colors z-20"
+            title="Siguiente"
+          >
+            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+          </button>
+        )}
+
+        {/* Media content */}
+        <motion.div
+          key={media.url}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative max-w-4xl max-h-[88dvh] flex flex-col items-center"
+        >
+          {media.type === 'video' ? (
+            <video
+              src={media.url}
+              controls
+              autoPlay
+              className="max-w-full max-h-[75dvh] rounded-2xl shadow-2xl"
+            />
+          ) : (
+            <img
+              src={media.url}
+              alt={media.caption || 'Recuerdo'}
+              className="max-w-full max-h-[75dvh] object-contain rounded-2xl shadow-2xl"
+            />
+          )}
+
+          {media.caption && (
+            <p className="mt-3 text-center font-handwriting text-rose-200 text-base sm:text-xl px-4 max-w-xl">
+              {media.caption}
+            </p>
+          )}
+
+          <p className="text-[11px] text-white/40 mt-1 block sm:hidden">
+            Desliza ← / → para navegar • Desliza ↓ para cerrar
           </p>
-        )}
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
