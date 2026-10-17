@@ -5,41 +5,54 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
   
   body {
     background-color: #FAF7F5;
     color: #292524;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
   }
 }
 
-/* Custom romantic glow & textures */
-.romantic-glass {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 228, 230, 0.6);
+/* GPU Hardware-accelerated cards (zero-lag replacement for heavy backdrop blur) */
+.smooth-card {
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(254, 205, 214, 0.75);
+  box-shadow: 0 4px 16px -2px rgba(244, 63, 104, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
-.romantic-glass-rose {
-  background: rgba(255, 241, 243, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(254, 205, 214, 0.7);
+.smooth-card-rose {
+  background-color: rgba(255, 245, 247, 0.97);
+  border: 1px solid rgba(254, 205, 214, 0.85);
+  box-shadow: 0 4px 16px -2px rgba(244, 63, 104, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.romantic-shadow {
-  box-shadow: 0 10px 30px -10px rgba(244, 63, 104, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+.polaroid-card {
+  background-color: #ffffff;
+  border: 1px solid #f0e6e8;
+  box-shadow: 0 6px 20px -3px rgba(41, 37, 36, 0.08), 0 2px 6px -1px rgba(41, 37, 36, 0.04);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
-.polaroid-shadow {
-  box-shadow: 0 12px 28px -5px rgba(41, 37, 36, 0.12), 0 4px 8px -2px rgba(41, 37, 36, 0.05);
-}
-
-/* Custom scrollbar */
+/* Custom mobile-friendly scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #FAF7F5;
