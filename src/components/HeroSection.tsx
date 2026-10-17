@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Sparkles, Calendar, Baby, Hourglass } from 'lucide-react';
+import { Heart, Calendar, Baby, Hourglass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateElapsedTime, calculateNextAnniversary } from '../utils/timeCalculations';
 import type { ElapsedTime, CountdownTime } from '../utils/timeCalculations';
@@ -31,16 +31,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section id="tiempo" className="relative pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
-        {/* Subheader Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-rose-100/90 border border-rose-200 text-rose-700 text-[11px] sm:text-xs font-medium mb-4 sm:mb-6 shadow-sm"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-          <span>Nuestra Historia de Amor Oficial desde el 11 de Julio de 2025</span>
-        </motion.div>
 
         {/* Names Header */}
         <motion.h1
