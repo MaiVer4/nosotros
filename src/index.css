@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #FAF7F5;
+    color: #292524;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom romantic glow & textures */
+.romantic-glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 228, 230, 0.6);
+}
+
+.romantic-glass-rose {
+  background: rgba(255, 241, 243, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(254, 205, 214, 0.7);
+}
+
+.romantic-shadow {
+  box-shadow: 0 10px 30px -10px rgba(244, 63, 104, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+.polaroid-shadow {
+  box-shadow: 0 12px 28px -5px rgba(41, 37, 36, 0.12), 0 4px 8px -2px rgba(41, 37, 36, 0.05);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #fecdd6;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fb718d;
+}
