@@ -34,7 +34,7 @@ export const initialRelationshipConfig: RelationshipConfig = {
     "estimatedDueDateSubtext": "(En cualquier instante de hoy o estos días)",
     "customProgressPercentage": 98,
     "pregnancyNote": "39 semanas de puro amor, pataditas y una dulce espera que llena nuestros corazones de emoción. Mamá y papá ya tienen todo listo para tu llegada.",
-    "galleryTitle": "Galería de la Dulce Espera",
+    "galleryTitle": "Galería de Ecografías & Dulce Espera de Vaiolet",
     "checklist": [
       {
         "id": "chk-1",
@@ -54,45 +54,81 @@ export const initialRelationshipConfig: RelationshipConfig = {
     ],
     "ultrasoundImages": [
       {
-        "id": "vai-img-1",
+        "id": "vai-eco-1",
         "type": "image",
-        "url": "./media/124_2026-10-17_15-09-10.jpg",
-        "caption": "Papá y mamá abrazando las 39 semanas de nuestra princesa Vaiolet"
+        "url": "./media/ecografias/eco_39.jpg",
+        "caption": "El inicio de nuestro mayor milagro: Primer test positivo (17 de marzo de 2026)"
       },
       {
-        "id": "vai-img-2",
+        "id": "vai-eco-2",
         "type": "image",
-        "url": "./media/091_2026-07-02_23-41-41.jpg",
-        "caption": "Los besos de papá en la pancita para nuestra amada Vaiolet"
+        "url": "./media/ecografias/eco_08.jpg",
+        "caption": "Ecografía de Vaiolet: La silueta y carita de nuestra princesa formándose"
       },
       {
-        "id": "vai-img-3",
+        "id": "vai-eco-3",
         "type": "image",
-        "url": "./media/117_2026-08-12_10-36-37.jpg",
-        "caption": "Sintiendo cada patadita con la sonrisa más hermosa de mamá"
+        "url": "./media/ecografias/eco_14.jpg",
+        "caption": "Perfil ecográfico: Observando sus manitas y su cabecita perfecta"
       },
       {
-        "id": "vai-img-4",
+        "id": "vai-eco-4",
         "type": "image",
-        "url": "./media/092_2026-07-02_23-41-43.jpg",
-        "caption": "Hablándole bajito a nuestra bebita antes de dormir"
+        "url": "./media/ecografias/eco_17.jpg",
+        "caption": "El latido más bello del universo: El corazoncito de Vaiolet latiendo fuerte"
       },
       {
-        "id": "vai-img-5",
+        "id": "vai-eco-5",
         "type": "image",
-        "url": "./media/121_2026-08-16_22-13-37.jpg",
-        "caption": "Nuestras manos unidas cuidando tu llegada al mundo"
+        "url": "./media/ecografias/eco_27.jpg",
+        "caption": "Desarrollo morfológico impecable: Creciendo sana y llena de amor"
       },
       {
-        "id": "vai-img-6",
+        "id": "vai-eco-6",
         "type": "image",
-        "url": "./media/122_2026-10-17_15-09-03.jpg",
-        "caption": "Semana 39 cumplida: contando las horas para conocerte"
+        "url": "./media/ecografias/eco_34.jpg",
+        "caption": "Detalle ecográfico de nuestra bebé: Contando los días para tenerte en brazos"
+      },
+      {
+        "id": "vai-eco-7",
+        "type": "image",
+        "url": "./media/ecografias/eco_01.jpg",
+        "caption": "Movimientos y vitalidad en ecografía obstétrica 2D"
+      },
+      {
+        "id": "vai-eco-8",
+        "type": "image",
+        "url": "./media/ecografias/eco_06.jpg",
+        "caption": "Cada imagen confirma el milagro más puro de nuestras vidas"
+      },
+      {
+        "id": "vai-eco-9",
+        "type": "image",
+        "url": "./media/ecografias/eco_11.jpg",
+        "caption": "La emoción indescriptible de papá y mamá al verte en la pantalla"
+      },
+      {
+        "id": "vai-eco-10",
+        "type": "image",
+        "url": "./media/ecografias/eco_21.jpg",
+        "caption": "Monitoreo anatómico: Toda la dulzura de Vaiolet en una imagen"
+      },
+      {
+        "id": "vai-eco-11",
+        "type": "image",
+        "url": "./media/ecografias/eco_36.jpg",
+        "caption": "Mamá Vanessa durante el control ecográfico: Valiente y radiante"
+      },
+      {
+        "id": "vai-eco-12",
+        "type": "image",
+        "url": "./media/ecografias/eco_40.jpg",
+        "caption": "Nuestras manos abrazando la pancita donde vive nuestro sueño"
       }
     ],
     "bornBadgeText": "¡Nuestra Princesa ya está en casa!",
     "bornHeadline": "Bienvenida al mundo, Vaiolet 🌸",
-    "birthDate": undefined,
+    "birthDate": null,
     "birthWeight": "3.25 kg",
     "birthLength": "49 cm",
     "birthCity": "Con todo el amor de mamá y papá",
@@ -809,6 +845,264 @@ export const initialRelationshipConfig: RelationshipConfig = {
           "type": "video",
           "url": "./media/089_2026-06-22_11-41-46.mp4",
           "caption": "Video: La alegría de esperar juntos a nuestra bebé"
+        }
+      ]
+    },
+    {
+      "id": "mem-eco-vaiolet",
+      "title": "Nuestra Ecografía: El día que vimos tu carita y escuchamos tus latidos",
+      "date": "2026-06-26",
+      "category": "vaiolet",
+      "isFavorite": true,
+      "location": "Pereira, Risaralda — Consulta ecográfica obstétrica",
+      "description": "Uno de los días más mágicos de nuestras vidas. Entramos con los nervios a flor de piel y el corazón acelerado, y al ver la pantalla del ecógrafo todo se convirtió en lágrimas de felicidad. Ahí estabas tú, nuestra princesa Vaiolet: moviéndote, con tus manitas, tu cabecita y ese latido constante y fuerte que nos llenó el alma.",
+      "tags": [
+        "Ecografía",
+        "Vaiolet",
+        "Latidos",
+        "Embarazo",
+        "Junio 2026"
+      ],
+      "media": [
+        {
+          "id": "mem-eco-m1",
+          "type": "image",
+          "url": "./media/ecografias/eco_01.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #01"
+        },
+        {
+          "id": "mem-eco-m2",
+          "type": "image",
+          "url": "./media/ecografias/eco_02.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #02"
+        },
+        {
+          "id": "mem-eco-m3",
+          "type": "image",
+          "url": "./media/ecografias/eco_03.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #03"
+        },
+        {
+          "id": "mem-eco-m4",
+          "type": "image",
+          "url": "./media/ecografias/eco_04.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #04"
+        },
+        {
+          "id": "mem-eco-m5",
+          "type": "image",
+          "url": "./media/ecografias/eco_05.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #05"
+        },
+        {
+          "id": "mem-eco-m6",
+          "type": "image",
+          "url": "./media/ecografias/eco_06.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #06"
+        },
+        {
+          "id": "mem-eco-m7",
+          "type": "image",
+          "url": "./media/ecografias/eco_07.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #07"
+        },
+        {
+          "id": "mem-eco-m8",
+          "type": "image",
+          "url": "./media/ecografias/eco_08.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #08"
+        },
+        {
+          "id": "mem-eco-m9",
+          "type": "image",
+          "url": "./media/ecografias/eco_09.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #09"
+        },
+        {
+          "id": "mem-eco-m10",
+          "type": "image",
+          "url": "./media/ecografias/eco_10.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #10"
+        },
+        {
+          "id": "mem-eco-m11",
+          "type": "image",
+          "url": "./media/ecografias/eco_11.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #11"
+        },
+        {
+          "id": "mem-eco-m12",
+          "type": "image",
+          "url": "./media/ecografias/eco_12.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #12"
+        },
+        {
+          "id": "mem-eco-m13",
+          "type": "image",
+          "url": "./media/ecografias/eco_13.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #13"
+        },
+        {
+          "id": "mem-eco-m14",
+          "type": "image",
+          "url": "./media/ecografias/eco_14.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #14"
+        },
+        {
+          "id": "mem-eco-m15",
+          "type": "image",
+          "url": "./media/ecografias/eco_15.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #15"
+        },
+        {
+          "id": "mem-eco-m16",
+          "type": "image",
+          "url": "./media/ecografias/eco_16.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #16"
+        },
+        {
+          "id": "mem-eco-m17",
+          "type": "image",
+          "url": "./media/ecografias/eco_17.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #17"
+        },
+        {
+          "id": "mem-eco-m18",
+          "type": "image",
+          "url": "./media/ecografias/eco_18.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #18"
+        },
+        {
+          "id": "mem-eco-m19",
+          "type": "image",
+          "url": "./media/ecografias/eco_19.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #19"
+        },
+        {
+          "id": "mem-eco-m20",
+          "type": "image",
+          "url": "./media/ecografias/eco_20.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #20"
+        },
+        {
+          "id": "mem-eco-m21",
+          "type": "image",
+          "url": "./media/ecografias/eco_21.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #21"
+        },
+        {
+          "id": "mem-eco-m22",
+          "type": "image",
+          "url": "./media/ecografias/eco_22.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #22"
+        },
+        {
+          "id": "mem-eco-m23",
+          "type": "image",
+          "url": "./media/ecografias/eco_23.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #23"
+        },
+        {
+          "id": "mem-eco-m24",
+          "type": "image",
+          "url": "./media/ecografias/eco_24.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #24"
+        },
+        {
+          "id": "mem-eco-m25",
+          "type": "image",
+          "url": "./media/ecografias/eco_25.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #25"
+        },
+        {
+          "id": "mem-eco-m26",
+          "type": "image",
+          "url": "./media/ecografias/eco_26.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #26"
+        },
+        {
+          "id": "mem-eco-m27",
+          "type": "image",
+          "url": "./media/ecografias/eco_27.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #27"
+        },
+        {
+          "id": "mem-eco-m28",
+          "type": "image",
+          "url": "./media/ecografias/eco_28.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #28"
+        },
+        {
+          "id": "mem-eco-m29",
+          "type": "image",
+          "url": "./media/ecografias/eco_29.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #29"
+        },
+        {
+          "id": "mem-eco-m30",
+          "type": "image",
+          "url": "./media/ecografias/eco_30.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #30"
+        },
+        {
+          "id": "mem-eco-m31",
+          "type": "image",
+          "url": "./media/ecografias/eco_31.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #31"
+        },
+        {
+          "id": "mem-eco-m32",
+          "type": "image",
+          "url": "./media/ecografias/eco_32.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #32"
+        },
+        {
+          "id": "mem-eco-m33",
+          "type": "image",
+          "url": "./media/ecografias/eco_33.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #33"
+        },
+        {
+          "id": "mem-eco-m34",
+          "type": "image",
+          "url": "./media/ecografias/eco_34.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #34"
+        },
+        {
+          "id": "mem-eco-m35",
+          "type": "image",
+          "url": "./media/ecografias/eco_35.jpg",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #35"
+        },
+        {
+          "id": "mem-eco-m36",
+          "type": "image",
+          "url": "./media/ecografias/eco_36.jpg",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (36)"
+        },
+        {
+          "id": "mem-eco-m37",
+          "type": "image",
+          "url": "./media/ecografias/eco_37.jpg",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (37)"
+        },
+        {
+          "id": "mem-eco-m38",
+          "type": "image",
+          "url": "./media/ecografias/eco_38.jpg",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (38)"
+        },
+        {
+          "id": "mem-eco-m39",
+          "type": "image",
+          "url": "./media/ecografias/eco_39.jpg",
+          "caption": "Primer test de embarazo positivo: El inicio del milagro (17 mar 2026)"
+        },
+        {
+          "id": "mem-eco-m40",
+          "type": "image",
+          "url": "./media/ecografias/eco_40.jpg",
+          "caption": "Acariciando la barriguita donde crece nuestra princesa Vaiolet"
         }
       ]
     },
