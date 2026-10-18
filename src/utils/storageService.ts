@@ -108,7 +108,14 @@ export async function clearLocalDB(): Promise<void> {
  */
 export async function loadSiteConfiguration(): Promise<RelationshipConfig> {
   const hasUnpublished = localStorage.getItem(UNPUBLISHED_FLAG_KEY) === 'true';
-  const localConfig = await loadConfigFromLocalDB();
+  let localConfig = await loadConfigFromLocalDB();
+
+  // If localConfig contains legacy Unsplash placeholder URLs, purge it so real photos load!
+  if (localConfig && JSON.stringify(localConfig).includes('images.unsplash.com')) {
+    console.log('Purging legacy Unsplash placeholder data from local storage...');
+    await clearLocalDB();
+    localConfig = null;
+  }
 
   if (hasUnpublished && localConfig) {
     return localConfig;
