@@ -1,0 +1,1135 @@
+{
+  "partner1": "Maicol",
+  "partner2": "Vanessa",
+  "relationshipStartDate": "2025-07-11T00:00:00",
+  "secretPin": "1107",
+  "adminPassword": "admin1107",
+  "hero": {
+    "lockScreenSubtitle": "Nuestra historia, recuerdos & Vaiolet",
+    "lockScreenHint": "Día y mes de nuestra fecha especial (11 de julio: 1107)",
+    "heroQuote": "\"Un día nos miramos, dijimos que sí, y hoy creamos nuestro propio universo con Vaiolet.\"",
+    "counterTitle": "Tiempo Compartiendo Nuestras Vidas",
+    "counterSubtextPrefix": "Equivalente a más de",
+    "counterSubtextSuffix": "días juntos despertando y amándonos",
+    "anniversaryCardTitle": "Próximo Aniversario",
+    "anniversaryCardSubtitle": "Para seguir sumando años de risas y complicidad",
+    "daughterCardBadge": "La Dulce Espera de Vaiolet",
+    "daughterCardTitle": "¡Semana 39 de gestación cumplida!",
+    "daughterCardSubtitle": "En cualquier momento recibimos a nuestra hija →"
+  },
+  "daughter": {
+    "name": "Vaiolet",
+    "status": "expecting",
+    "sectionBadge": "Nuestra Mayor Bendición",
+    "expectingSubtitle": "La dulce espera que llena nuestros días de ilusión y emoción",
+    "bornSubtitle": "Nuestra princesa amada, la luz de nuestras miradas",
+    "statusBadgeText": "✨ ESTADO ACTUAL: SEMANA 39",
+    "expectingHeadline": "¡Vaiolet está lista para llegar al mundo!",
+    "gestationWeeksAtRefDate": 39,
+    "refDate": "2026-10-17",
+    "estimatedDueDate": "2026-10-24",
+    "estimatedDueDateLabel": "24 de Octubre de 2026",
+    "estimatedDueDateSubtext": "(En cualquier instante de hoy o estos días)",
+    "customProgressPercentage": 98,
+    "pregnancyNote": "39 semanas de puro amor, pataditas y una dulce espera que llena nuestros corazones de emoción. Mamá y papá ya tienen todo listo para tu llegada.",
+    "galleryTitle": "Galería de la Dulce Espera",
+    "checklist": [
+      {
+        "id": "chk-1",
+        "title": "Maleta del hospital lista",
+        "description": "Ropita de primera puesta de Vaiolet, mantitas y todo preparado para salir."
+      },
+      {
+        "id": "chk-2",
+        "title": "Su cunita y habitación",
+        "description": "Un rincón lleno de calidez, almohaditas y mucho amor para su primer descanso."
+      },
+      {
+        "id": "chk-3",
+        "title": "Papá y Mamá listos",
+        "description": "Maicol y Vanessa unidos, con el corazón acelerado para recibir al amor de sus vidas."
+      }
+    ],
+    "ultrasoundImages": [
+      {
+        "id": "vai-img-1",
+        "type": "image",
+        "url": "./media/124_2026-10-17_15-09-10.jpg",
+        "caption": "Papá y mamá abrazando las 39 semanas de nuestra princesa Vaiolet"
+      },
+      {
+        "id": "vai-img-2",
+        "type": "image",
+        "url": "./media/091_2026-07-02_23-41-41.jpg",
+        "caption": "Los besos de papá en la pancita para nuestra amada Vaiolet"
+      },
+      {
+        "id": "vai-img-3",
+        "type": "image",
+        "url": "./media/117_2026-08-12_10-36-37.jpg",
+        "caption": "Sintiendo cada patadita con la sonrisa más hermosa de mamá"
+      },
+      {
+        "id": "vai-img-4",
+        "type": "image",
+        "url": "./media/092_2026-07-02_23-41-43.jpg",
+        "caption": "Hablándole bajito a nuestra bebita antes de dormir"
+      },
+      {
+        "id": "vai-img-5",
+        "type": "image",
+        "url": "./media/121_2026-08-16_22-13-37.jpg",
+        "caption": "Nuestras manos unidas cuidando tu llegada al mundo"
+      },
+      {
+        "id": "vai-img-6",
+        "type": "image",
+        "url": "./media/122_2026-10-17_15-09-03.jpg",
+        "caption": "Semana 39 cumplida: contando las horas para conocerte"
+      }
+    ],
+    "bornBadgeText": "¡Nuestra Princesa ya está en casa!",
+    "bornHeadline": "Bienvenida al mundo, Vaiolet 🌸",
+    "birthDate": undefined,
+    "birthWeight": "3.25 kg",
+    "birthLength": "49 cm",
+    "birthCity": "Con todo el amor de mamá y papá",
+    "birthNote": "El día más feliz de nuestras vidas: ¡Llegó nuestra princesa Vaiolet al mundo!"
+  },
+  "timelineSection": {
+    "sectionBadge": "Nuestra Historia en Recuerdos",
+    "sectionTitle": "Línea del Tiempo",
+    "sectionSubtitle": "Cada instante, cada fotografía y cada paso que hemos dado juntos",
+    "categories": [
+      {
+        "id": "todos",
+        "label": "Todos"
+      },
+      {
+        "id": "inicio",
+        "label": "Inicios"
+      },
+      {
+        "id": "cita",
+        "label": "Citas"
+      },
+      {
+        "id": "viaje",
+        "label": "Viajes"
+      },
+      {
+        "id": "especial",
+        "label": "Especiales"
+      },
+      {
+        "id": "hito",
+        "label": "Hitos"
+      },
+      {
+        "id": "embarazo",
+        "label": "Embarazo"
+      },
+      {
+        "id": "vaiolet",
+        "label": "Vaiolet 🌸"
+      },
+      {
+        "id": "favoritos",
+        "label": "Favoritos ⭐"
+      }
+    ]
+  },
+  "memories": [
+    {
+      "id": "mem-1",
+      "title": "Nuestras primeras noches mágicas juntos",
+      "date": "2025-08-09",
+      "category": "inicio",
+      "isFavorite": true,
+      "location": "Bajo las luces rojas, donde todo brillaba diferente",
+      "description": "Esos primeros días y noches después de nuestro 11 de julio en los que cada mirada, cada beso en la mejilla y cada risa espontánea confirmaban que habíamos encontrado al amor de nuestras vidas.",
+      "tags": [
+        "Inicios",
+        "Primeras Citas",
+        "Complicidad",
+        "Agosto 2025"
+      ],
+      "media": [
+        {
+          "id": "mem-1-m1",
+          "type": "image",
+          "url": "./media/001_2025-08-08_21-18-02.jpg",
+          "caption": "Nuestro reflejo de felicidad pura"
+        },
+        {
+          "id": "mem-1-m2",
+          "type": "image",
+          "url": "./media/002_2025-08-08_21-18-02.jpg",
+          "caption": "Miradas que lo decían absolutamente todo"
+        },
+        {
+          "id": "mem-1-m3",
+          "type": "image",
+          "url": "./media/003_2025-08-08_21-18-09.jpg",
+          "caption": "Abrazados al inicio de nuestra aventura"
+        },
+        {
+          "id": "mem-1-m4",
+          "type": "image",
+          "url": "./media/004_2025-08-08_21-18-11.jpg",
+          "caption": "Tu sonrisa iluminando cada instante"
+        },
+        {
+          "id": "mem-1-m5",
+          "type": "image",
+          "url": "./media/005_2025-08-08_21-18-16.jpg",
+          "caption": "Juntos desde el primer momento"
+        },
+        {
+          "id": "mem-1-m6",
+          "type": "image",
+          "url": "./media/006_2025-08-08_21-18-18.jpg",
+          "caption": "Un beso para sellar nuestros primeros recuerdos"
+        },
+        {
+          "id": "mem-1-m7",
+          "type": "image",
+          "url": "./media/007_2025-08-09_21-54-49.jpg",
+          "caption": "La ternura de tenerte cerquita"
+        },
+        {
+          "id": "mem-1-m8",
+          "type": "image",
+          "url": "./media/008_2025-08-09_21-58-02.jpg",
+          "caption": "Risas y muecas que solo nosotros entendemos"
+        },
+        {
+          "id": "mem-1-m9",
+          "type": "image",
+          "url": "./media/009_2025-08-09_21-58-17.jpg",
+          "caption": "Cómplices bajo las luces de la noche"
+        },
+        {
+          "id": "mem-1-m10",
+          "type": "image",
+          "url": "./media/010_2025-08-09_21-58-35.jpg",
+          "caption": "Un beso lleno de amor en tu mejilla"
+        },
+        {
+          "id": "mem-1-m11",
+          "type": "image",
+          "url": "./media/011_2025-08-09_21-58-39.jpg",
+          "caption": "Tu sonrisa mientras te abrazo fuerte"
+        },
+        {
+          "id": "mem-1-m12",
+          "type": "image",
+          "url": "./media/012_2025-08-09_21-58-42.jpg",
+          "caption": "Cada segundo a tu lado es mi lugar favorito"
+        },
+        {
+          "id": "mem-1-m13",
+          "type": "image",
+          "url": "./media/013_2025-08-09_21-58-45.jpg",
+          "caption": "Locuras y sonrisas de principio a fin"
+        },
+        {
+          "id": "mem-1-m14",
+          "type": "image",
+          "url": "./media/014_2025-08-09_21-59-14.jpg",
+          "caption": "Abrazándote como si el tiempo se detuviera"
+        },
+        {
+          "id": "mem-1-m15",
+          "type": "image",
+          "url": "./media/015_2025-08-09_21-59-19.jpg",
+          "caption": "El calor de tu abrazo en nuestras primeras salidas"
+        },
+        {
+          "id": "mem-1-m16",
+          "type": "image",
+          "url": "./media/016_2025-08-09_22-05-32.jpg",
+          "caption": "Perdidos en nuestra propia burbuja de amor"
+        },
+        {
+          "id": "mem-1-m17",
+          "type": "image",
+          "url": "./media/017_2025-08-09_22-05-41.jpg",
+          "caption": "Un beso tierno que guardo en el alma"
+        },
+        {
+          "id": "mem-1-m18",
+          "type": "image",
+          "url": "./media/018_2025-08-10_13-02-13.jpg",
+          "caption": "Disfrutando el domingo juntos y enamorados"
+        },
+        {
+          "id": "mem-1-m19",
+          "type": "image",
+          "url": "./media/019_2025-08-10_13-02-22.jpg",
+          "caption": "Tu carita pegada a la mía"
+        },
+        {
+          "id": "mem-1-m20",
+          "type": "image",
+          "url": "./media/020_2025-08-10_13-02-26.jpg",
+          "caption": "La paz de estar entre tus brazos"
+        },
+        {
+          "id": "mem-1-m21",
+          "type": "image",
+          "url": "./media/021_2025-08-10_13-02-39.jpg",
+          "caption": "Cerrando un fin de semana inolvidable juntos"
+        }
+      ]
+    },
+    {
+      "id": "mem-2",
+      "title": "Mañanas de abrazos, descansos y ternura",
+      "date": "2025-08-27",
+      "category": "cita",
+      "isFavorite": true,
+      "location": "En nuestro rincón favorito",
+      "description": "Despertar juntos, quedarnos abrazados conversando de nuestros sueños y descubrir que la felicidad más grande está en la tranquilidad de compartir el día a día a tu lado.",
+      "tags": [
+        "Ternura",
+        "Abrazos",
+        "Nuestro Rincón",
+        "Cotidianidad"
+      ],
+      "media": [
+        {
+          "id": "mem-2-m1",
+          "type": "image",
+          "url": "./media/022_2025-08-23_21-05-56.jpg",
+          "caption": "Un beso al aire libre bajo el cielo de la tarde"
+        },
+        {
+          "id": "mem-2-m2",
+          "type": "image",
+          "url": "./media/023_2025-08-23_21-07-00.jpg",
+          "caption": "Tu abrazo que me llena de paz"
+        },
+        {
+          "id": "mem-2-m3",
+          "type": "image",
+          "url": "./media/024_2025-08-27_09-10-14.jpg",
+          "caption": "Cuidando tu sueño mientras descansas a mi lado"
+        },
+        {
+          "id": "mem-2-m4",
+          "type": "image",
+          "url": "./media/025_2025-08-27_09-10-18.jpg",
+          "caption": "Despertar y ver a la mujer más hermosa del mundo"
+        },
+        {
+          "id": "mem-2-m5",
+          "type": "image",
+          "url": "./media/026_2025-08-27_09-10-22.jpg",
+          "caption": "Acurrucados sin prisa por salir de la cama"
+        },
+        {
+          "id": "mem-2-m6",
+          "type": "image",
+          "url": "./media/027_2025-08-27_09-10-23.jpg",
+          "caption": "La calma perfecta de nuestras mañanas"
+        },
+        {
+          "id": "mem-2-m7",
+          "type": "image",
+          "url": "./media/028_2025-08-27_09-10-26.jpg",
+          "caption": "Besando tu mejilla despacito"
+        },
+        {
+          "id": "mem-2-m8",
+          "type": "image",
+          "url": "./media/029_2025-08-27_09-10-27.jpg",
+          "caption": "Abrazados entre risas y pereza"
+        },
+        {
+          "id": "mem-2-m9",
+          "type": "image",
+          "url": "./media/030_2025-08-27_09-10-29.jpg",
+          "caption": "Tu piel y tu sonrisa cerquita de mí"
+        },
+        {
+          "id": "mem-2-m10",
+          "type": "image",
+          "url": "./media/031_2025-08-28_23-05-10.jpg",
+          "caption": "Nuestras noches de luces cálidas y miradas tiernas"
+        },
+        {
+          "id": "mem-2-m11",
+          "type": "image",
+          "url": "./media/032_2025-08-28_23-05-16.jpg",
+          "caption": "Siempre juntos, sin importar la hora"
+        },
+        {
+          "id": "mem-2-m12",
+          "type": "image",
+          "url": "./media/033_2025-08-30_15-59-05.jpg",
+          "caption": "Un abrazo frente al espejo antes de salir"
+        },
+        {
+          "id": "mem-2-m13",
+          "type": "image",
+          "url": "./media/034_2025-08-30_15-59-09.jpg",
+          "caption": "Tardes de agosto grabadas en el corazón"
+        }
+      ]
+    },
+    {
+      "id": "mem-3",
+      "title": "Noches de fiesta, besos y videos inolvidables",
+      "date": "2025-09-28",
+      "category": "especial",
+      "isFavorite": true,
+      "location": "Saliendo juntos a celebrar nuestro amor",
+      "description": "Dos noches llenas de música, luces de neón, videos llenos de besos y esa alegría contagiosa que sentimos cada vez que salimos de la mano a comernos el mundo.",
+      "tags": [
+        "Noche Juntos",
+        "Videos",
+        "Besos",
+        "Septiembre 2025"
+      ],
+      "media": [
+        {
+          "id": "mem-3-m1",
+          "type": "image",
+          "url": "./media/035_2025-09-27_21-53-53.jpg",
+          "caption": "Tus ojitos brillando en la noche"
+        },
+        {
+          "id": "mem-3-m2",
+          "type": "image",
+          "url": "./media/036_2025-09-27_21-53-55.jpg",
+          "caption": "Dándote mil besos mientras sonríes para la cámara"
+        },
+        {
+          "id": "mem-3-m3",
+          "type": "image",
+          "url": "./media/037_2025-09-27_21-53-56.jpg",
+          "caption": "Nuestra complicidad en cada foto"
+        },
+        {
+          "id": "mem-3-m4",
+          "type": "image",
+          "url": "./media/038_2025-09-27_22-30-25.jpg",
+          "caption": "Mirando hacia arriba, soñando el mismo futuro"
+        },
+        {
+          "id": "mem-3-m5",
+          "type": "image",
+          "url": "./media/039_2025-09-27_22-30-28.jpg",
+          "caption": "Bajo las luces de neón, tú y yo"
+        },
+        {
+          "id": "mem-3-m6",
+          "type": "image",
+          "url": "./media/040_2025-09-27_22-31-36.jpg",
+          "caption": "Abrazados en medio de la noche"
+        },
+        {
+          "id": "mem-3-m7",
+          "type": "image",
+          "url": "./media/041_2025-09-27_22-39-45.jpg",
+          "caption": "La pareja más feliz del universo"
+        },
+        {
+          "id": "mem-3-m8",
+          "type": "image",
+          "url": "./media/042_2025-09-28_21-01-00.jpg",
+          "caption": "Robándote una sonrisa con cada beso"
+        },
+        {
+          "id": "mem-3-m9",
+          "type": "image",
+          "url": "./media/043_2025-09-28_21-01-00.jpg",
+          "caption": "Tus gestos hermosos que me enamoran más"
+        },
+        {
+          "id": "mem-3-m10",
+          "type": "video",
+          "url": "./media/044_2025-09-28_21-01-00.mp4",
+          "caption": "Video: Risas y besos que quedan para siempre"
+        },
+        {
+          "id": "mem-3-m11",
+          "type": "video",
+          "url": "./media/045_2025-09-28_21-02-57.mp4",
+          "caption": "Video: Nuestro amor en movimiento"
+        },
+        {
+          "id": "mem-3-m12",
+          "type": "video",
+          "url": "./media/046_2025-09-28_21-08-41.mp4",
+          "caption": "Video: La dicha de tenerte a mi lado"
+        }
+      ]
+    },
+    {
+      "id": "mem-4",
+      "title": "Abrazos frente al espejo y noches de complicidad",
+      "date": "2025-10-24",
+      "category": "cita",
+      "isFavorite": false,
+      "location": "En casa, nuestro refugio",
+      "description": "Esos abrazos por la espalda frente al espejo donde no hace falta decir nada para sentirnos completos, y las madrugadas de risas y cariño interminable.",
+      "tags": [
+        "Espejo",
+        "Abrazos",
+        "Octubre 2025",
+        "Hogar"
+      ],
+      "media": [
+        {
+          "id": "mem-4-m1",
+          "type": "image",
+          "url": "./media/047_2025-10-24_12-00-48.jpg",
+          "caption": "Abrazándote fuerte frente al espejo"
+        },
+        {
+          "id": "mem-4-m2",
+          "type": "image",
+          "url": "./media/048_2025-10-24_12-00-49.jpg",
+          "caption": "Tu beso en mi mejilla mientras guardamos el momento"
+        },
+        {
+          "id": "mem-4-m3",
+          "type": "image",
+          "url": "./media/049_2025-10-24_12-00-51.jpg",
+          "caption": "Reflejando lo mucho que nos amamos"
+        },
+        {
+          "id": "mem-4-m4",
+          "type": "image",
+          "url": "./media/050_2025-10-24_12-01-31.jpg",
+          "caption": "Mi lugar seguro siempre serán tus brazos"
+        },
+        {
+          "id": "mem-4-m5",
+          "type": "image",
+          "url": "./media/051_2025-10-25_01-17-28.jpg",
+          "caption": "Madrugadas de amor y ternura juntos"
+        },
+        {
+          "id": "mem-4-m6",
+          "type": "image",
+          "url": "./media/052_2025-10-25_01-17-44.jpg",
+          "caption": "Cuidándonos el uno al otro en cada instante"
+        }
+      ]
+    },
+    {
+      "id": "mem-5",
+      "title": "Pasión verdolaga, mascarillas y tardes de novios",
+      "date": "2025-11-16",
+      "category": "viaje",
+      "isFavorite": true,
+      "location": "Compartiendo cada aventura y cada locura",
+      "description": "Desde ponernos mascarillas juntos entre besos y risas, hasta lucir los colores de nuestra camiseta favorita. Contigo cualquier plan se convierte en el mejor recuerdo.",
+      "tags": [
+        "Aventuras",
+        "Cuidado Juntos",
+        "Noviembre 2025",
+        "Alegría"
+      ],
+      "media": [
+        {
+          "id": "mem-5-m1",
+          "type": "image",
+          "url": "./media/053_2025-11-01_16-04-02.jpg",
+          "caption": "Tarde de spa y mascarillas con un beso tuyo"
+        },
+        {
+          "id": "mem-5-m2",
+          "type": "image",
+          "url": "./media/054_2025-11-01_16-04-40.jpg",
+          "caption": "Riendo juntos con nuestras mascarillas puestas"
+        },
+        {
+          "id": "mem-5-m3",
+          "type": "image",
+          "url": "./media/055_2025-11-01_16-04-51.jpg",
+          "caption": "De paseo bajo el sol de noviembre"
+        },
+        {
+          "id": "mem-5-m4",
+          "type": "image",
+          "url": "./media/056_2025-11-01_16-05-03.jpg",
+          "caption": "Disfrutando del camino siempre a tu lado"
+        },
+        {
+          "id": "mem-5-m5",
+          "type": "image",
+          "url": "./media/057_2025-11-01_16-05-11.jpg",
+          "caption": "Un beso en medio de nuestra salida"
+        },
+        {
+          "id": "mem-5-m6",
+          "type": "image",
+          "url": "./media/058_2025-11-16_18-02-37.jpg",
+          "caption": "Luciendo nuestros colores y nuestro amor"
+        },
+        {
+          "id": "mem-5-m7",
+          "type": "image",
+          "url": "./media/059_2025-11-16_18-02-51.jpg",
+          "caption": "Un beso tierno en tu mejilla"
+        },
+        {
+          "id": "mem-5-m8",
+          "type": "image",
+          "url": "./media/060_2025-11-16_18-05-17.jpg",
+          "caption": "Cabeza con cabeza, corazón con corazón"
+        },
+        {
+          "id": "mem-5-m9",
+          "type": "image",
+          "url": "./media/061_2025-11-16_18-05-25.jpg",
+          "caption": "Abrazados y felices en cada rincón"
+        },
+        {
+          "id": "mem-5-m10",
+          "type": "image",
+          "url": "./media/062_2025-11-16_18-05-57.jpg",
+          "caption": "Compartiendo la tarde con alegría"
+        },
+        {
+          "id": "mem-5-m11",
+          "type": "image",
+          "url": "./media/063_2025-11-16_18-06-40.jpg",
+          "caption": "Sonrisas que iluminan el día entero"
+        },
+        {
+          "id": "mem-5-m12",
+          "type": "image",
+          "url": "./media/064_2025-11-16_18-08-24.jpg",
+          "caption": "Siempre orgulloso de caminar de tu mano"
+        },
+        {
+          "id": "mem-5-m13",
+          "type": "video",
+          "url": "./media/065_2025-11-17_14-04-27.mp4",
+          "caption": "Video: Un beso lleno de ternura y complicidad"
+        }
+      ]
+    },
+    {
+      "id": "mem-6",
+      "title": "Nuestro Primer Año Nuevo Juntos (Bienvenido 2026)",
+      "date": "2025-12-31",
+      "category": "hito",
+      "isFavorite": true,
+      "location": "Nochevieja recibiendo el año de nuestras vidas",
+      "description": "Despedir el 2025 mirándote a los ojos y agradecer por haberte encontrado. Esa noche nos vestimos de gala, nos abrazamos fuerte y nos prometimos que el 2026 sería inolvidable... sin imaginar que nos traería a nuestra princesa Vaiolet.",
+      "tags": [
+        "Año Nuevo",
+        "31 de Diciembre",
+        "Promesas",
+        "2026"
+      ],
+      "media": [
+        {
+          "id": "mem-6-m1",
+          "type": "image",
+          "url": "./media/066_2025-12-31_22-30-23.jpg",
+          "caption": "Nuestra primera foto de Nochevieja frente al espejo"
+        },
+        {
+          "id": "mem-6-m2",
+          "type": "image",
+          "url": "./media/067_2025-12-31_22-30-24.jpg",
+          "caption": "Abrazados despidiendo el año que nos unió"
+        },
+        {
+          "id": "mem-6-m3",
+          "type": "image",
+          "url": "./media/068_2025-12-31_22-30-25.jpg",
+          "caption": "Tu sonrisa radiante antes de las doce"
+        },
+        {
+          "id": "mem-6-m4",
+          "type": "image",
+          "url": "./media/069_2025-12-31_22-31-11.jpg",
+          "caption": "Tomando tu rostro con todo el amor del mundo"
+        },
+        {
+          "id": "mem-6-m5",
+          "type": "image",
+          "url": "./media/070_2025-12-31_22-31-16.jpg",
+          "caption": "Mirándonos con la ilusión de todo lo que vendría"
+        },
+        {
+          "id": "mem-6-m6",
+          "type": "image",
+          "url": "./media/071_2025-12-31_22-31-32.jpg",
+          "caption": "Felices y agradecidos por tenernos"
+        },
+        {
+          "id": "mem-6-m7",
+          "type": "image",
+          "url": "./media/072_2025-12-31_22-32-25.jpg",
+          "caption": "Dos corazones listos para recibir el 2026"
+        },
+        {
+          "id": "mem-6-m8",
+          "type": "image",
+          "url": "./media/073_2025-12-31_22-38-21.jpg",
+          "caption": "El inicio del año más bendecido de nuestras vidas"
+        }
+      ]
+    },
+    {
+      "id": "mem-7",
+      "title": "Nuevos caminos y el inicio de nuestro gran milagro",
+      "date": "2026-03-03",
+      "category": "embarazo",
+      "isFavorite": true,
+      "location": "Creciendo juntos como pareja y futuros papás",
+      "description": "Los primeros meses de 2026 trajeron consigo la noticia más hermosa de nuestra historia: un pedacito de nosotros dos comenzaba a latir en el vientre de Vanessa. Nuestra pequeña Vaiolet ya venía en camino.",
+      "tags": [
+        "Futuros Papás",
+        "Dulce Espera",
+        "Nuevos Caminos",
+        "Vaiolet"
+      ],
+      "media": [
+        {
+          "id": "mem-7-m1",
+          "type": "image",
+          "url": "./media/074_2026-01-07_22-34-07.jpg",
+          "caption": "Empezando enero con tu dulzura sobre mi hombro"
+        },
+        {
+          "id": "mem-7-m2",
+          "type": "image",
+          "url": "./media/075_2026-01-24_22-55-50.jpg",
+          "caption": "Paseos nocturnos compartiendo nuestros sueños"
+        },
+        {
+          "id": "mem-7-m3",
+          "type": "image",
+          "url": "./media/076_2026-03-03_07-57-42.jpg",
+          "caption": "Maicol, Vanessa y buenas compañías en el camino"
+        },
+        {
+          "id": "mem-7-m4",
+          "type": "image",
+          "url": "./media/077_2026-03-03_07-58-06.jpg",
+          "caption": "Desayunando y compartiendo cada mañana juntos"
+        },
+        {
+          "id": "mem-7-m5",
+          "type": "image",
+          "url": "./media/078_2026-05-17_20-11-47.jpg",
+          "caption": "Guardando cada instante de esta etapa tan especial"
+        }
+      ]
+    },
+    {
+      "id": "mem-8",
+      "title": "Tardes de junio: Risas, juegos y amor en casa",
+      "date": "2026-06-19",
+      "category": "especial",
+      "isFavorite": true,
+      "location": "En nuestra habitación, llenos de ilusión",
+      "description": "Mientras Vaiolet crecía semana a semana, nuestras tardes se llenaban de ataques de risa, videos divertidos, caricias y esa ternura única de vernos convertidos en familia.",
+      "tags": [
+        "Junio 2026",
+        "Risas",
+        "Videos",
+        "Familia"
+      ],
+      "media": [
+        {
+          "id": "mem-8-m1",
+          "type": "image",
+          "url": "./media/079_2026-06-19_13-04-38.jpg",
+          "caption": "Tus ojos hermosos mirándome de cerca"
+        },
+        {
+          "id": "mem-8-m2",
+          "type": "image",
+          "url": "./media/080_2026-06-19_13-04-42.jpg",
+          "caption": "Intentando no reírnos mientras tomamos la foto"
+        },
+        {
+          "id": "mem-8-m3",
+          "type": "image",
+          "url": "./media/081_2026-06-19_13-04-51.jpg",
+          "caption": "Tapándote la carita entre carcajadas"
+        },
+        {
+          "id": "mem-8-m4",
+          "type": "image",
+          "url": "./media/082_2026-06-19_13-04-54.jpg",
+          "caption": "Abrazándote y haciéndote cosquillas"
+        },
+        {
+          "id": "mem-8-m5",
+          "type": "image",
+          "url": "./media/083_2026-06-19_13-07-18.jpg",
+          "caption": "Tu sonrisa que alegra todos mis días"
+        },
+        {
+          "id": "mem-8-m6",
+          "type": "image",
+          "url": "./media/084_2026-06-19_13-07-21.jpg",
+          "caption": "Jugando como niños en nuestra cama"
+        },
+        {
+          "id": "mem-8-m7",
+          "type": "image",
+          "url": "./media/085_2026-06-19_13-07-27.jpg",
+          "caption": "Miradas llenas de complicidad y ternura"
+        },
+        {
+          "id": "mem-8-m8",
+          "type": "image",
+          "url": "./media/086_2026-06-19_13-07-31.jpg",
+          "caption": "Siempre juntos, cuidándote en cada momento"
+        },
+        {
+          "id": "mem-8-m9",
+          "type": "image",
+          "url": "./media/087_2026-06-19_13-07-34.jpg",
+          "caption": "La felicidad de nuestro hogar en una imagen"
+        },
+        {
+          "id": "mem-8-m10",
+          "type": "video",
+          "url": "./media/088_2026-06-22_11-33-26.mp4",
+          "caption": "Video: Un momento lleno de risas y amor"
+        },
+        {
+          "id": "mem-8-m11",
+          "type": "video",
+          "url": "./media/089_2026-06-22_11-41-46.mp4",
+          "caption": "Video: La alegría de esperar juntos a nuestra bebé"
+        }
+      ]
+    },
+    {
+      "id": "mem-9",
+      "title": "Besos en la pancita y vísperas de nuestro Primer Aniversario",
+      "date": "2026-07-02",
+      "category": "vaiolet",
+      "isFavorite": true,
+      "location": "Hablándole de cerca a nuestra princesa Vaiolet",
+      "description": "Cumpliendo casi un año de novios y con la barriguita de Vanessa cada vez más grande y hermosa. Esa noche papá no paró de darle besos a la pancita, sentir las pataditas de Vaiolet y abrazar a mamá.",
+      "tags": [
+        "Vaiolet",
+        "Pancita",
+        "Besos de Papá",
+        "1 Año de Amor"
+      ],
+      "media": [
+        {
+          "id": "mem-9-m1",
+          "type": "image",
+          "url": "./media/090_2026-07-02_23-41-39.jpg",
+          "caption": "Papá dándole el primer beso de la noche a Vaiolet"
+        },
+        {
+          "id": "mem-9-m2",
+          "type": "image",
+          "url": "./media/091_2026-07-02_23-41-41.jpg",
+          "caption": "Sintiendo tus pataditas desde afuera, mi princesa"
+        },
+        {
+          "id": "mem-9-m3",
+          "type": "image",
+          "url": "./media/092_2026-07-02_23-41-43.jpg",
+          "caption": "Besando la barriguita donde crece nuestro mayor tesoro"
+        },
+        {
+          "id": "mem-9-m4",
+          "type": "image",
+          "url": "./media/093_2026-07-02_23-41-45.jpg",
+          "caption": "Escuchando el latido de nuestro futuro juntos"
+        },
+        {
+          "id": "mem-9-m5",
+          "type": "image",
+          "url": "./media/094_2026-07-02_23-41-46.jpg",
+          "caption": "Acurrucados los tres en nuestra cama"
+        },
+        {
+          "id": "mem-9-m6",
+          "type": "image",
+          "url": "./media/095_2026-07-02_23-41-47.jpg",
+          "caption": "Vanessa escondiendo la risa entre mis brazos"
+        },
+        {
+          "id": "mem-9-m7",
+          "type": "image",
+          "url": "./media/096_2026-07-02_23-41-47.jpg",
+          "caption": "Abrazando a las dos mujeres de mi vida"
+        },
+        {
+          "id": "mem-9-m8",
+          "type": "image",
+          "url": "./media/097_2026-07-02_23-41-48.jpg",
+          "caption": "Susurrándote cuánto te amamos"
+        },
+        {
+          "id": "mem-9-m9",
+          "type": "image",
+          "url": "./media/098_2026-07-02_23-41-49.jpg",
+          "caption": "Tus manos y las mías en un solo abrazo"
+        },
+        {
+          "id": "mem-9-m10",
+          "type": "image",
+          "url": "./media/099_2026-07-02_23-41-50.jpg",
+          "caption": "La paz de tenerlas a las dos conmigo"
+        },
+        {
+          "id": "mem-9-m11",
+          "type": "image",
+          "url": "./media/100_2026-07-02_23-41-50.jpg",
+          "caption": "Entre risas y caricias a medianoche"
+        },
+        {
+          "id": "mem-9-m12",
+          "type": "image",
+          "url": "./media/101_2026-07-02_23-41-51.jpg",
+          "caption": "Tu rostro iluminado por la maternidad"
+        },
+        {
+          "id": "mem-9-m13",
+          "type": "image",
+          "url": "./media/102_2026-07-02_23-41-52.jpg",
+          "caption": "Cada gesto tuyo me enamora más"
+        },
+        {
+          "id": "mem-9-m14",
+          "type": "image",
+          "url": "./media/103_2026-07-02_23-41-56.jpg",
+          "caption": "Riendo sin parar juntos en la cama"
+        },
+        {
+          "id": "mem-9-m15",
+          "type": "image",
+          "url": "./media/104_2026-07-02_23-41-56.jpg",
+          "caption": "Cuidando el sueño de mamá y de Vaiolet"
+        },
+        {
+          "id": "mem-9-m16",
+          "type": "image",
+          "url": "./media/105_2026-07-02_23-41-57.jpg",
+          "caption": "Más unidos y enamorados que el primer día"
+        },
+        {
+          "id": "mem-9-m17",
+          "type": "image",
+          "url": "./media/106_2026-07-02_23-41-58.jpg",
+          "caption": "Nuestras noches favoritas hablando de cuando nazcas"
+        },
+        {
+          "id": "mem-9-m18",
+          "type": "image",
+          "url": "./media/107_2026-07-02_23-41-58.jpg",
+          "caption": "Abrazos que curan cualquier cansancio"
+        },
+        {
+          "id": "mem-9-m19",
+          "type": "image",
+          "url": "./media/108_2026-07-02_23-42-09.jpg",
+          "caption": "Papá completamente enamorado de la pancita"
+        },
+        {
+          "id": "mem-9-m20",
+          "type": "image",
+          "url": "./media/109_2026-07-02_23-42-10.jpg",
+          "caption": "Un beso lleno de promesas para nuestra hija"
+        },
+        {
+          "id": "mem-9-m21",
+          "type": "image",
+          "url": "./media/110_2026-07-02_23-42-12.jpg",
+          "caption": "Acariciando tu vientre con infinita ternura"
+        },
+        {
+          "id": "mem-9-m22",
+          "type": "image",
+          "url": "./media/111_2026-07-02_23-42-13.jpg",
+          "caption": "Tres corazones latiendo al mismo ritmo"
+        },
+        {
+          "id": "mem-9-m23",
+          "type": "image",
+          "url": "./media/112_2026-07-02_23-42-14.jpg",
+          "caption": "La sonrisa más tierna de mamá"
+        },
+        {
+          "id": "mem-9-m24",
+          "type": "image",
+          "url": "./media/113_2026-07-02_23-42-17.jpg",
+          "caption": "Cobijados por el amor de nuestra familia"
+        },
+        {
+          "id": "mem-9-m25",
+          "type": "image",
+          "url": "./media/114_2026-07-02_23-42-18.jpg",
+          "caption": "Mirándote con admiración por dar vida a Vaiolet"
+        },
+        {
+          "id": "mem-9-m26",
+          "type": "image",
+          "url": "./media/115_2026-07-02_23-42-19.jpg",
+          "caption": "Cerrando una noche mágica los tres juntos"
+        }
+      ]
+    },
+    {
+      "id": "mem-10",
+      "title": "Agosto de dulce espera: Acariciando cada patadita",
+      "date": "2026-08-16",
+      "category": "embarazo",
+      "isFavorite": true,
+      "location": "Pereira, Risaralda — En casita",
+      "description": "La pancita de Vanessa creciendo radiante y las manos de papá siempre listas para sentir cada movimiento de Vaiolet. Noches de descanso, luz cálida y amor incondicional.",
+      "tags": [
+        "Embarazo",
+        "Pataditas",
+        "Agosto 2026",
+        "Pereira"
+      ],
+      "media": [
+        {
+          "id": "mem-10-m1",
+          "type": "image",
+          "url": "./media/116_2026-08-12_10-36-25.jpg",
+          "caption": "Descansando juntos bajo nuestra luz favorita"
+        },
+        {
+          "id": "mem-10-m2",
+          "type": "image",
+          "url": "./media/117_2026-08-12_10-36-37.jpg",
+          "caption": "Las manos de papá protegiendo a Vaiolet"
+        },
+        {
+          "id": "mem-10-m3",
+          "type": "image",
+          "url": "./media/118_2026-08-12_10-36-41.jpg",
+          "caption": "La felicidad reflejada en la sonrisa de mamá"
+        },
+        {
+          "id": "mem-10-m4",
+          "type": "image",
+          "url": "./media/119_2026-08-16_22-12-11.jpg",
+          "caption": "Acariciando la pancita antes de dormir"
+        },
+        {
+          "id": "mem-10-m5",
+          "type": "image",
+          "url": "./media/120_2026-08-16_22-13-23.jpg",
+          "caption": "Sintiendo cómo creces día tras día, princesa"
+        },
+        {
+          "id": "mem-10-m6",
+          "type": "image",
+          "url": "./media/121_2026-08-16_22-13-37.jpg",
+          "caption": "Nuestras manos unidas rodeando tu vida"
+        }
+      ]
+    },
+    {
+      "id": "mem-11",
+      "title": "Semana 39: ¡Ya casi estás en nuestros brazos, Vaiolet!",
+      "date": "2026-10-17",
+      "category": "vaiolet",
+      "isFavorite": true,
+      "location": "Pereira, Risaralda — Con la maleta lista",
+      "description": "39 semanas de puro amor cumplidas. Mamá luce más hermosa que nunca y papá te abraza frente al espejo contando las horas para conocer tu carita. ¡Te esperamos con el alma abierta, amada Vaiolet!",
+      "tags": [
+        "Semana 39",
+        "Recta Final",
+        "Vaiolet",
+        "Octubre 2026"
+      ],
+      "media": [
+        {
+          "id": "mem-11-m1",
+          "type": "image",
+          "url": "./media/122_2026-10-17_15-09-03.jpg",
+          "caption": "Papá y mamá abrazando tu pancita de 39 semanas"
+        },
+        {
+          "id": "mem-11-m2",
+          "type": "image",
+          "url": "./media/123_2026-10-17_15-09-08.jpg",
+          "caption": "Una familia lista para el encuentro más hermoso"
+        },
+        {
+          "id": "mem-11-m3",
+          "type": "image",
+          "url": "./media/124_2026-10-17_15-09-10.jpg",
+          "caption": "Cualquier día, a cualquier hora... ¡Bienvenida Vaiolet!"
+        }
+      ]
+    }
+  ],
+  "lettersSection": {
+    "sectionBadge": "Cápsula del Tiempo & Palabras del Alma",
+    "sectionTitle": "Cartas \"Ábreme Cuando...\"",
+    "sectionSubtitle": "Sobres sellados con promesas, fuerza y recuerdos para los momentos clave de nuestras vidas"
+  },
+  "letters": [
+    {
+      "id": "let-1",
+      "title": "Para cuando sientas nervios por el parto",
+      "author": "Maicol",
+      "recipient": "Vanessa",
+      "openWhen": "Ábreme cuando sientas miedo, cansancio o nervios por la llegada de Vaiolet",
+      "dateWritten": "2026-10-17",
+      "sealColor": "#f43f68",
+      "content": "Mi amor Vanessa,\n\nSé que en estos días las emociones están a flor de piel. Sientes el peso del embarazo, los dolores y probablemente esa incertidumbre natural de enfrentarte al parto y a convertirte en mamá.\n\nQuiero que recuerdes algo con cada latido de tu corazón: eres la mujer más valiente, noble y fuerte que conozco. Tu cuerpo ha creado la vida de nuestra hija Vaiolet con una perfección que me llena de admiración y respeto todos los días.\n\nNo estás sola. Ni por un solo segundo. Voy a estar tomando tu mano, respirando contigo, secando tus lágrimas y celebrando cada esfuerzo. Juntos trajimos a Vaiolet hasta aquí y juntos la recibiremos con los brazos abiertos. Eres y serás la mejor mamá que nuestra hija pudo soñar.\n\nTe amo con toda mi alma, mi reina hermosa. Lo vas a hacer increíble.\n\nSiempre tuyo,\nMaicol."
+    },
+    {
+      "id": "let-2",
+      "title": "Carta para nuestra princesa Vaiolet",
+      "author": "Ambos",
+      "recipient": "Vaiolet",
+      "openWhen": "Para Vaiolet, cuando aprenda a leer o en su cumpleaños especial",
+      "dateWritten": "2026-10-17",
+      "sealColor": "#e11d53",
+      "content": "Nuestra amada Vaiolet,\n\nTe escribimos estas líneas cuando aún estás calientita en la barriga de mamá, cumpliendo 39 semanas de gestación. Afuera el mundo te espera, pero sobre todo, te esperan dos personas que ya te aman más que a sus propias vidas: tus papás, Maicol y Vanessa.\n\nNo sabes cuántas noches nos quedamos despiertos acariciando la pancita, hablándote despacito, imaginando el color de tus ojitos y soñando con escuchar tu risa por primera vez. Eres el fruto de un amor verdadero, puro y leal.\n\nQueremos prometerte que siempre tendrás un hogar lleno de abrazos sinceros, comprensión y risas. Nunca dudes de lo valiosa, única y amada que eres. Viniste a darle sentido a todo.\n\nCon todo el amor del universo,\nTus papás, Maicol y Vanessa."
+    },
+    {
+      "id": "let-3",
+      "title": "Para cuando tengamos un día difícil",
+      "author": "Ambos",
+      "recipient": "Nosotros",
+      "openWhen": "Ábreme cuando la rutina, el cansancio o una discusión nos haga olvidar la magia",
+      "dateWritten": "2026-10-17",
+      "sealColor": "#cb9e5b",
+      "content": "Recuerda el 11 de julio de 2025. Recuerda las risas tontas del principio, las miradas que no necesitaban palabras y cómo elegimos conscientemente caminar juntos en las buenas y en las malas.\n\nLa vida de padres y de pareja no siempre es un camino fácil, habrá noches sin dormir, estrés y días pesados. Pero antes de irnos a dormir enojados o distantes, démonos un abrazo apretado de 10 segundos en silencio. \n\nSomos un equipo. Somos Maicol, Vanessa y Vaiolet. Nada en este mundo puede con nosotros si nos mantenemos unidos. Te elijo hoy, mañana y siempre."
+    },
+    {
+      "id": "let-4",
+      "title": "Para el día de nuestro aniversario",
+      "author": "Maicol",
+      "recipient": "Vanessa",
+      "openWhen": "Ábreme cada 11 de julio para celebrar un año más",
+      "dateWritten": "2026-07-11",
+      "sealColor": "#be1243",
+      "content": "¡Feliz Aniversario mi vida!\n\nParece que fue ayer cuando empezamos a escribir esta historia y hoy miro todo lo que hemos construido y me quedo sin aliento. Gracias por cada sonrisa, por tu ternura, por tu paciencia infinita y por hacerme el hombre más feliz de la tierra.\n\nBrindo por muchos 11 de julio más, por envejecer juntos de la mano y por ver crecer a nuestra hermosa familia. Te amo más de lo que las palabras alcanzan a expresar."
+    }
+  ],
+  "footer": {
+    "quote": "\"Esperando con todo el amor a nuestra pequeña Vaiolet\"",
+    "description": "Nuestra historia comenzó el 11 de julio de 2025. Cada día que pasa es un regalo y el mejor capítulo aún está por comenzar con la llegada de nuestra princesa.",
+    "badgeText": "Hecho con amor infinito para nuestra familia"
+  },
+  "appearance": {
+    "showFloatingParticles": true,
+    "floatingSymbols": [
+      "✨",
+      "🌸",
+      "💖"
+    ]
+  }
+}

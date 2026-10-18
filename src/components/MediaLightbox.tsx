@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { MediaItem } from '../types';
+import { getEmbeddedVideoUrl } from '../utils/mediaProcessor';
 
 interface MediaLightboxProps {
   media: MediaItem | null;
@@ -23,7 +24,6 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -34,7 +34,6 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, onPrev, onNext, hasPrev, hasNext]);
 
-  // Touch Swipe Gesture handlers for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
@@ -46,16 +45,15 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
     const diffX = e.changedTouches[0].clientX - touchStartX.current;
     const diffY = e.changedTouches[0].clientY - touchStartY.current;
 
-    // Horizontal swipe takes precedence if horizontal movement is greater
     if (Math.abs(diffX) > Math.abs(diffY)) {
       if (diffX > 50 && hasPrev && onPrev) {
-        onPrev(); // Swipe right -> Previous
+        onPrev();
       } else if (diffX < -50 && hasNext && onNext) {
-        onNext(); // Swipe left -> Next
+        onNext();
       }
     } else {
       if (diffY > 80) {
-        onClose(); // Swipe down -> Close
+        onClose();
       }
     }
 
@@ -64,6 +62,8 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
   };
 
   if (!media) return null;
+
+  const embedUrl = media.type === 'video' ? getEmbeddedVideoUrl(media.url) : null;
 
   return (
     <AnimatePresence>
@@ -128,12 +128,22 @@ export const MediaLightbox: React.FC<MediaLightboxProps> = ({
           className="relative max-w-4xl max-h-[88dvh] flex flex-col items-center"
         >
           {media.type === 'video' ? (
-            <video
-              src={media.url}
-              controls
-              autoPlay
-              className="max-w-full max-h-[75dvh] rounded-2xl shadow-2xl"
-            />
+            embedUrl ? (
+              <iframe
+                src={embedUrl}
+                title={media.caption || 'Video'}
+                className="w-[88vw] max-w-3xl aspect-video rounded-2xl shadow-2xl border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                src={media.url}
+                controls
+                autoPlay
+                className="max-w-full max-h-[75dvh] rounded-2xl shadow-2xl"
+              />
+            )
           ) : (
             <img
               src={media.url}

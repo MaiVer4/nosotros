@@ -4,11 +4,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 
 interface LockScreenProps {
+  partner1: string;
+  partner2: string;
+  subtitle: string;
+  hint: string;
   correctPin: string;
   onUnlock: () => void;
 }
 
-export const LockScreen: React.FC<LockScreenProps> = ({ correctPin, onUnlock }) => {
+export const LockScreen: React.FC<LockScreenProps> = ({
+  partner1,
+  partner2,
+  subtitle,
+  hint,
+  correctPin,
+  onUnlock,
+}) => {
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -49,7 +60,6 @@ export const LockScreen: React.FC<LockScreenProps> = ({ correctPin, onUnlock }) 
     }
   };
 
-  // Keyboard support
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (/^[0-9]$/.test(e.key)) {
@@ -83,10 +93,10 @@ export const LockScreen: React.FC<LockScreenProps> = ({ correctPin, onUnlock }) 
         </motion.div>
 
         <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-stone-800 tracking-tight mb-1">
-          Maicol & Vanessa
+          {partner1} & {partner2}
         </h1>
         <p className="font-handwriting text-lg sm:text-xl text-rose-600 mb-5">
-          Nuestra historia, recuerdos & Vaiolet
+          {subtitle}
         </p>
 
         {/* Lock instructions */}
@@ -184,7 +194,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ correctPin, onUnlock }) 
               exit={{ opacity: 0, height: 0 }}
               className="mt-2 p-2.5 text-xs text-rose-700 bg-rose-50 rounded-xl border border-rose-200/60 overflow-hidden"
             >
-              💡 Pista: Día y mes de nuestra fecha especial (11 de julio: 1107)
+              💡 Pista: {hint}
             </motion.div>
           )}
         </AnimatePresence>

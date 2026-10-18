@@ -1,16 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Lock, Plus, Baby, BookOpen, Clock, Mail } from 'lucide-react';
+import {
+  Heart,
+  Lock,
+  Plus,
+  Baby,
+  BookOpen,
+  Clock,
+  Mail,
+  Settings,
+  Edit3,
+  LogOut,
+  CloudUpload,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
+import type { AdminTabId } from '../types';
 
 interface NavbarProps {
+  partner1: string;
+  partner2: string;
+  daughterName: string;
+  isAdminUnlocked: boolean;
+  isLiveEditMode: boolean;
+  hasUnsavedGitHubChanges: boolean;
   onLock: () => void;
   onOpenAddModal: () => void;
+  onTriggerAdminButton: (tab?: AdminTabId) => void;
+  onToggleLiveEdit: () => void;
+  onLogoutAdmin: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  partner1,
+  partner2,
+  daughterName,
+  isAdminUnlocked,
+  isLiveEditMode,
+  hasUnsavedGitHubChanges,
+  onLock,
+  onOpenAddModal,
+  onTriggerAdminButton,
+  onToggleLiveEdit,
+  onLogoutAdmin,
+}) => {
   const [activeTab, setActiveTab] = useState<'tiempo' | 'vaiolet' | 'historia' | 'cartas'>('tiempo');
 
-  // Track scroll position to update active tab
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -35,7 +68,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
 
   return (
     <>
-      {/* Top Navbar for Desktop & Mobile Header */}
       <header className="sticky top-0 z-40 w-full bg-white/95 border-b border-rose-100 shadow-sm transition-all">
         <div className="max-w-6xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between">
           {/* Monogram / Brand */}
@@ -44,12 +76,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
             </div>
             <span className="font-serif font-bold text-base sm:text-lg text-stone-800 tracking-tight">
-              Maicol <span className="text-rose-500 font-sans font-normal">&</span> Vanessa
+              {partner1} <span className="text-rose-500 font-sans font-normal">&</span> {partner2}
             </span>
           </a>
 
           {/* Desktop Navigation links */}
-          <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-stone-600">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-stone-600">
             <a
               href="#tiempo"
               className={`flex items-center gap-1.5 transition-colors ${
@@ -66,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
               }`}
             >
               <Baby className="w-4 h-4 text-rose-400" />
-              <span>Vaiolet</span>
+              <span>{daughterName}</span>
             </a>
             <a
               href="#historia"
@@ -88,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             </a>
           </nav>
 
-          {/* Desktop Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Right Actions */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
             <button
               type="button"
               onClick={onOpenAddModal}
@@ -97,6 +129,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             >
               <Plus className="w-4 h-4" />
               <span>Nuevo Recuerdo</span>
+            </button>
+
+            {/* Admin Panel Button */}
+            <button
+              type="button"
+              onClick={() => onTriggerAdminButton()}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                isAdminUnlocked
+                  ? 'bg-stone-800 text-white shadow-sm hover:bg-stone-900'
+                  : 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100'
+              }`}
+              title="Panel de Administración"
+            >
+              <Settings className="w-3.5 h-3.5" />
+              <span>Admin</span>
             </button>
 
             <button
@@ -109,12 +156,71 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             </button>
           </div>
         </div>
+
+        {/* Active Admin Toolbar */}
+        {isAdminUnlocked && (
+          <div className="bg-stone-900 text-white px-4 py-2 text-xs border-t border-stone-800">
+            <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-semibold text-rose-200">
+                  Modo Administrador Activo
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onToggleLiveEdit}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold transition-all ${
+                    isLiveEditMode
+                      ? 'bg-rose-500 text-white'
+                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                  }`}
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>
+                    Edición en Vivo: {isLiveEditMode ? 'ENCENDIDA' : 'APAGADA'}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => onTriggerAdminButton('portada')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-stone-900 font-semibold hover:bg-rose-50 transition-colors"
+                >
+                  <Settings className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Abrir Panel 100%</span>
+                </button>
+
+                {hasUnsavedGitHubChanges && (
+                  <button
+                    type="button"
+                    onClick={() => onTriggerAdminButton('seguridad')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold"
+                  >
+                    <CloudUpload className="w-3.5 h-3.5" />
+                    <span>Publicar en GitHub</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={onLogoutAdmin}
+                  title="Salir del modo Admin"
+                  className="p-1 rounded-full text-stone-400 hover:text-white"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* Floating Bottom Tab Bar for Mobile (Native App Style) */}
-      <div className="sm:hidden fixed bottom-3 left-3 right-3 z-40">
+      {/* Floating Bottom Tab Bar for Mobile */}
+      <div className="md:hidden fixed bottom-3 left-3 right-3 z-40">
         <nav className="bg-white/95 border border-rose-200/90 rounded-2xl shadow-xl px-2 py-1.5 flex items-center justify-between">
-          {/* Tab 1: Inicio */}
           <a
             href="#tiempo"
             onClick={() => setActiveTab('tiempo')}
@@ -126,7 +232,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             <span>Inicio</span>
           </a>
 
-          {/* Tab 2: Vaiolet */}
           <a
             href="#vaiolet"
             onClick={() => setActiveTab('vaiolet')}
@@ -135,7 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             }`}
           >
             <Baby className="w-4 h-4 mb-0.5" />
-            <span>Vaiolet</span>
+            <span>{daughterName}</span>
           </a>
 
           {/* Center Action: Plus Button */}
@@ -151,7 +256,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             </motion.button>
           </div>
 
-          {/* Tab 3: Recuerdos */}
           <a
             href="#historia"
             onClick={() => setActiveTab('historia')}
@@ -163,7 +267,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onLock, onOpenAddModal }) => {
             <span>Recuerdos</span>
           </a>
 
-          {/* Tab 4: Cartas */}
           <a
             href="#cartas"
             onClick={() => setActiveTab('cartas')}

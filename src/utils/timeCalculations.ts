@@ -116,7 +116,7 @@ export function calculateDaughterProgress(
   refDateStr: string,
   weeksAtRef: number,
   estimatedDueDateStr: string,
-  birthDateStr?: string
+  birthDateStr?: string | null
 ) {
   const now = new Date();
 

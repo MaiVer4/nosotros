@@ -7,35 +7,53 @@ import {
   Grid, 
   GitCommit, 
   Video, 
-  Image as ImageIcon 
+  Image as ImageIcon,
+  Edit3,
+  Trash2,
+  Plus
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { Memory, MediaItem } from '../types';
+import type { Memory, MediaItem, TimelineSectionConfig } from '../types';
+import { getVideoThumbnailUrl } from '../utils/mediaProcessor';
 
 interface TimelineSectionProps {
   memories: Memory[];
+  timelineConfig: TimelineSectionConfig;
   onSelectMedia: (media: MediaItem) => void;
   onToggleFavorite: (id: string) => void;
+  isLiveEditMode?: boolean;
+  onEditSection?: () => void;
+  onEditMemory?: (id: string) => void;
+  onDeleteMemory?: (id: string) => void;
+  onAddMemory?: () => void;
 }
 
 export const TimelineSection: React.FC<TimelineSectionProps> = ({
   memories,
+  timelineConfig,
   onSelectMedia,
   onToggleFavorite,
+  isLiveEditMode = false,
+  onEditSection,
+  onEditMemory,
+  onDeleteMemory,
+  onAddMemory,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'timeline' | 'grid'>('timeline');
 
-  const categories = [
-    { id: 'todos', label: 'Todos' },
-    { id: 'inicio', label: 'Inicios' },
-    { id: 'hito', label: 'Hitos' },
-    { id: 'embarazo', label: 'Embarazo' },
-    { id: 'vaiolet', label: 'Vaiolet 🌸' },
-    { id: 'viaje', label: 'Viajes' },
-    { id: 'favoritos', label: 'Favoritos ⭐' },
-  ];
+  const categories = timelineConfig?.categories?.length
+    ? timelineConfig.categories
+    : [
+        { id: 'todos', label: 'Todos' },
+        { id: 'inicio', label: 'Inicios' },
+        { id: 'hito', label: 'Hitos' },
+        { id: 'embarazo', label: 'Embarazo' },
+        { id: 'vaiolet', label: 'Vaiolet 🌸' },
+        { id: 'viaje', label: 'Viajes' },
+        { id: 'favoritos', label: 'Favoritos ⭐' },
+      ];
 
   const filteredMemories = useMemo(() => {
     return memories
@@ -63,17 +81,43 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
   return (
     <section id="historia" className="py-12 sm:py-16 px-4">
       <div className="max-w-5xl mx-auto">
+        {/* Live Edit Mode Controls */}
+        {isLiveEditMode && (
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5">
+            {onEditSection && (
+              <button
+                type="button"
+                onClick={onEditSection}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-900 hover:bg-rose-600 text-white text-xs font-semibold shadow-md transition-all"
+              >
+                <Edit3 className="w-3.5 h-3.5" />
+                <span>Editar Textos y Categorías de la Sección</span>
+              </button>
+            )}
+            {onAddMemory && (
+              <button
+                type="button"
+                onClick={onAddMemory}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold shadow-md transition-all"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>+ Crear Nuevo Recuerdo</span>
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-[11px] font-semibold uppercase tracking-wider mb-2.5">
             <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-            <span>Nuestra Historia en Recuerdos</span>
+            <span>{timelineConfig?.sectionBadge || 'Nuestra Historia en Recuerdos'}</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-800 tracking-tight mb-2">
-            Línea del Tiempo
+            {timelineConfig?.sectionTitle || 'Línea del Tiempo'}
           </h2>
           <p className="font-handwriting text-xl sm:text-2xl text-rose-600 px-2">
-            Cada instante, cada fotografía y cada paso que hemos dado juntos
+            {timelineConfig?.sectionSubtitle || 'Cada instante, cada fotografía y cada paso que hemos dado juntos'}
           </p>
         </div>
 
@@ -186,7 +230,38 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                     </div>
 
                     {/* Memory Card */}
-                    <div className="p-4 sm:p-6 rounded-3xl smooth-card border border-stone-200/90">
+                    <div className="p-4 sm:p-6 rounded-3xl smooth-card border border-stone-200/90 relative">
+                      {/* Live Edit Mode Actions Bar on top of card */}
+                      {isLiveEditMode && (
+                        <div className="mb-3 p-2 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between gap-2">
+                          <span className="text-[11px] font-bold text-rose-800">
+                            🛠️ Opciones de Administrador
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            {onEditMemory && (
+                              <button
+                                type="button"
+                                onClick={() => onEditMemory(mem.id)}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-rose-600 text-white text-[11px] font-semibold"
+                              >
+                                <Edit3 className="w-3 h-3" />
+                                <span>Editar Recuerdo & Fotos</span>
+                              </button>
+                            )}
+                            {onDeleteMemory && (
+                              <button
+                                type="button"
+                                onClick={() => onDeleteMemory(mem.id)}
+                                title="Eliminar este recuerdo"
+                                className="p-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-600"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
                         <div>
                           {/* Mobile Date Header */}
@@ -233,36 +308,53 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                       {/* Media preview */}
                       {mem.media.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-3 sm:mb-4">
-                          {mem.media.map((med, idx) => (
-                            <motion.div
-                              key={idx}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => onSelectMedia(med)}
-                              className="group/media relative rounded-2xl overflow-hidden aspect-video bg-stone-100 cursor-pointer border border-stone-200"
-                            >
-                              {med.type === 'video' ? (
-                                <div className="w-full h-full relative">
-                                  <video
+                          {mem.media.map((med, idx) => {
+                            const ytThumb = getVideoThumbnailUrl(med.url);
+
+                            return (
+                              <motion.div
+                                key={med.id || idx}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => onSelectMedia(med)}
+                                className="group/media relative rounded-2xl overflow-hidden aspect-video bg-stone-100 cursor-pointer border border-stone-200"
+                              >
+                                {med.type === 'video' ? (
+                                  ytThumb ? (
+                                    <img
+                                      src={ytThumb}
+                                      alt={med.caption || mem.title}
+                                      className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full relative">
+                                      <video
+                                        src={med.url}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                  )
+                                ) : (
+                                  <img
                                     src={med.url}
-                                    className="w-full h-full object-cover"
+                                    alt={med.caption || mem.title}
+                                    className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
+                                    loading="lazy"
                                   />
-                                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white">
+                                )}
+
+                                {med.type === 'video' && (
+                                  <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
                                     <Video className="w-7 h-7" />
                                   </div>
+                                )}
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/media:opacity-100 transition-opacity flex items-end p-2.5 text-white text-[11px]">
+                                  <span>{med.caption || 'Ver archivo'}</span>
                                 </div>
-                              ) : (
-                                <img
-                                  src={med.url}
-                                  alt={med.caption || mem.title}
-                                  className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
-                                  loading="lazy"
-                                />
-                              )}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/media:opacity-100 transition-opacity flex items-end p-2.5 text-white text-[11px]">
-                                <span>{med.caption || 'Ver foto'}</span>
-                              </div>
-                            </motion.div>
-                          ))}
+                              </motion.div>
+                            );
+                          })}
                         </div>
                       )}
 
@@ -300,6 +392,7 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                   month: 'short',
                   year: 'numeric',
                 });
+                const ytThumb = primaryMedia ? getVideoThumbnailUrl(primaryMedia.url) : null;
 
                 return (
                   <motion.div
@@ -309,26 +402,75 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 280 }}
-                    className="p-3.5 sm:p-4 bg-white rounded-3xl polaroid-card flex flex-col justify-between"
+                    className="p-3.5 sm:p-4 bg-white rounded-3xl polaroid-card flex flex-col justify-between relative"
                   >
                     <div>
+                      {/* Live Edit Mode Actions */}
+                      {isLiveEditMode && (
+                        <div className="mb-2 p-1.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between gap-1">
+                          {onEditMemory && (
+                            <button
+                              type="button"
+                              onClick={() => onEditMemory(mem.id)}
+                              className="px-2 py-0.5 rounded-md bg-stone-900 text-white text-[10px] font-semibold flex items-center gap-1"
+                            >
+                              <Edit3 className="w-3 h-3" />
+                              <span>Editar</span>
+                            </button>
+                          )}
+                          {onDeleteMemory && (
+                            <button
+                              type="button"
+                              onClick={() => onDeleteMemory(mem.id)}
+                              className="p-1 rounded-md text-red-500 hover:bg-red-100"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+                      )}
+
                       {/* Media Thumbnail */}
                       <div
                         onClick={() => primaryMedia && onSelectMedia(primaryMedia)}
                         className="relative aspect-square rounded-2xl overflow-hidden bg-stone-100 mb-3 cursor-pointer group"
                       >
                         {primaryMedia ? (
-                          <img
-                            src={primaryMedia.url}
-                            alt={mem.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                          />
+                          primaryMedia.type === 'video' ? (
+                            ytThumb ? (
+                              <img
+                                src={ytThumb}
+                                alt={mem.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <video
+                                src={primaryMedia.url}
+                                className="w-full h-full object-cover"
+                                muted
+                              />
+                            )
+                          ) : (
+                            <img
+                              src={primaryMedia.url}
+                              alt={mem.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          )
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-stone-300">
                             <ImageIcon className="w-10 h-10" />
                           </div>
                         )}
+
+                        {primaryMedia?.type === 'video' && (
+                          <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
+                            <Video className="w-8 h-8" />
+                          </div>
+                        )}
+
                         <div className="absolute top-2 right-2">
                           <motion.button
                             whileTap={{ scale: 0.85 }}

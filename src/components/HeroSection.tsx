@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, Baby, Hourglass } from 'lucide-react';
+import { Heart, Calendar, Baby, Hourglass, Edit3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateElapsedTime, calculateNextAnniversary } from '../utils/timeCalculations';
 import type { ElapsedTime, CountdownTime } from '../utils/timeCalculations';
+import type { HeroTexts } from '../types';
 
 interface HeroSectionProps {
   partner1: string;
   partner2: string;
   startDate: string;
-  daughterName: string;
+  heroTexts: HeroTexts;
+  isLiveEditMode?: boolean;
+  onEditSection?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   partner1,
   partner2,
   startDate,
-  daughterName,
+  heroTexts,
+  isLiveEditMode = false,
+  onEditSection,
 }) => {
   const [elapsed, setElapsed] = useState<ElapsedTime>(() => calculateElapsedTime(startDate));
   const [anniversary, setAnniversary] = useState<CountdownTime>(() => calculateNextAnniversary(startDate));
 
   useEffect(() => {
+    setElapsed(calculateElapsedTime(startDate));
+    setAnniversary(calculateNextAnniversary(startDate));
+
     const timer = setInterval(() => {
       setElapsed(calculateElapsedTime(startDate));
       setAnniversary(calculateNextAnniversary(startDate));
@@ -30,7 +38,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <section id="tiempo" className="relative pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center relative">
+        {isLiveEditMode && onEditSection && (
+          <div className="mb-4 flex justify-center">
+            <button
+              type="button"
+              onClick={onEditSection}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-900 hover:bg-rose-600 text-white text-xs font-semibold shadow-md transition-all"
+            >
+              <Edit3 className="w-3.5 h-3.5" />
+              <span>Editar Portada, Nombres y Contadores</span>
+            </button>
+          </div>
+        )}
 
         {/* Names Header */}
         <motion.h1
@@ -52,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           transition={{ delay: 0.15, duration: 0.5 }}
           className="font-handwriting text-xl sm:text-3xl text-rose-600/90 max-w-xl mx-auto mb-8 sm:mb-10 px-2"
         >
-          "Un día nos miramos, dijimos que sí, y hoy creamos nuestro propio universo con {daughterName}."
+          {heroTexts.heroQuote}
         </motion.p>
 
         {/* Real-time Relationship Counter Box */}
@@ -65,11 +85,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
             <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500 fill-rose-500 animate-pulse" />
             <h2 className="text-xs sm:text-sm uppercase tracking-widest font-semibold text-rose-900">
-              Tiempo Compartiendo Nuestras Vidas
+              {heroTexts.counterTitle}
             </h2>
           </div>
 
-          {/* Grid of live counter units (mobile optimized 3 cols on mobile, 6 cols on desktop) */}
+          {/* Grid of live counter units */}
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5 sm:gap-4 max-w-2xl mx-auto">
             <div className="p-2.5 sm:p-4 rounded-2xl bg-white shadow-sm border border-rose-100 flex flex-col items-center">
               <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600">
@@ -127,7 +147,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           <p className="mt-4 sm:mt-5 text-xs text-rose-800/80 font-medium">
-            (Equivalente a más de <span className="font-bold text-rose-700">{elapsed.totalDays}</span> días juntos despertando y amándonos)
+            ({heroTexts.counterSubtextPrefix}{' '}
+            <span className="font-bold text-rose-700">{elapsed.totalDays}</span>{' '}
+            {heroTexts.counterSubtextSuffix})
           </p>
         </motion.div>
 
@@ -140,7 +162,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-stone-400 block mb-0.5">
-                Próximo Aniversario #{anniversary.anniversaryNumber}
+                {heroTexts.anniversaryCardTitle} #{anniversary.anniversaryNumber}
               </span>
               {anniversary.isToday ? (
                 <p className="text-sm sm:text-base font-bold text-rose-600">
@@ -150,11 +172,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <p className="text-xs sm:text-sm font-semibold text-stone-700">
                   Faltan <span className="text-rose-600 font-bold">{anniversary.days}</span>d,{' '}
                   <span className="text-rose-600 font-bold">{anniversary.hours}</span>h y{' '}
-                  <span className="text-rose-600 font-bold">{anniversary.minutes}</span>m (11 de Julio)
+                  <span className="text-rose-600 font-bold">{anniversary.minutes}</span>m
                 </p>
               )}
               <span className="text-[11px] text-stone-500 mt-1 block">
-                Para seguir sumando años de risas y complicidad
+                {heroTexts.anniversaryCardSubtitle}
               </span>
             </div>
           </div>
@@ -169,14 +191,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-rose-600 block mb-0.5 flex items-center gap-1.5">
-                <span>La Dulce Espera de Vaiolet</span>
+                <span>{heroTexts.daughterCardBadge}</span>
                 <Hourglass className="w-3 h-3 animate-spin text-rose-400" />
               </span>
               <p className="text-xs sm:text-sm font-semibold text-stone-800">
-                ¡Semana 39 de gestación cumplida!
+                {heroTexts.daughterCardTitle}
               </p>
               <span className="text-[11px] text-stone-500 mt-1 block group-hover:text-rose-600 transition-colors">
-                En cualquier momento recibimos a nuestra hija →
+                {heroTexts.daughterCardSubtitle}
               </span>
             </div>
           </a>
