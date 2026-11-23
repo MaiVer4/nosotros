@@ -97,6 +97,7 @@ export const MediaManagerEditor: React.FC<MediaManagerEditorProps> = ({
         ...updated[replaceIndex],
         type: processed.type,
         url: processed.dataUrl,
+        thumbUrl: undefined,
       };
       onChange(updated);
       setStatusMsg('¡Imagen reemplazada y optimizada!');
@@ -148,6 +149,7 @@ export const MediaManagerEditor: React.FC<MediaManagerEditorProps> = ({
     updated[index] = {
       ...updated[index],
       url,
+      thumbUrl: undefined,
       type: isEmbed || isVideoExt ? 'video' : updated[index].type,
     };
     onChange(updated);

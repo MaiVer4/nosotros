@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Lock, Eye, EyeOff, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { verifySecret } from '../utils/security';
 
 interface AdminLoginModalProps {
   isOpen: boolean;
@@ -18,17 +19,24 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.trim() === correctPassword) {
-      setPassword('');
-      setError(false);
-      onSuccess();
-    } else {
-      setError(true);
+    setIsChecking(true);
+    try {
+      const valid = await verifySecret(password.trim(), correctPassword);
+      if (valid) {
+        setPassword('');
+        setError(false);
+        onSuccess();
+      } else {
+        setError(true);
+      }
+    } finally {
+      setIsChecking(false);
     }
   };
 
@@ -90,7 +98,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
               </div>
               {error && (
                 <p className="text-xs text-red-500 font-medium mt-1.5">
-                  Clave incorrecta. (Por defecto: <code className="bg-red-50 px-1 rounded">admin1107</code>)
+                  Clave incorrecta. Vuelve a intentarlo.
                 </p>
               )}
             </div>
@@ -105,9 +113,10 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="flex-1 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold shadow-sm transition-all"
+                disabled={isChecking}
+                className="flex-1 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 disabled:opacity-60 text-white text-xs font-semibold shadow-sm transition-all"
               >
-                Desbloquear Admin
+                {isChecking ? 'Verificando...' : 'Desbloquear Admin'}
               </button>
             </div>
           </form>

@@ -93,7 +93,7 @@ export async function publishToGitHub(
 
   if (!owner || !repo || !token) {
     throw new Error(
-      'Faltan los datos de conexión de GitHub (Usuario, Repositorio o Token). Configúralos en la pestaña Seguridad & GitHub.'
+      'Faltan los datos de conexión de GitHub (Usuario, Repositorio o Token). Configúralos en la pestaña GitHub & Claves.'
     );
   }
 
@@ -116,19 +116,36 @@ export async function publishToGitHub(
   );
   const baseTreeSha = commitData.tree.sha;
 
-  // 3. Collect all media items that have base64 data: URLs to upload as files
-  const pendingUploads: Array<{ item: MediaItem; prefix: string }> = [];
+  // 3. Collect all media items and milestone images that have base64 data: URLs to upload
+  const pendingMediaUploads: Array<{ item: MediaItem; prefix: string; subDir?: string }> = [];
+  const pendingMilestoneUploads: Array<{ index: number; dataUrl: string; prefix: string }> = [];
 
   updatedConfig.daughter.ultrasoundImages?.forEach((item, idx) => {
     if (item.url && item.url.startsWith('data:')) {
-      pendingUploads.push({ item, prefix: `vaiolet-${idx + 1}` });
+      pendingMediaUploads.push({ item, prefix: `vaiolet-eco-${idx + 1}` });
+    }
+  });
+
+  updatedConfig.daughter.bornImages?.forEach((item, idx) => {
+    if (item.url && item.url.startsWith('data:')) {
+      pendingMediaUploads.push({ item, prefix: `vaiolet-${idx + 1}`, subDir: 'vaiolet' });
+    }
+  });
+
+  updatedConfig.daughter.milestones?.forEach((ms, idx) => {
+    if (ms.mediaUrl && ms.mediaUrl.startsWith('data:')) {
+      pendingMilestoneUploads.push({
+        index: idx,
+        dataUrl: ms.mediaUrl,
+        prefix: `hito-${idx + 1}`,
+      });
     }
   });
 
   updatedConfig.memories.forEach((mem) => {
     mem.media.forEach((item, idx) => {
       if (item.url && item.url.startsWith('data:')) {
-        pendingUploads.push({ item, prefix: `${mem.id}-${idx + 1}` });
+        pendingMediaUploads.push({ item, prefix: `${mem.id}-${idx + 1}` });
       }
     });
   });
@@ -140,20 +157,25 @@ export async function publishToGitHub(
     sha: string;
   }> = [];
 
-  // 4. Upload each base64 media file as a Git Blob
+  const totalUploads = pendingMediaUploads.length + pendingMilestoneUploads.length;
   const timestamp = Date.now();
-  for (let i = 0; i < pendingUploads.length; i++) {
-    const { item, prefix } = pendingUploads[i];
-    const pct = 20 + Math.round(((i + 1) / (pendingUploads.length + 1)) * 50);
+  let uploadCursor = 0;
+
+  // 4a. Upload MediaItem base64 files
+  for (let i = 0; i < pendingMediaUploads.length; i++) {
+    const { item, prefix, subDir } = pendingMediaUploads[i];
+    uploadCursor += 1;
+    const pct = 20 + Math.round((uploadCursor / (totalUploads + 1)) * 50);
     onProgress?.({
-      step: `Subiendo archivo multimedia ${i + 1} de ${pendingUploads.length}...`,
+      step: `Subiendo archivo multimedia ${uploadCursor} de ${totalUploads}...`,
       percentage: pct,
     });
 
     const ext = getExtensionFromDataUrl(item.url);
     const base64Content = item.url.split(',')[1];
     const fileName = `${prefix}-${timestamp}-${i}.${ext}`;
-    const repoFilePath = `public/media/${fileName}`;
+    const relPath = subDir ? `${subDir}/${fileName}` : fileName;
+    const repoFilePath = `public/media/${relPath}`;
 
     const blobRes = await githubRequest<{ sha: string }>(
       `${baseUrl}/git/blobs`,
@@ -174,8 +196,47 @@ export async function publishToGitHub(
       sha: blobRes.sha,
     });
 
-    // Replace data URL with clean relative path for GitHub Pages
-    item.url = `./media/${fileName}`;
+    item.url = `./media/${relPath}`;
+    delete item.thumbUrl;
+  }
+
+  // 4b. Upload milestone base64 photos
+  for (let i = 0; i < pendingMilestoneUploads.length; i++) {
+    const { index, dataUrl, prefix } = pendingMilestoneUploads[i];
+    uploadCursor += 1;
+    const pct = 20 + Math.round((uploadCursor / (totalUploads + 1)) * 50);
+    onProgress?.({
+      step: `Subiendo archivo multimedia ${uploadCursor} de ${totalUploads}...`,
+      percentage: pct,
+    });
+
+    const ext = getExtensionFromDataUrl(dataUrl);
+    const base64Content = dataUrl.split(',')[1];
+    const fileName = `${prefix}-${timestamp}-${i}.${ext}`;
+    const repoFilePath = `public/media/vaiolet/${fileName}`;
+
+    const blobRes = await githubRequest<{ sha: string }>(
+      `${baseUrl}/git/blobs`,
+      token,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          content: base64Content,
+          encoding: 'base64',
+        }),
+      }
+    );
+
+    treeEntries.push({
+      path: repoFilePath,
+      mode: '100644',
+      type: 'blob',
+      sha: blobRes.sha,
+    });
+
+    if (updatedConfig.daughter.milestones?.[index]) {
+      updatedConfig.daughter.milestones[index].mediaUrl = `./media/vaiolet/${fileName}`;
+    }
   }
 
   onProgress?.({

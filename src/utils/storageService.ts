@@ -7,6 +7,7 @@ const STORE_NAME = 'site_data';
 const CONFIG_KEY = 'current_config';
 const UNPUBLISHED_FLAG_KEY = 'nosotros_has_unpublished_changes';
 const GITHUB_CONFIG_KEY = 'nosotros_github_sync_config';
+const GITHUB_SESSION_TOKEN_KEY = 'nosotros_github_session_token';
 
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -68,7 +69,6 @@ export async function loadConfigFromLocalDB(): Promise<RelationshipConfig | null
     console.warn('Error reading IndexedDB:', err);
   }
 
-  // Fallback or migrate legacy localStorage keys
   const fallback = localStorage.getItem('nosotros_fallback_config');
   if (fallback) {
     try {
@@ -110,13 +110,13 @@ export async function loadSiteConfiguration(): Promise<RelationshipConfig> {
   const hasUnpublished = localStorage.getItem(UNPUBLISHED_FLAG_KEY) === 'true';
   let localConfig = await loadConfigFromLocalDB();
 
-  // If localConfig contains legacy Unsplash placeholder URLs, purge it so real photos load!
+  // If localConfig contains legacy Unsplash placeholder URLs, purge it so real photos load
   if (localConfig && JSON.stringify(localConfig).includes('images.unsplash.com')) {
-    console.log('Purging legacy Unsplash placeholder data from local storage...');
     await clearLocalDB();
     localConfig = null;
   }
 
+  // If localConfig has unpublished edits, keep them (unless it lacks modern structure)
   if (hasUnpublished && localConfig) {
     return localConfig;
   }
@@ -169,15 +169,18 @@ export function detectGitHubRepoFromUrl(): { owner: string; repo: string } {
 
 export function loadGitHubSyncConfig(): GitHubSyncConfig {
   const saved = localStorage.getItem(GITHUB_CONFIG_KEY);
+  const sessionToken = sessionStorage.getItem(GITHUB_SESSION_TOKEN_KEY) || '';
   const detected = detectGitHubRepoFromUrl();
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
+      const sessionOnly = Boolean(parsed.sessionOnly);
       return {
         owner: parsed.owner || detected.owner || '',
         repo: parsed.repo || detected.repo || '',
         branch: parsed.branch || 'main',
-        token: parsed.token || '',
+        sessionOnly,
+        token: sessionOnly ? sessionToken : parsed.token || sessionToken || '',
       };
     } catch {
       // ignore
@@ -187,10 +190,40 @@ export function loadGitHubSyncConfig(): GitHubSyncConfig {
     owner: detected.owner,
     repo: detected.repo,
     branch: 'main',
-    token: '',
+    sessionOnly: false,
+    token: sessionToken,
   };
 }
 
 export function saveGitHubSyncConfig(cfg: GitHubSyncConfig): void {
-  localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify(cfg));
+  const sessionOnly = Boolean(cfg.sessionOnly);
+  if (sessionOnly) {
+    if (cfg.token) {
+      sessionStorage.setItem(GITHUB_SESSION_TOKEN_KEY, cfg.token);
+    } else {
+      sessionStorage.removeItem(GITHUB_SESSION_TOKEN_KEY);
+    }
+    localStorage.setItem(
+      GITHUB_CONFIG_KEY,
+      JSON.stringify({
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        sessionOnly: true,
+        token: '',
+      })
+    );
+  } else {
+    sessionStorage.removeItem(GITHUB_SESSION_TOKEN_KEY);
+    localStorage.setItem(
+      GITHUB_CONFIG_KEY,
+      JSON.stringify({
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        sessionOnly: false,
+        token: cfg.token,
+      })
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   X,
   Home,
@@ -43,6 +43,11 @@ import {
   publishToGitHub,
   type SyncProgress,
 } from '../utils/githubSync';
+import { hashSecret } from '../utils/security';
+import type { BabyMilestone } from '../types';
+
+const makeId = (prefix: string): string => `${prefix}-${crypto.randomUUID()}`;
+const getTodayIsoDate = (): string => new Date().toISOString().slice(0, 10);
 
 interface AdminDashboardProps {
   isOpen: boolean;
@@ -67,7 +72,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onResetToDefaults,
   onClose,
 }) => {
-  const [activeTab, setActiveTab] = useState<AdminTabId>(initialTab);
+  const [activeTab, setActiveTab] = useState<AdminTabId>(() => {
+    if (focusMemoryId) return 'recuerdos';
+    if (focusLetterId) return 'cartas';
+    return initialTab;
+  });
   const [expandedMemoryId, setExpandedMemoryId] = useState<string | null>(
     focusMemoryId || config.memories[0]?.id || null
   );
@@ -76,6 +85,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   );
   const [memorySearch, setMemorySearch] = useState('');
   const [newCategoryLabel, setNewCategoryLabel] = useState('');
+  const [newPinInput, setNewPinInput] = useState('');
+  const [newAdminPassInput, setNewAdminPassInput] = useState('');
+  const [securityMsg, setSecurityMsg] = useState<string | null>(null);
 
   // GitHub Sync states
   const [ghConfig, setGhConfig] = useState<GitHubSyncConfig>(() =>
@@ -87,26 +99,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [isTestingGh, setIsTestingGh] = useState(false);
 
   const importFileInputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (isOpen && initialTab) {
-      setActiveTab(initialTab);
-    }
-  }, [isOpen, initialTab]);
-
-  useEffect(() => {
-    if (focusMemoryId) {
-      setActiveTab('recuerdos');
-      setExpandedMemoryId(focusMemoryId);
-    }
-  }, [focusMemoryId]);
-
-  useEffect(() => {
-    if (focusLetterId) {
-      setActiveTab('cartas');
-      setExpandedLetterId(focusLetterId);
-    }
-  }, [focusLetterId]);
 
   if (!isOpen) return null;
 
@@ -144,11 +136,40 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleAddChecklistItem = () => {
     const current = config.daughter.checklist || [];
     const newItem: ChecklistItem = {
-      id: `chk-${Date.now()}`,
+      id: makeId('chk'),
       title: 'Nuevo preparativo listo',
       description: 'Descripción del preparativo para la llegada.',
     };
     updateDaughter({ checklist: [...current, newItem] });
+  };
+
+  const handleAddMilestoneAdmin = () => {
+    const current = config.daughter.milestones || [];
+    const newMs: BabyMilestone = {
+      id: makeId('ms'),
+      title: 'Nuevo hito de Vaiolet',
+      date: getTodayIsoDate(),
+      achieved: false,
+      note: 'Describe este momento especial...',
+      icon: '🌸',
+    };
+    updateDaughter({ milestones: [...current, newMs] });
+  };
+
+  const handleUpdateMilestoneAdmin = (
+    index: number,
+    patch: Partial<BabyMilestone>
+  ) => {
+    const current = [...(config.daughter.milestones || [])];
+    current[index] = { ...current[index], ...patch };
+    updateDaughter({ milestones: current });
+  };
+
+  const handleDeleteMilestoneAdmin = (index: number) => {
+    const current = (config.daughter.milestones || []).filter(
+      (_, i) => i !== index
+    );
+    updateDaughter({ milestones: current });
   };
 
   const handleUpdateChecklistItem = (
@@ -206,9 +227,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleAddMemory = () => {
     const newMem: Memory = {
-      id: `mem-${Date.now()}`,
+      id: makeId('mem'),
       title: 'Nuevo recuerdo inolvidable',
-      date: new Date().toISOString().slice(0, 10),
+      date: getTodayIsoDate(),
       category: 'especial',
       location: 'Nuestro lugar especial',
       description: 'Escribe aquí la historia de este hermoso momento...',
@@ -236,7 +257,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleDuplicateMemory = (mem: Memory) => {
     const copy: Memory = {
       ...structuredClone(mem),
-      id: `mem-${Date.now()}`,
+      id: makeId('mem'),
       title: `${mem.title} (Copia)`,
     };
     onUpdateConfig({
@@ -273,12 +294,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleAddLetter = () => {
     const newLet: LoveLetter = {
-      id: `let-${Date.now()}`,
+      id: makeId('let'),
       title: 'Nueva carta desde el corazón',
       author: config.partner1,
       recipient: config.partner2,
       openWhen: 'Ábreme cuando quieras recordar cuánto te amo',
-      dateWritten: new Date().toISOString().slice(0, 10),
+      dateWritten: getTodayIsoDate(),
       sealColor: '#f43f68',
       content: 'Escribe aquí las palabras que quieres dejar guardadas para siempre...',
     };
@@ -365,6 +386,30 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  const handleSaveNewPin = async () => {
+    const clean = newPinInput.replace(/\D/g, '').slice(0, 4);
+    if (clean.length !== 4) {
+      alert('El PIN debe tener exactamente 4 dígitos.');
+      return;
+    }
+    const hashed = await hashSecret(clean);
+    onUpdateConfig({ ...config, secretPin: hashed });
+    setNewPinInput('');
+    setSecurityMsg('PIN de acceso actualizado y cifrado correctamente.');
+  };
+
+  const handleSaveNewAdminPassword = async () => {
+    const clean = newAdminPassInput.trim();
+    if (clean.length < 4) {
+      alert('La clave de administrador debe tener al menos 4 caracteres.');
+      return;
+    }
+    const hashed = await hashSecret(clean);
+    onUpdateConfig({ ...config, adminPassword: hashed });
+    setNewAdminPassInput('');
+    setSecurityMsg('Clave de administrador actualizada y cifrada correctamente.');
+  };
+
   const handleExportJson = () => {
     const blob = new Blob([JSON.stringify(config, null, 2)], {
       type: 'application/json',
@@ -372,7 +417,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `respaldo-nosotros-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `respaldo-nosotros-${getTodayIsoDate()}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -635,7 +680,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </span>
                       <input
                         type="text"
-                        placeholder="Etiqueta superior"
+                        placeholder="Etiqueta modo espera"
                         value={config.hero.daughterCardBadge}
                         onChange={(e) =>
                           updateHero({ daughterCardBadge: e.target.value })
@@ -644,19 +689,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       />
                       <input
                         type="text"
-                        placeholder="Texto principal"
-                        value={config.hero.daughterCardTitle}
+                        placeholder="Etiqueta modo ya nació"
+                        value={config.hero.daughterBornCardBadge || ''}
                         onChange={(e) =>
-                          updateHero({ daughterCardTitle: e.target.value })
+                          updateHero({ daughterBornCardBadge: e.target.value })
                         }
                         className="w-full px-3 py-1.5 rounded-xl border border-stone-200 text-xs"
                       />
                       <input
                         type="text"
-                        placeholder="Subtítulo inferior"
-                        value={config.hero.daughterCardSubtitle}
+                        placeholder="Subtítulo modo ya nació"
+                        value={config.hero.daughterBornCardSubtitle || ''}
                         onChange={(e) =>
-                          updateHero({ daughterCardSubtitle: e.target.value })
+                          updateHero({ daughterBornCardSubtitle: e.target.value })
                         }
                         className="w-full px-3 py-1.5 rounded-xl border border-stone-200 text-xs"
                       />
@@ -978,20 +1023,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
                           Fecha y Hora de Nacimiento
                         </label>
                         <input
                           type="datetime-local"
-                          value={(
-                            config.daughter.birthDate ||
-                            new Date().toISOString()
-                          ).slice(0, 16)}
+                          value={(config.daughter.birthDate || '').slice(0, 16)}
                           onChange={(e) =>
                             updateDaughter({ birthDate: e.target.value })
                           }
+                          className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
+                          Ciudad / Clínica
+                        </label>
+                        <input
+                          type="text"
+                          value={config.daughter.birthCity || ''}
+                          onChange={(e) =>
+                            updateDaughter({ birthCity: e.target.value })
+                          }
+                          placeholder="ej. Pereira, Risaralda"
                           className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm"
                         />
                       </div>
@@ -1039,11 +1095,37 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
                 )}
 
-                {/* Galería de Fotos y Videos de Vaiolet */}
+                {/* Galería Recién Nacida de Vaiolet */}
                 <div className="p-5 rounded-2xl bg-white border border-rose-100 shadow-sm space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-2">
                     <h3 className="font-serif text-lg font-bold text-stone-800">
-                      3. Galería de Fotos y Videos de {config.daughter.name}
+                      3. Álbum de {config.daughter.name} (Recién Nacida & Crecimiento)
+                    </h3>
+                    <input
+                      type="text"
+                      value={config.daughter.bornGalleryTitle || ''}
+                      onChange={(e) =>
+                        updateDaughter({ bornGalleryTitle: e.target.value })
+                      }
+                      placeholder="Título del álbum recién nacida"
+                      className="px-3 py-1 rounded-lg border border-stone-200 text-xs"
+                    />
+                  </div>
+
+                  <MediaManagerEditor
+                    label={`Fotos y Videos de ${config.daughter.name} Recién Nacida`}
+                    items={config.daughter.bornImages || []}
+                    onChange={(updatedMedia) =>
+                      updateDaughter({ bornImages: updatedMedia })
+                    }
+                  />
+                </div>
+
+                {/* Galería de Ecografías y Dulce Espera */}
+                <div className="p-5 rounded-2xl bg-white border border-rose-100 shadow-sm space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-2">
+                    <h3 className="font-serif text-lg font-bold text-stone-800">
+                      4. Galería de Ecografías & Dulce Espera
                     </h3>
                     <input
                       type="text"
@@ -1051,18 +1133,147 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       onChange={(e) =>
                         updateDaughter({ galleryTitle: e.target.value })
                       }
-                      placeholder="Título de la galería"
+                      placeholder="Título de la galería de ecografías"
                       className="px-3 py-1 rounded-lg border border-stone-200 text-xs"
                     />
                   </div>
 
                   <MediaManagerEditor
-                    label={`Fotos y Videos de ${config.daughter.name}`}
+                    label="Ecografías y Dulce Espera"
                     items={config.daughter.ultrasoundImages || []}
                     onChange={(updatedMedia) =>
                       updateDaughter({ ultrasoundImages: updatedMedia })
                     }
                   />
+                </div>
+
+                {/* Diario de Hitos y Cumplemeses */}
+                <div className="p-5 rounded-2xl bg-white border border-rose-100 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-stone-100 pb-2">
+                    <h3 className="font-serif text-lg font-bold text-stone-800">
+                      5. Hitos y Cumplemeses de {config.daughter.name}
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={handleAddMilestoneAdmin}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Nuevo Hito</span>
+                    </button>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {(config.daughter.milestones || []).map((ms, idx) => (
+                      <div
+                        key={ms.id || idx}
+                        className="p-3 rounded-xl bg-stone-50 border border-stone-200 space-y-2"
+                      >
+                        <div className="flex flex-wrap items-center gap-2">
+                          <input
+                            type="text"
+                            value={ms.icon || '🌸'}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                icon: e.target.value,
+                              })
+                            }
+                            className="w-12 px-2 py-1 rounded-lg border border-stone-200 text-center text-sm bg-white"
+                            title="Ícono"
+                          />
+                          <input
+                            type="text"
+                            value={ms.title}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                title: e.target.value,
+                              })
+                            }
+                            placeholder="Título del hito"
+                            className="flex-1 min-w-[160px] px-2.5 py-1 rounded-lg border border-stone-200 text-xs font-semibold bg-white"
+                          />
+                          <input
+                            type="date"
+                            value={ms.date || ''}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                date: e.target.value || undefined,
+                              })
+                            }
+                            className="px-2 py-1 rounded-lg border border-stone-200 text-xs bg-white"
+                          />
+                          <label className="inline-flex items-center gap-1 text-xs font-semibold text-stone-700 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={ms.achieved}
+                              onChange={(e) =>
+                                handleUpdateMilestoneAdmin(idx, {
+                                  achieved: e.target.checked,
+                                })
+                              }
+                              className="rounded text-rose-500"
+                            />
+                            <span>Logrado</span>
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteMilestoneAdmin(idx)}
+                            className="p-1 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <input
+                            type="number"
+                            placeholder="Mes #"
+                            value={ms.monthNumber ?? ''}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                monthNumber: e.target.value
+                                  ? Number(e.target.value)
+                                  : undefined,
+                              })
+                            }
+                            className="px-2.5 py-1 rounded-lg border border-stone-200 text-xs bg-white"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Peso (ej. 4.1 kg)"
+                            value={ms.weight || ''}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                weight: e.target.value || undefined,
+                              })
+                            }
+                            className="px-2.5 py-1 rounded-lg border border-stone-200 text-xs bg-white"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Talla (ej. 53 cm)"
+                            value={ms.height || ''}
+                            onChange={(e) =>
+                              handleUpdateMilestoneAdmin(idx, {
+                                height: e.target.value || undefined,
+                              })
+                            }
+                            className="px-2.5 py-1 rounded-lg border border-stone-200 text-xs bg-white"
+                          />
+                        </div>
+                        <input
+                          type="text"
+                          value={ms.note}
+                          onChange={(e) =>
+                            handleUpdateMilestoneAdmin(idx, {
+                              note: e.target.value,
+                            })
+                          }
+                          placeholder="Nota del hito"
+                          className="w-full px-2.5 py-1 rounded-lg border border-stone-200 text-xs bg-white"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -1890,6 +2101,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       }
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm font-mono"
                     />
+                    <label className="mt-2 inline-flex items-center gap-2 text-xs text-stone-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(ghConfig.sessionOnly)}
+                        onChange={(e) =>
+                          handleGhFieldChange({ sessionOnly: e.target.checked })
+                        }
+                        className="rounded text-rose-500"
+                      />
+                      <span>
+                        Guardar token solo durante esta sesión (más seguro en equipos compartidos)
+                      </span>
+                    </label>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -1914,44 +2138,62 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
                 </div>
 
-                {/* Claves de Acceso */}
+                {/* Claves de Acceso (Hasheadas con SHA-256) */}
                 <div className="p-5 rounded-2xl bg-white border border-rose-100 shadow-sm space-y-4">
                   <h3 className="font-serif text-lg font-bold text-stone-800 border-b border-stone-100 pb-2">
-                    Claves de Seguridad
+                    Claves de Seguridad (Cifradas SHA-256)
                   </h3>
+                  {securityMsg && (
+                    <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+                      ✅ {securityMsg}
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
-                        PIN de Entrada a la Web (4 dígitos)
+                        Nuevo PIN de Entrada (4 dígitos)
                       </label>
-                      <input
-                        type="text"
-                        maxLength={4}
-                        value={config.secretPin}
-                        onChange={(e) =>
-                          onUpdateConfig({
-                            ...config,
-                            secretPin: e.target.value.replace(/\D/g, '').slice(0, 4),
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm font-mono"
-                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="password"
+                          inputMode="numeric"
+                          maxLength={4}
+                          placeholder="••••"
+                          value={newPinInput}
+                          onChange={(e) =>
+                            setNewPinInput(e.target.value.replace(/\D/g, '').slice(0, 4))
+                          }
+                          className="flex-1 px-3 py-2 rounded-xl border border-stone-200 text-sm font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSaveNewPin}
+                          className="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-rose-600 text-white text-xs font-semibold transition-colors"
+                        >
+                          Actualizar
+                        </button>
+                      </div>
                     </div>
                     <div>
                       <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
-                        Clave de Administrador (Para este Panel)
+                        Nueva Clave de Administrador
                       </label>
-                      <input
-                        type="text"
-                        value={config.adminPassword}
-                        onChange={(e) =>
-                          onUpdateConfig({
-                            ...config,
-                            adminPassword: e.target.value,
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm font-mono"
-                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="password"
+                          placeholder="Mínimo 4 caracteres"
+                          value={newAdminPassInput}
+                          onChange={(e) => setNewAdminPassInput(e.target.value)}
+                          className="flex-1 px-3 py-2 rounded-xl border border-stone-200 text-sm font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSaveNewAdminPassword}
+                          className="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-rose-600 text-white text-xs font-semibold transition-colors"
+                        >
+                          Actualizar
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

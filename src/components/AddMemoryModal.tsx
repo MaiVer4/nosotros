@@ -2,25 +2,35 @@ import React, { useState } from 'react';
 import { X, Sparkles, Copy, Check, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import type { Memory, MemoryCategory } from '../types';
+import type { Memory, MemoryCategory, MediaItem, CategoryItem } from '../types';
+import { MediaManagerEditor } from './MediaManagerEditor';
 
 interface AddMemoryModalProps {
   isOpen: boolean;
+  categories: CategoryItem[];
   onClose: () => void;
   onAddMemory: (memory: Memory) => void;
 }
 
 export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
   isOpen,
+  categories,
   onClose,
   onAddMemory,
 }) => {
+  const selectableCategories = categories.filter(
+    (c) => c.id !== 'todos' && c.id !== 'favoritos'
+  );
+  const defaultCategory =
+    selectableCategories.find((c) => c.id === 'vaiolet')?.id ||
+    selectableCategories[0]?.id ||
+    'especial';
+
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [category, setCategory] = useState<MemoryCategory>('hito');
+  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [category, setCategory] = useState<MemoryCategory>(defaultCategory);
   const [description, setDescription] = useState('');
-  const [mediaUrl, setMediaUrl] = useState('');
-  const [mediaCaption, setMediaCaption] = useState('');
+  const [media, setMedia] = useState<MediaItem[]>([]);
   const [location, setLocation] = useState('');
   const [tags, setTags] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
@@ -28,32 +38,35 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
 
   if (!isOpen) return null;
 
+  const buildMemoryObject = (): Memory => ({
+    id: `mem-${crypto.randomUUID()}`,
+    title: title.trim(),
+    date,
+    category,
+    description: description.trim(),
+    location: location.trim() ? location.trim() : undefined,
+    isFavorite,
+    tags: tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean),
+    media,
+  });
+
+  const resetForm = () => {
+    setTitle('');
+    setDate(new Date().toISOString().slice(0, 10));
+    setCategory(defaultCategory);
+    setDescription('');
+    setMedia([]);
+    setLocation('');
+    setTags('');
+    setIsFavorite(false);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const newMemory: Memory = {
-      id: `mem-${Date.now()}`,
-      title,
-      date,
-      category,
-      description,
-      location: location.trim() ? location.trim() : undefined,
-      isFavorite,
-      tags: tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean),
-      media: mediaUrl.trim()
-        ? [
-            {
-              type: mediaUrl.match(/\.(mp4|webm|mov)$/i) ? 'video' : 'image',
-              url: mediaUrl.trim(),
-              caption: mediaCaption.trim() ? mediaCaption.trim() : undefined,
-            },
-          ]
-        : [],
-    };
-
+    const newMemory = buildMemoryObject();
     onAddMemory(newMemory);
     confetti({
       particleCount: 70,
@@ -61,31 +74,12 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
       origin: { y: 0.6 },
       colors: ['#f43f68', '#fecdd6', '#fb718d'],
     });
-
+    resetForm();
     onClose();
   };
 
   const handleCopyCode = () => {
-    const memoryObj = {
-      id: `mem-${Date.now()}`,
-      title,
-      date,
-      category,
-      isFavorite,
-      location: location || undefined,
-      description,
-      tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
-      media: mediaUrl
-        ? [
-            {
-              type: mediaUrl.match(/\.(mp4|webm|mov)$/i) ? 'video' : 'image',
-              url: mediaUrl,
-              caption: mediaCaption || undefined,
-            },
-          ]
-        : [],
-    };
-
+    const memoryObj = buildMemoryObject();
     navigator.clipboard.writeText(JSON.stringify(memoryObj, null, 2) + ',');
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2500);
@@ -118,11 +112,11 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
               Añadir Momento a Nuestra Historia
             </h3>
             <p className="text-xs text-stone-500">
-              Guarda una fecha, anécdota o fotografía especial en la línea de tiempo.
+              Sube fotos o videos directo desde tu celular o PC y guarda una fecha especial en la línea de tiempo.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
@@ -131,7 +125,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="ej. Nuestro viaje a la playa"
+                  placeholder="ej. El primer mes de Vaiolet"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
@@ -162,13 +156,11 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                   onChange={(e) => setCategory(e.target.value as MemoryCategory)}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 bg-white"
                 >
-                  <option value="inicio">Nuestros Inicios</option>
-                  <option value="hito">Hito de Pareja</option>
-                  <option value="embarazo">El Embarazo</option>
-                  <option value="vaiolet">Nuestra Hija Vaiolet 🌸</option>
-                  <option value="viaje">Viajes y Escapadas</option>
-                  <option value="cita">Citas y Salidas</option>
-                  <option value="especial">Momento Especial</option>
+                  {selectableCategories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -178,7 +170,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                 </label>
                 <input
                   type="text"
-                  placeholder="ej. En nuestro lugar favorito"
+                  placeholder="ej. Pereira, Risaralda"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
@@ -200,32 +192,13 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div>
-                <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
-                  URL o ruta de Foto / Video
-                </label>
-                <input
-                  type="text"
-                  placeholder="https://... o /media/mi-foto.jpg"
-                  value={mediaUrl}
-                  onChange={(e) => setMediaUrl(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold uppercase text-stone-500 mb-1">
-                  Pie de Foto (Epígrafe)
-                </label>
-                <input
-                  type="text"
-                  placeholder="ej. Sonriendo como siempre"
-                  value={mediaCaption}
-                  onChange={(e) => setMediaCaption(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
-                />
-              </div>
+            {/* Direct Device Upload & URL Media Manager */}
+            <div className="p-3.5 rounded-2xl bg-rose-50/40 border border-rose-100">
+              <MediaManagerEditor
+                items={media}
+                onChange={setMedia}
+                label="Fotos y Videos del Recuerdo"
+              />
             </div>
 
             <div className="flex items-center justify-between pt-1">
@@ -235,7 +208,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                 </label>
                 <input
                   type="text"
-                  placeholder="Amor, Playa, Risa"
+                  placeholder="Vaiolet, Familia, Amor"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
@@ -263,8 +236,12 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                 onClick={handleCopyCode}
                 className="py-2.5 px-4 rounded-xl border border-rose-200 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors flex items-center justify-center gap-1.5"
               >
-                {copiedCode ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedCode ? '¡Código Copiado!' : 'Copiar código para Git'}</span>
+                {copiedCode ? (
+                  <Check className="w-4 h-4 text-green-500" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+                <span>{copiedCode ? '¡Código Copiado!' : 'Copiar JSON'}</span>
               </button>
 
               <div className="flex-1 flex gap-2">

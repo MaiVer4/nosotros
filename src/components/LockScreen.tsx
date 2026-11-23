@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Heart, Lock, KeyRound, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { verifySecret } from '../utils/security';
 
 interface LockScreenProps {
   partner1: string;
@@ -23,42 +24,57 @@ export const LockScreen: React.FC<LockScreenProps> = ({
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
-  const handleDigit = (digit: string) => {
-    if (pin.length < 4) {
-      const newPin = pin + digit;
-      setPin(newPin);
-      setError(false);
-
-      if (newPin.length === 4) {
-        verifyPin(newPin);
+  const verifyPin = useCallback(
+    async (candidate: string) => {
+      setIsVerifying(true);
+      try {
+        const valid = await verifySecret(candidate, correctPin);
+        if (valid) {
+          confetti({
+            particleCount: 70,
+            spread: 60,
+            origin: { y: 0.6 },
+            colors: ['#f43f68', '#fecdd6', '#fb718d', '#d7b77f'],
+          });
+          setTimeout(() => {
+            onUnlock();
+          }, 350);
+        } else {
+          setError(true);
+          setTimeout(() => {
+            setPin('');
+          }, 700);
+        }
+      } finally {
+        setIsVerifying(false);
       }
-    }
-  };
+    },
+    [correctPin, onUnlock]
+  );
 
-  const handleBackspace = () => {
+  const handleDigit = useCallback(
+    (digit: string) => {
+      if (isVerifying) return;
+      setPin((prev) => {
+        if (prev.length >= 4) return prev;
+        const next = prev + digit;
+        setError(false);
+        if (next.length === 4) {
+          void verifyPin(next);
+        }
+        return next;
+      });
+    },
+    [isVerifying, verifyPin]
+  );
+
+  const handleBackspace = useCallback(() => {
+    if (isVerifying) return;
     setPin((prev) => prev.slice(0, -1));
     setError(false);
-  };
-
-  const verifyPin = (candidate: string) => {
-    if (candidate === correctPin) {
-      confetti({
-        particleCount: 70,
-        spread: 60,
-        origin: { y: 0.6 },
-        colors: ['#f43f68', '#fecdd6', '#fb718d', '#d7b77f'],
-      });
-      setTimeout(() => {
-        onUnlock();
-      }, 350);
-    } else {
-      setError(true);
-      setTimeout(() => {
-        setPin('');
-      }, 700);
-    }
-  };
+  }, [isVerifying]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -70,7 +86,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pin]);
+  }, [handleDigit, handleBackspace]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-[#FFF0F2] via-[#FDF8F5] to-[#FCEEE9] min-h-[100dvh]">
@@ -105,7 +121,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({
           <span>Ingresa el PIN de acceso</span>
         </div>
 
-        {/* PIN visual indicators with spring */}
+        {/* PIN visual indicators */}
         <motion.div
           animate={error ? { x: [-10, 10, -8, 8, -4, 4, 0] } : {}}
           transition={{ duration: 0.4 }}
@@ -143,7 +159,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Digital Numpad with Spring Feedback */}
+        {/* Digital Numpad */}
         <div className="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-[220px] sm:max-w-[240px] mx-auto mb-5">
           {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((digit) => (
             <motion.button
