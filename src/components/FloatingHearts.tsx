@@ -15,13 +15,20 @@ interface FloatingHeartsProps {
   symbols?: string[];
 }
 
+const DEFAULT_SYMBOLS = ['✨', '🌸', '💖'];
+
 export const FloatingHearts: React.FC<FloatingHeartsProps> = ({
   enabled = true,
-  symbols = ['✨', '🌸', '💖'],
+  symbols = DEFAULT_SYMBOLS,
 }) => {
-  const safeSymbols = symbols.length > 0 ? symbols : ['✨', '🌸', '💖'];
+  const symbolsKey =
+    symbols && symbols.length > 0
+      ? symbols.join('|')
+      : DEFAULT_SYMBOLS.join('|');
 
   const particles = useMemo<HeartParticle[]>(() => {
+    const activeSymbols = symbolsKey.split('|').filter(Boolean);
+    const palette = activeSymbols.length > 0 ? activeSymbols : DEFAULT_SYMBOLS;
     const isSmall = typeof window !== 'undefined' && window.innerWidth < 768;
     const count = isSmall ? 8 : 14;
 
@@ -30,11 +37,11 @@ export const FloatingHearts: React.FC<FloatingHeartsProps> = ({
       left: Math.floor((i * 93 + 7) % 92) + 4,
       size: (i % 3) * 4 + 12,
       duration: (i % 5) * 2 + 12,
-      delay: (i % 6),
-      opacity: ((i % 3) * 0.08) + 0.15,
-      symbol: safeSymbols[i % safeSymbols.length],
+      delay: i % 6,
+      opacity: (i % 3) * 0.08 + 0.15,
+      symbol: palette[i % palette.length],
     }));
-  }, [safeSymbols.join(',')]);
+  }, [symbolsKey]);
 
   if (!enabled) return null;
 
