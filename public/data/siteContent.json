@@ -2,8 +2,8 @@
   "partner1": "Maicol",
   "partner2": "Vanessa",
   "relationshipStartDate": "2025-07-11T00:00:00",
-  "secretPin": "1107",
-  "adminPassword": "admin1107",
+  "secretPin": "sha256:86cb35a822329fe1de40eb82a1791be1f66f8bd327446686bdd859a89e436853",
+  "adminPassword": "sha256:279fe2e09fd48e7a9e8f5227d3333d9e1442f6eaa74cc91095a230e8251edc28",
   "hero": {
     "lockScreenSubtitle": "Nuestra historia, recuerdos & Vaiolet",
     "lockScreenHint": "Día y mes de nuestra fecha especial (11 de julio: 1107)",
@@ -15,11 +15,13 @@
     "anniversaryCardSubtitle": "Para seguir sumando años de risas y complicidad",
     "daughterCardBadge": "La Dulce Espera de Vaiolet",
     "daughterCardTitle": "¡Semana 39 de gestación cumplida!",
-    "daughterCardSubtitle": "En cualquier momento recibimos a nuestra hija →"
+    "daughterCardSubtitle": "En cualquier momento recibimos a nuestra hija →",
+    "daughterBornCardBadge": "¡Vaiolet ya está con nosotros!",
+    "daughterBornCardSubtitle": "Ver su edad en vivo, hitos y fotos →"
   },
   "daughter": {
     "name": "Vaiolet",
-    "status": "expecting",
+    "status": "born",
     "sectionBadge": "Nuestra Mayor Bendición",
     "expectingSubtitle": "La dulce espera que llena nuestros días de ilusión y emoción",
     "bornSubtitle": "Nuestra princesa amada, la luz de nuestras miradas",
@@ -54,83 +56,186 @@
       {
         "id": "vai-eco-1",
         "type": "image",
-        "url": "./media/ecografias/eco_39.jpg",
-        "caption": "El inicio de nuestro mayor milagro: Primer test positivo (17 de marzo de 2026)"
+        "url": "./media/ecografias/eco_39.webp",
+        "caption": "El inicio de nuestro mayor milagro: Primer test positivo (17 de marzo de 2026)",
+        "thumbUrl": "./media/thumbs/ecografias/eco_39.webp"
       },
       {
         "id": "vai-eco-2",
         "type": "image",
-        "url": "./media/ecografias/eco_08.jpg",
-        "caption": "Ecografía de Vaiolet: La silueta y carita de nuestra princesa formándose"
+        "url": "./media/ecografias/eco_08.webp",
+        "caption": "Ecografía de Vaiolet: La silueta y carita de nuestra princesa formándose",
+        "thumbUrl": "./media/thumbs/ecografias/eco_08.webp"
       },
       {
         "id": "vai-eco-3",
         "type": "image",
-        "url": "./media/ecografias/eco_14.jpg",
-        "caption": "Perfil ecográfico: Observando sus manitas y su cabecita perfecta"
+        "url": "./media/ecografias/eco_14.webp",
+        "caption": "Perfil ecográfico: Observando sus manitas y su cabecita perfecta",
+        "thumbUrl": "./media/thumbs/ecografias/eco_14.webp"
       },
       {
         "id": "vai-eco-4",
         "type": "image",
-        "url": "./media/ecografias/eco_17.jpg",
-        "caption": "El latido más bello del universo: El corazoncito de Vaiolet latiendo fuerte"
+        "url": "./media/ecografias/eco_17.webp",
+        "caption": "El latido más bello del universo: El corazoncito de Vaiolet latiendo fuerte",
+        "thumbUrl": "./media/thumbs/ecografias/eco_17.webp"
       },
       {
         "id": "vai-eco-5",
         "type": "image",
-        "url": "./media/ecografias/eco_27.jpg",
-        "caption": "Desarrollo morfológico impecable: Creciendo sana y llena de amor"
+        "url": "./media/ecografias/eco_27.webp",
+        "caption": "Desarrollo morfológico impecable: Creciendo sana y llena de amor",
+        "thumbUrl": "./media/thumbs/ecografias/eco_27.webp"
       },
       {
         "id": "vai-eco-6",
         "type": "image",
-        "url": "./media/ecografias/eco_34.jpg",
-        "caption": "Detalle ecográfico de nuestra bebé: Contando los días para tenerte en brazos"
+        "url": "./media/ecografias/eco_34.webp",
+        "caption": "Detalle ecográfico de nuestra bebé: Contando los días para tenerte en brazos",
+        "thumbUrl": "./media/thumbs/ecografias/eco_34.webp"
       },
       {
         "id": "vai-eco-7",
         "type": "image",
-        "url": "./media/ecografias/eco_01.jpg",
-        "caption": "Movimientos y vitalidad en ecografía obstétrica 2D"
+        "url": "./media/ecografias/eco_01.webp",
+        "caption": "Movimientos y vitalidad en ecografía obstétrica 2D",
+        "thumbUrl": "./media/thumbs/ecografias/eco_01.webp"
       },
       {
         "id": "vai-eco-8",
         "type": "image",
-        "url": "./media/ecografias/eco_06.jpg",
-        "caption": "Cada imagen confirma el milagro más puro de nuestras vidas"
+        "url": "./media/ecografias/eco_06.webp",
+        "caption": "Cada imagen confirma el milagro más puro de nuestras vidas",
+        "thumbUrl": "./media/thumbs/ecografias/eco_06.webp"
       },
       {
         "id": "vai-eco-9",
         "type": "image",
-        "url": "./media/ecografias/eco_11.jpg",
-        "caption": "La emoción indescriptible de papá y mamá al verte en la pantalla"
+        "url": "./media/ecografias/eco_11.webp",
+        "caption": "La emoción indescriptible de papá y mamá al verte en la pantalla",
+        "thumbUrl": "./media/thumbs/ecografias/eco_11.webp"
       },
       {
         "id": "vai-eco-10",
         "type": "image",
-        "url": "./media/ecografias/eco_21.jpg",
-        "caption": "Monitoreo anatómico: Toda la dulzura de Vaiolet en una imagen"
+        "url": "./media/ecografias/eco_21.webp",
+        "caption": "Monitoreo anatómico: Toda la dulzura de Vaiolet en una imagen",
+        "thumbUrl": "./media/thumbs/ecografias/eco_21.webp"
       },
       {
         "id": "vai-eco-11",
         "type": "image",
-        "url": "./media/ecografias/eco_36.jpg",
-        "caption": "Mamá Vanessa durante el control ecográfico: Valiente y radiante"
+        "url": "./media/ecografias/eco_36.webp",
+        "caption": "Mamá Vanessa durante el control ecográfico: Valiente y radiante",
+        "thumbUrl": "./media/thumbs/ecografias/eco_36.webp"
       },
       {
         "id": "vai-eco-12",
         "type": "image",
-        "url": "./media/ecografias/eco_40.jpg",
-        "caption": "Nuestras manos abrazando la pancita donde vive nuestro sueño"
+        "url": "./media/ecografias/eco_40.webp",
+        "caption": "Nuestras manos abrazando la pancita donde vive nuestro sueño",
+        "thumbUrl": "./media/thumbs/ecografias/eco_40.webp"
       }
     ],
     "bornBadgeText": "¡Nuestra Princesa ya está en casa!",
     "bornHeadline": "Bienvenida al mundo, Vaiolet 🌸",
-    "birthDate": null,
+    "birthDate": "2026-10-24T12:00:00",
     "birthWeight": "3.25 kg",
     "birthLength": "49 cm",
-    "birthCity": "Con todo el amor de mamá y papá",
-    "birthNote": "El día más feliz de nuestras vidas: ¡Llegó nuestra princesa Vaiolet al mundo!"
+    "birthCity": "Pereira, Risaralda",
+    "birthNote": "El día más feliz de nuestras vidas: ¡Llegó nuestra princesa Vaiolet al mundo!",
+    "bornNote": "El día más feliz de nuestras vidas: ¡Llegó nuestra princesa Vaiolet al mundo para llenar nuestro hogar de amor infinito!",
+    "bornGalleryTitle": "Álbum de Vaiolet: Recién Nacida & Crecimiento",
+    "bornImages": [],
+    "milestones": [
+      {
+        "id": "ms-0-nacimiento",
+        "monthNumber": 0,
+        "title": "¡Bienvenida al mundo, Vaiolet!",
+        "date": "2026-10-24",
+        "achieved": true,
+        "weight": "3.25 kg",
+        "height": "49 cm",
+        "icon": "🌸",
+        "note": "El instante más mágico de nuestras vidas: escuchamos tu primer llanto y te tuvimos por fin en nuestros brazos."
+      },
+      {
+        "id": "ms-sonrisa",
+        "title": "Tu primera sonrisa consciente",
+        "achieved": false,
+        "icon": "😊",
+        "note": "Ese primer gesto que derritió por completo el corazón de mamá y papá."
+      },
+      {
+        "id": "ms-mes-1",
+        "monthNumber": 1,
+        "title": "Primer Cumplemes de Vaiolet",
+        "date": "2026-11-24",
+        "achieved": false,
+        "icon": "🎀",
+        "note": "Un mes entero descubriendo el mundo a tu lado y aprendiendo a ser la mejor familia."
+      },
+      {
+        "id": "ms-mes-2",
+        "monthNumber": 2,
+        "title": "Segundo Cumplemes",
+        "achieved": false,
+        "icon": "🍼",
+        "note": "Dos meses llenando la casa de balbuceos, ternura y abrazos infinitos."
+      },
+      {
+        "id": "ms-cabecita",
+        "title": "Sostiene su cabecita",
+        "achieved": false,
+        "icon": "✨",
+        "note": "Cada día más fuerte y curiosa mirando todo a su alrededor."
+      },
+      {
+        "id": "ms-mes-3",
+        "monthNumber": 3,
+        "title": "Tercer Cumplemes",
+        "achieved": false,
+        "icon": "💖",
+        "note": "Tres meses de carcajadas, miradas cómplices y noches acurrucados."
+      },
+      {
+        "id": "ms-diente",
+        "title": "Primer dientecito",
+        "achieved": false,
+        "icon": "🦷",
+        "note": "Una nueva etapa llena de sonrisas traviesas."
+      },
+      {
+        "id": "ms-sienta",
+        "title": "Se sienta solita",
+        "achieved": false,
+        "icon": "🌷",
+        "note": "Conquistando nuevas posturas para jugar con mamá y papá."
+      },
+      {
+        "id": "ms-palabras",
+        "title": "Primeras palabras",
+        "achieved": false,
+        "icon": "🗣️",
+        "note": "Escuchar por primera vez mamá o papá desde tu vocecita."
+      },
+      {
+        "id": "ms-pasos",
+        "title": "Primeros pasitos",
+        "achieved": false,
+        "icon": "👣",
+        "note": "Tus pequeños pies empezando a recorrer el mundo de nuestra mano."
+      },
+      {
+        "id": "ms-ano-1",
+        "monthNumber": 12,
+        "title": "¡Primer Añito de Vaiolet!",
+        "achieved": false,
+        "icon": "🎂",
+        "note": "365 días de la aventura más hermosa de nuestras vidas."
+      }
+    ]
   },
   "timelineSection": {
     "sectionBadge": "Nuestra Historia en Recuerdos",
@@ -170,6 +275,10 @@
         "label": "Vaiolet 🌸"
       },
       {
+        "id": "cumplemes",
+        "label": "Cumplemeses 🎀"
+      },
+      {
         "id": "favoritos",
         "label": "Favoritos ⭐"
       }
@@ -194,128 +303,149 @@
         {
           "id": "mem-1-m1",
           "type": "image",
-          "url": "./media/001_2025-08-08_21-18-02.jpg",
-          "caption": "Nuestro reflejo de felicidad pura"
+          "url": "./media/001_2025-08-08_21-18-02.webp",
+          "caption": "Nuestro reflejo de felicidad pura",
+          "thumbUrl": "./media/thumbs/001_2025-08-08_21-18-02.webp"
         },
         {
           "id": "mem-1-m2",
           "type": "image",
-          "url": "./media/002_2025-08-08_21-18-02.jpg",
-          "caption": "Miradas que lo decían absolutamente todo"
+          "url": "./media/002_2025-08-08_21-18-02.webp",
+          "caption": "Miradas que lo decían absolutamente todo",
+          "thumbUrl": "./media/thumbs/002_2025-08-08_21-18-02.webp"
         },
         {
           "id": "mem-1-m3",
           "type": "image",
-          "url": "./media/003_2025-08-08_21-18-09.jpg",
-          "caption": "Abrazados al inicio de nuestra aventura"
+          "url": "./media/003_2025-08-08_21-18-09.webp",
+          "caption": "Abrazados al inicio de nuestra aventura",
+          "thumbUrl": "./media/thumbs/003_2025-08-08_21-18-09.webp"
         },
         {
           "id": "mem-1-m4",
           "type": "image",
-          "url": "./media/004_2025-08-08_21-18-11.jpg",
-          "caption": "Tu sonrisa iluminando cada instante"
+          "url": "./media/004_2025-08-08_21-18-11.webp",
+          "caption": "Tu sonrisa iluminando cada instante",
+          "thumbUrl": "./media/thumbs/004_2025-08-08_21-18-11.webp"
         },
         {
           "id": "mem-1-m5",
           "type": "image",
-          "url": "./media/005_2025-08-08_21-18-16.jpg",
-          "caption": "Juntos desde el primer momento"
+          "url": "./media/005_2025-08-08_21-18-16.webp",
+          "caption": "Juntos desde el primer momento",
+          "thumbUrl": "./media/thumbs/005_2025-08-08_21-18-16.webp"
         },
         {
           "id": "mem-1-m6",
           "type": "image",
-          "url": "./media/006_2025-08-08_21-18-18.jpg",
-          "caption": "Un beso para sellar nuestros primeros recuerdos"
+          "url": "./media/006_2025-08-08_21-18-18.webp",
+          "caption": "Un beso para sellar nuestros primeros recuerdos",
+          "thumbUrl": "./media/thumbs/006_2025-08-08_21-18-18.webp"
         },
         {
           "id": "mem-1-m7",
           "type": "image",
-          "url": "./media/007_2025-08-09_21-54-49.jpg",
-          "caption": "La ternura de tenerte cerquita"
+          "url": "./media/007_2025-08-09_21-54-49.webp",
+          "caption": "La ternura de tenerte cerquita",
+          "thumbUrl": "./media/thumbs/007_2025-08-09_21-54-49.webp"
         },
         {
           "id": "mem-1-m8",
           "type": "image",
-          "url": "./media/008_2025-08-09_21-58-02.jpg",
-          "caption": "Risas y muecas que solo nosotros entendemos"
+          "url": "./media/008_2025-08-09_21-58-02.webp",
+          "caption": "Risas y muecas que solo nosotros entendemos",
+          "thumbUrl": "./media/thumbs/008_2025-08-09_21-58-02.webp"
         },
         {
           "id": "mem-1-m9",
           "type": "image",
-          "url": "./media/009_2025-08-09_21-58-17.jpg",
-          "caption": "Cómplices bajo las luces de la noche"
+          "url": "./media/009_2025-08-09_21-58-17.webp",
+          "caption": "Cómplices bajo las luces de la noche",
+          "thumbUrl": "./media/thumbs/009_2025-08-09_21-58-17.webp"
         },
         {
           "id": "mem-1-m10",
           "type": "image",
-          "url": "./media/010_2025-08-09_21-58-35.jpg",
-          "caption": "Un beso lleno de amor en tu mejilla"
+          "url": "./media/010_2025-08-09_21-58-35.webp",
+          "caption": "Un beso lleno de amor en tu mejilla",
+          "thumbUrl": "./media/thumbs/010_2025-08-09_21-58-35.webp"
         },
         {
           "id": "mem-1-m11",
           "type": "image",
-          "url": "./media/011_2025-08-09_21-58-39.jpg",
-          "caption": "Tu sonrisa mientras te abrazo fuerte"
+          "url": "./media/011_2025-08-09_21-58-39.webp",
+          "caption": "Tu sonrisa mientras te abrazo fuerte",
+          "thumbUrl": "./media/thumbs/011_2025-08-09_21-58-39.webp"
         },
         {
           "id": "mem-1-m12",
           "type": "image",
-          "url": "./media/012_2025-08-09_21-58-42.jpg",
-          "caption": "Cada segundo a tu lado es mi lugar favorito"
+          "url": "./media/012_2025-08-09_21-58-42.webp",
+          "caption": "Cada segundo a tu lado es mi lugar favorito",
+          "thumbUrl": "./media/thumbs/012_2025-08-09_21-58-42.webp"
         },
         {
           "id": "mem-1-m13",
           "type": "image",
-          "url": "./media/013_2025-08-09_21-58-45.jpg",
-          "caption": "Locuras y sonrisas de principio a fin"
+          "url": "./media/013_2025-08-09_21-58-45.webp",
+          "caption": "Locuras y sonrisas de principio a fin",
+          "thumbUrl": "./media/thumbs/013_2025-08-09_21-58-45.webp"
         },
         {
           "id": "mem-1-m14",
           "type": "image",
-          "url": "./media/014_2025-08-09_21-59-14.jpg",
-          "caption": "Abrazándote como si el tiempo se detuviera"
+          "url": "./media/014_2025-08-09_21-59-14.webp",
+          "caption": "Abrazándote como si el tiempo se detuviera",
+          "thumbUrl": "./media/thumbs/014_2025-08-09_21-59-14.webp"
         },
         {
           "id": "mem-1-m15",
           "type": "image",
-          "url": "./media/015_2025-08-09_21-59-19.jpg",
-          "caption": "El calor de tu abrazo en nuestras primeras salidas"
+          "url": "./media/015_2025-08-09_21-59-19.webp",
+          "caption": "El calor de tu abrazo en nuestras primeras salidas",
+          "thumbUrl": "./media/thumbs/015_2025-08-09_21-59-19.webp"
         },
         {
           "id": "mem-1-m16",
           "type": "image",
-          "url": "./media/016_2025-08-09_22-05-32.jpg",
-          "caption": "Perdidos en nuestra propia burbuja de amor"
+          "url": "./media/016_2025-08-09_22-05-32.webp",
+          "caption": "Perdidos en nuestra propia burbuja de amor",
+          "thumbUrl": "./media/thumbs/016_2025-08-09_22-05-32.webp"
         },
         {
           "id": "mem-1-m17",
           "type": "image",
-          "url": "./media/017_2025-08-09_22-05-41.jpg",
-          "caption": "Un beso tierno que guardo en el alma"
+          "url": "./media/017_2025-08-09_22-05-41.webp",
+          "caption": "Un beso tierno que guardo en el alma",
+          "thumbUrl": "./media/thumbs/017_2025-08-09_22-05-41.webp"
         },
         {
           "id": "mem-1-m18",
           "type": "image",
-          "url": "./media/018_2025-08-10_13-02-13.jpg",
-          "caption": "Disfrutando el domingo juntos y enamorados"
+          "url": "./media/018_2025-08-10_13-02-13.webp",
+          "caption": "Disfrutando el domingo juntos y enamorados",
+          "thumbUrl": "./media/thumbs/018_2025-08-10_13-02-13.webp"
         },
         {
           "id": "mem-1-m19",
           "type": "image",
-          "url": "./media/019_2025-08-10_13-02-22.jpg",
-          "caption": "Tu carita pegada a la mía"
+          "url": "./media/019_2025-08-10_13-02-22.webp",
+          "caption": "Tu carita pegada a la mía",
+          "thumbUrl": "./media/thumbs/019_2025-08-10_13-02-22.webp"
         },
         {
           "id": "mem-1-m20",
           "type": "image",
-          "url": "./media/020_2025-08-10_13-02-26.jpg",
-          "caption": "La paz de estar entre tus brazos"
+          "url": "./media/020_2025-08-10_13-02-26.webp",
+          "caption": "La paz de estar entre tus brazos",
+          "thumbUrl": "./media/thumbs/020_2025-08-10_13-02-26.webp"
         },
         {
           "id": "mem-1-m21",
           "type": "image",
-          "url": "./media/021_2025-08-10_13-02-39.jpg",
-          "caption": "Cerrando un fin de semana inolvidable juntos"
+          "url": "./media/021_2025-08-10_13-02-39.webp",
+          "caption": "Cerrando un fin de semana inolvidable juntos",
+          "thumbUrl": "./media/thumbs/021_2025-08-10_13-02-39.webp"
         }
       ]
     },
@@ -337,80 +467,93 @@
         {
           "id": "mem-2-m1",
           "type": "image",
-          "url": "./media/022_2025-08-23_21-05-56.jpg",
-          "caption": "Un beso al aire libre bajo el cielo de la tarde"
+          "url": "./media/022_2025-08-23_21-05-56.webp",
+          "caption": "Un beso al aire libre bajo el cielo de la tarde",
+          "thumbUrl": "./media/thumbs/022_2025-08-23_21-05-56.webp"
         },
         {
           "id": "mem-2-m2",
           "type": "image",
-          "url": "./media/023_2025-08-23_21-07-00.jpg",
-          "caption": "Tu abrazo que me llena de paz"
+          "url": "./media/023_2025-08-23_21-07-00.webp",
+          "caption": "Tu abrazo que me llena de paz",
+          "thumbUrl": "./media/thumbs/023_2025-08-23_21-07-00.webp"
         },
         {
           "id": "mem-2-m3",
           "type": "image",
-          "url": "./media/024_2025-08-27_09-10-14.jpg",
-          "caption": "Cuidando tu sueño mientras descansas a mi lado"
+          "url": "./media/024_2025-08-27_09-10-14.webp",
+          "caption": "Cuidando tu sueño mientras descansas a mi lado",
+          "thumbUrl": "./media/thumbs/024_2025-08-27_09-10-14.webp"
         },
         {
           "id": "mem-2-m4",
           "type": "image",
-          "url": "./media/025_2025-08-27_09-10-18.jpg",
-          "caption": "Despertar y ver a la mujer más hermosa del mundo"
+          "url": "./media/025_2025-08-27_09-10-18.webp",
+          "caption": "Despertar y ver a la mujer más hermosa del mundo",
+          "thumbUrl": "./media/thumbs/025_2025-08-27_09-10-18.webp"
         },
         {
           "id": "mem-2-m5",
           "type": "image",
-          "url": "./media/026_2025-08-27_09-10-22.jpg",
-          "caption": "Acurrucados sin prisa por salir de la cama"
+          "url": "./media/026_2025-08-27_09-10-22.webp",
+          "caption": "Acurrucados sin prisa por salir de la cama",
+          "thumbUrl": "./media/thumbs/026_2025-08-27_09-10-22.webp"
         },
         {
           "id": "mem-2-m6",
           "type": "image",
-          "url": "./media/027_2025-08-27_09-10-23.jpg",
-          "caption": "La calma perfecta de nuestras mañanas"
+          "url": "./media/027_2025-08-27_09-10-23.webp",
+          "caption": "La calma perfecta de nuestras mañanas",
+          "thumbUrl": "./media/thumbs/027_2025-08-27_09-10-23.webp"
         },
         {
           "id": "mem-2-m7",
           "type": "image",
-          "url": "./media/028_2025-08-27_09-10-26.jpg",
-          "caption": "Besando tu mejilla despacito"
+          "url": "./media/028_2025-08-27_09-10-26.webp",
+          "caption": "Besando tu mejilla despacito",
+          "thumbUrl": "./media/thumbs/028_2025-08-27_09-10-26.webp"
         },
         {
           "id": "mem-2-m8",
           "type": "image",
-          "url": "./media/029_2025-08-27_09-10-27.jpg",
-          "caption": "Abrazados entre risas y pereza"
+          "url": "./media/029_2025-08-27_09-10-27.webp",
+          "caption": "Abrazados entre risas y pereza",
+          "thumbUrl": "./media/thumbs/029_2025-08-27_09-10-27.webp"
         },
         {
           "id": "mem-2-m9",
           "type": "image",
-          "url": "./media/030_2025-08-27_09-10-29.jpg",
-          "caption": "Tu piel y tu sonrisa cerquita de mí"
+          "url": "./media/030_2025-08-27_09-10-29.webp",
+          "caption": "Tu piel y tu sonrisa cerquita de mí",
+          "thumbUrl": "./media/thumbs/030_2025-08-27_09-10-29.webp"
         },
         {
           "id": "mem-2-m10",
           "type": "image",
-          "url": "./media/031_2025-08-28_23-05-10.jpg",
-          "caption": "Nuestras noches de luces cálidas y miradas tiernas"
+          "url": "./media/031_2025-08-28_23-05-10.webp",
+          "caption": "Nuestras noches de luces cálidas y miradas tiernas",
+          "thumbUrl": "./media/thumbs/031_2025-08-28_23-05-10.webp"
         },
         {
           "id": "mem-2-m11",
           "type": "image",
-          "url": "./media/032_2025-08-28_23-05-16.jpg",
-          "caption": "Siempre juntos, sin importar la hora"
+          "url": "./media/032_2025-08-28_23-05-16.webp",
+          "caption": "Siempre juntos, sin importar la hora",
+          "thumbUrl": "./media/thumbs/032_2025-08-28_23-05-16.webp"
         },
         {
           "id": "mem-2-m12",
           "type": "image",
-          "url": "./media/033_2025-08-30_15-59-05.jpg",
-          "caption": "Un abrazo frente al espejo antes de salir"
+          "url": "./media/033_2025-08-30_15-59-05.webp",
+          "caption": "Un abrazo frente al espejo antes de salir",
+          "thumbUrl": "./media/thumbs/033_2025-08-30_15-59-05.webp"
         },
         {
           "id": "mem-2-m13",
           "type": "image",
-          "url": "./media/034_2025-08-30_15-59-09.jpg",
-          "caption": "Tardes de agosto grabadas en el corazón"
+          "url": "./media/034_2025-08-30_15-59-09.webp",
+          "caption": "Tardes de agosto grabadas en el corazón",
+          "thumbUrl": "./media/thumbs/034_2025-08-30_15-59-09.webp"
         }
       ]
     },
@@ -432,62 +575,72 @@
         {
           "id": "mem-3-m1",
           "type": "image",
-          "url": "./media/035_2025-09-27_21-53-53.jpg",
-          "caption": "Tus ojitos brillando en la noche"
+          "url": "./media/035_2025-09-27_21-53-53.webp",
+          "caption": "Tus ojitos brillando en la noche",
+          "thumbUrl": "./media/thumbs/035_2025-09-27_21-53-53.webp"
         },
         {
           "id": "mem-3-m2",
           "type": "image",
-          "url": "./media/036_2025-09-27_21-53-55.jpg",
-          "caption": "Dándote mil besos mientras sonríes para la cámara"
+          "url": "./media/036_2025-09-27_21-53-55.webp",
+          "caption": "Dándote mil besos mientras sonríes para la cámara",
+          "thumbUrl": "./media/thumbs/036_2025-09-27_21-53-55.webp"
         },
         {
           "id": "mem-3-m3",
           "type": "image",
-          "url": "./media/037_2025-09-27_21-53-56.jpg",
-          "caption": "Nuestra complicidad en cada foto"
+          "url": "./media/037_2025-09-27_21-53-56.webp",
+          "caption": "Nuestra complicidad en cada foto",
+          "thumbUrl": "./media/thumbs/037_2025-09-27_21-53-56.webp"
         },
         {
           "id": "mem-3-m4",
           "type": "image",
-          "url": "./media/038_2025-09-27_22-30-25.jpg",
-          "caption": "Mirando hacia arriba, soñando el mismo futuro"
+          "url": "./media/038_2025-09-27_22-30-25.webp",
+          "caption": "Mirando hacia arriba, soñando el mismo futuro",
+          "thumbUrl": "./media/thumbs/038_2025-09-27_22-30-25.webp"
         },
         {
           "id": "mem-3-m5",
           "type": "image",
-          "url": "./media/039_2025-09-27_22-30-28.jpg",
-          "caption": "Bajo las luces de neón, tú y yo"
+          "url": "./media/039_2025-09-27_22-30-28.webp",
+          "caption": "Bajo las luces de neón, tú y yo",
+          "thumbUrl": "./media/thumbs/039_2025-09-27_22-30-28.webp"
         },
         {
           "id": "mem-3-m6",
           "type": "image",
-          "url": "./media/040_2025-09-27_22-31-36.jpg",
-          "caption": "Abrazados en medio de la noche"
+          "url": "./media/040_2025-09-27_22-31-36.webp",
+          "caption": "Abrazados en medio de la noche",
+          "thumbUrl": "./media/thumbs/040_2025-09-27_22-31-36.webp"
         },
         {
           "id": "mem-3-m7",
           "type": "image",
-          "url": "./media/041_2025-09-27_22-39-45.jpg",
-          "caption": "La pareja más feliz del universo"
+          "url": "./media/041_2025-09-27_22-39-45.webp",
+          "caption": "La pareja más feliz del universo",
+          "thumbUrl": "./media/thumbs/041_2025-09-27_22-39-45.webp"
         },
         {
           "id": "mem-3-m8",
           "type": "image",
-          "url": "./media/042_2025-09-28_21-01-00.jpg",
-          "caption": "Robándote una sonrisa con cada beso"
+          "url": "./media/042_2025-09-28_21-01-00.webp",
+          "caption": "Robándote una sonrisa con cada beso",
+          "thumbUrl": "./media/thumbs/042_2025-09-28_21-01-00.webp"
         },
         {
           "id": "mem-3-m9",
           "type": "image",
-          "url": "./media/043_2025-09-28_21-01-00.jpg",
-          "caption": "Tus gestos hermosos que me enamoran más"
+          "url": "./media/043_2025-09-28_21-01-00.webp",
+          "caption": "Tus gestos hermosos que me enamoran más",
+          "thumbUrl": "./media/thumbs/043_2025-09-28_21-01-00.webp"
         },
         {
           "id": "mem-3-m10",
           "type": "video",
           "url": "./media/044_2025-09-28_21-01-00.mp4",
-          "caption": "Video: Risas y besos que quedan para siempre"
+          "caption": "Video: Risas y besos que quedan para siempre",
+          "thumbUrl": "./media/thumbs/044_2025-09-28_21-01-00.webp"
         },
         {
           "id": "mem-3-m11",
@@ -521,38 +674,44 @@
         {
           "id": "mem-4-m1",
           "type": "image",
-          "url": "./media/047_2025-10-24_12-00-48.jpg",
-          "caption": "Abrazándote fuerte frente al espejo"
+          "url": "./media/047_2025-10-24_12-00-48.webp",
+          "caption": "Abrazándote fuerte frente al espejo",
+          "thumbUrl": "./media/thumbs/047_2025-10-24_12-00-48.webp"
         },
         {
           "id": "mem-4-m2",
           "type": "image",
-          "url": "./media/048_2025-10-24_12-00-49.jpg",
-          "caption": "Tu beso en mi mejilla mientras guardamos el momento"
+          "url": "./media/048_2025-10-24_12-00-49.webp",
+          "caption": "Tu beso en mi mejilla mientras guardamos el momento",
+          "thumbUrl": "./media/thumbs/048_2025-10-24_12-00-49.webp"
         },
         {
           "id": "mem-4-m3",
           "type": "image",
-          "url": "./media/049_2025-10-24_12-00-51.jpg",
-          "caption": "Reflejando lo mucho que nos amamos"
+          "url": "./media/049_2025-10-24_12-00-51.webp",
+          "caption": "Reflejando lo mucho que nos amamos",
+          "thumbUrl": "./media/thumbs/049_2025-10-24_12-00-51.webp"
         },
         {
           "id": "mem-4-m4",
           "type": "image",
-          "url": "./media/050_2025-10-24_12-01-31.jpg",
-          "caption": "Mi lugar seguro siempre serán tus brazos"
+          "url": "./media/050_2025-10-24_12-01-31.webp",
+          "caption": "Mi lugar seguro siempre serán tus brazos",
+          "thumbUrl": "./media/thumbs/050_2025-10-24_12-01-31.webp"
         },
         {
           "id": "mem-4-m5",
           "type": "image",
-          "url": "./media/051_2025-10-25_01-17-28.jpg",
-          "caption": "Madrugadas de amor y ternura juntos"
+          "url": "./media/051_2025-10-25_01-17-28.webp",
+          "caption": "Madrugadas de amor y ternura juntos",
+          "thumbUrl": "./media/thumbs/051_2025-10-25_01-17-28.webp"
         },
         {
           "id": "mem-4-m6",
           "type": "image",
-          "url": "./media/052_2025-10-25_01-17-44.jpg",
-          "caption": "Cuidándonos el uno al otro en cada instante"
+          "url": "./media/052_2025-10-25_01-17-44.webp",
+          "caption": "Cuidándonos el uno al otro en cada instante",
+          "thumbUrl": "./media/thumbs/052_2025-10-25_01-17-44.webp"
         }
       ]
     },
@@ -574,74 +733,86 @@
         {
           "id": "mem-5-m1",
           "type": "image",
-          "url": "./media/053_2025-11-01_16-04-02.jpg",
-          "caption": "Tarde de spa y mascarillas con un beso tuyo"
+          "url": "./media/053_2025-11-01_16-04-02.webp",
+          "caption": "Tarde de spa y mascarillas con un beso tuyo",
+          "thumbUrl": "./media/thumbs/053_2025-11-01_16-04-02.webp"
         },
         {
           "id": "mem-5-m2",
           "type": "image",
-          "url": "./media/054_2025-11-01_16-04-40.jpg",
-          "caption": "Riendo juntos con nuestras mascarillas puestas"
+          "url": "./media/054_2025-11-01_16-04-40.webp",
+          "caption": "Riendo juntos con nuestras mascarillas puestas",
+          "thumbUrl": "./media/thumbs/054_2025-11-01_16-04-40.webp"
         },
         {
           "id": "mem-5-m3",
           "type": "image",
-          "url": "./media/055_2025-11-01_16-04-51.jpg",
-          "caption": "De paseo bajo el sol de noviembre"
+          "url": "./media/055_2025-11-01_16-04-51.webp",
+          "caption": "De paseo bajo el sol de noviembre",
+          "thumbUrl": "./media/thumbs/055_2025-11-01_16-04-51.webp"
         },
         {
           "id": "mem-5-m4",
           "type": "image",
-          "url": "./media/056_2025-11-01_16-05-03.jpg",
-          "caption": "Disfrutando del camino siempre a tu lado"
+          "url": "./media/056_2025-11-01_16-05-03.webp",
+          "caption": "Disfrutando del camino siempre a tu lado",
+          "thumbUrl": "./media/thumbs/056_2025-11-01_16-05-03.webp"
         },
         {
           "id": "mem-5-m5",
           "type": "image",
-          "url": "./media/057_2025-11-01_16-05-11.jpg",
-          "caption": "Un beso en medio de nuestra salida"
+          "url": "./media/057_2025-11-01_16-05-11.webp",
+          "caption": "Un beso en medio de nuestra salida",
+          "thumbUrl": "./media/thumbs/057_2025-11-01_16-05-11.webp"
         },
         {
           "id": "mem-5-m6",
           "type": "image",
-          "url": "./media/058_2025-11-16_18-02-37.jpg",
-          "caption": "Luciendo nuestros colores y nuestro amor"
+          "url": "./media/058_2025-11-16_18-02-37.webp",
+          "caption": "Luciendo nuestros colores y nuestro amor",
+          "thumbUrl": "./media/thumbs/058_2025-11-16_18-02-37.webp"
         },
         {
           "id": "mem-5-m7",
           "type": "image",
-          "url": "./media/059_2025-11-16_18-02-51.jpg",
-          "caption": "Un beso tierno en tu mejilla"
+          "url": "./media/059_2025-11-16_18-02-51.webp",
+          "caption": "Un beso tierno en tu mejilla",
+          "thumbUrl": "./media/thumbs/059_2025-11-16_18-02-51.webp"
         },
         {
           "id": "mem-5-m8",
           "type": "image",
-          "url": "./media/060_2025-11-16_18-05-17.jpg",
-          "caption": "Cabeza con cabeza, corazón con corazón"
+          "url": "./media/060_2025-11-16_18-05-17.webp",
+          "caption": "Cabeza con cabeza, corazón con corazón",
+          "thumbUrl": "./media/thumbs/060_2025-11-16_18-05-17.webp"
         },
         {
           "id": "mem-5-m9",
           "type": "image",
-          "url": "./media/061_2025-11-16_18-05-25.jpg",
-          "caption": "Abrazados y felices en cada rincón"
+          "url": "./media/061_2025-11-16_18-05-25.webp",
+          "caption": "Abrazados y felices en cada rincón",
+          "thumbUrl": "./media/thumbs/061_2025-11-16_18-05-25.webp"
         },
         {
           "id": "mem-5-m10",
           "type": "image",
-          "url": "./media/062_2025-11-16_18-05-57.jpg",
-          "caption": "Compartiendo la tarde con alegría"
+          "url": "./media/062_2025-11-16_18-05-57.webp",
+          "caption": "Compartiendo la tarde con alegría",
+          "thumbUrl": "./media/thumbs/062_2025-11-16_18-05-57.webp"
         },
         {
           "id": "mem-5-m11",
           "type": "image",
-          "url": "./media/063_2025-11-16_18-06-40.jpg",
-          "caption": "Sonrisas que iluminan el día entero"
+          "url": "./media/063_2025-11-16_18-06-40.webp",
+          "caption": "Sonrisas que iluminan el día entero",
+          "thumbUrl": "./media/thumbs/063_2025-11-16_18-06-40.webp"
         },
         {
           "id": "mem-5-m12",
           "type": "image",
-          "url": "./media/064_2025-11-16_18-08-24.jpg",
-          "caption": "Siempre orgulloso de caminar de tu mano"
+          "url": "./media/064_2025-11-16_18-08-24.webp",
+          "caption": "Siempre orgulloso de caminar de tu mano",
+          "thumbUrl": "./media/thumbs/064_2025-11-16_18-08-24.webp"
         },
         {
           "id": "mem-5-m13",
@@ -669,50 +840,58 @@
         {
           "id": "mem-6-m1",
           "type": "image",
-          "url": "./media/066_2025-12-31_22-30-23.jpg",
-          "caption": "Nuestra primera foto de Nochevieja frente al espejo"
+          "url": "./media/066_2025-12-31_22-30-23.webp",
+          "caption": "Nuestra primera foto de Nochevieja frente al espejo",
+          "thumbUrl": "./media/thumbs/066_2025-12-31_22-30-23.webp"
         },
         {
           "id": "mem-6-m2",
           "type": "image",
-          "url": "./media/067_2025-12-31_22-30-24.jpg",
-          "caption": "Abrazados despidiendo el año que nos unió"
+          "url": "./media/067_2025-12-31_22-30-24.webp",
+          "caption": "Abrazados despidiendo el año que nos unió",
+          "thumbUrl": "./media/thumbs/067_2025-12-31_22-30-24.webp"
         },
         {
           "id": "mem-6-m3",
           "type": "image",
-          "url": "./media/068_2025-12-31_22-30-25.jpg",
-          "caption": "Tu sonrisa radiante antes de las doce"
+          "url": "./media/068_2025-12-31_22-30-25.webp",
+          "caption": "Tu sonrisa radiante antes de las doce",
+          "thumbUrl": "./media/thumbs/068_2025-12-31_22-30-25.webp"
         },
         {
           "id": "mem-6-m4",
           "type": "image",
-          "url": "./media/069_2025-12-31_22-31-11.jpg",
-          "caption": "Tomando tu rostro con todo el amor del mundo"
+          "url": "./media/069_2025-12-31_22-31-11.webp",
+          "caption": "Tomando tu rostro con todo el amor del mundo",
+          "thumbUrl": "./media/thumbs/069_2025-12-31_22-31-11.webp"
         },
         {
           "id": "mem-6-m5",
           "type": "image",
-          "url": "./media/070_2025-12-31_22-31-16.jpg",
-          "caption": "Mirándonos con la ilusión de todo lo que vendría"
+          "url": "./media/070_2025-12-31_22-31-16.webp",
+          "caption": "Mirándonos con la ilusión de todo lo que vendría",
+          "thumbUrl": "./media/thumbs/070_2025-12-31_22-31-16.webp"
         },
         {
           "id": "mem-6-m6",
           "type": "image",
-          "url": "./media/071_2025-12-31_22-31-32.jpg",
-          "caption": "Felices y agradecidos por tenernos"
+          "url": "./media/071_2025-12-31_22-31-32.webp",
+          "caption": "Felices y agradecidos por tenernos",
+          "thumbUrl": "./media/thumbs/071_2025-12-31_22-31-32.webp"
         },
         {
           "id": "mem-6-m7",
           "type": "image",
-          "url": "./media/072_2025-12-31_22-32-25.jpg",
-          "caption": "Dos corazones listos para recibir el 2026"
+          "url": "./media/072_2025-12-31_22-32-25.webp",
+          "caption": "Dos corazones listos para recibir el 2026",
+          "thumbUrl": "./media/thumbs/072_2025-12-31_22-32-25.webp"
         },
         {
           "id": "mem-6-m8",
           "type": "image",
-          "url": "./media/073_2025-12-31_22-38-21.jpg",
-          "caption": "El inicio del año más bendecido de nuestras vidas"
+          "url": "./media/073_2025-12-31_22-38-21.webp",
+          "caption": "El inicio del año más bendecido de nuestras vidas",
+          "thumbUrl": "./media/thumbs/073_2025-12-31_22-38-21.webp"
         }
       ]
     },
@@ -734,32 +913,37 @@
         {
           "id": "mem-7-m1",
           "type": "image",
-          "url": "./media/074_2026-01-07_22-34-07.jpg",
-          "caption": "Empezando enero con tu dulzura sobre mi hombro"
+          "url": "./media/074_2026-01-07_22-34-07.webp",
+          "caption": "Empezando enero con tu dulzura sobre mi hombro",
+          "thumbUrl": "./media/thumbs/074_2026-01-07_22-34-07.webp"
         },
         {
           "id": "mem-7-m2",
           "type": "image",
-          "url": "./media/075_2026-01-24_22-55-50.jpg",
-          "caption": "Paseos nocturnos compartiendo nuestros sueños"
+          "url": "./media/075_2026-01-24_22-55-50.webp",
+          "caption": "Paseos nocturnos compartiendo nuestros sueños",
+          "thumbUrl": "./media/thumbs/075_2026-01-24_22-55-50.webp"
         },
         {
           "id": "mem-7-m3",
           "type": "image",
-          "url": "./media/076_2026-03-03_07-57-42.jpg",
-          "caption": "Maicol, Vanessa y buenas compañías en el camino"
+          "url": "./media/076_2026-03-03_07-57-42.webp",
+          "caption": "Maicol, Vanessa y buenas compañías en el camino",
+          "thumbUrl": "./media/thumbs/076_2026-03-03_07-57-42.webp"
         },
         {
           "id": "mem-7-m4",
           "type": "image",
-          "url": "./media/077_2026-03-03_07-58-06.jpg",
-          "caption": "Desayunando y compartiendo cada mañana juntos"
+          "url": "./media/077_2026-03-03_07-58-06.webp",
+          "caption": "Desayunando y compartiendo cada mañana juntos",
+          "thumbUrl": "./media/thumbs/077_2026-03-03_07-58-06.webp"
         },
         {
           "id": "mem-7-m5",
           "type": "image",
-          "url": "./media/078_2026-05-17_20-11-47.jpg",
-          "caption": "Guardando cada instante de esta etapa tan especial"
+          "url": "./media/078_2026-05-17_20-11-47.webp",
+          "caption": "Guardando cada instante de esta etapa tan especial",
+          "thumbUrl": "./media/thumbs/078_2026-05-17_20-11-47.webp"
         }
       ]
     },
@@ -781,68 +965,79 @@
         {
           "id": "mem-8-m1",
           "type": "image",
-          "url": "./media/079_2026-06-19_13-04-38.jpg",
-          "caption": "Tus ojos hermosos mirándome de cerca"
+          "url": "./media/079_2026-06-19_13-04-38.webp",
+          "caption": "Tus ojos hermosos mirándome de cerca",
+          "thumbUrl": "./media/thumbs/079_2026-06-19_13-04-38.webp"
         },
         {
           "id": "mem-8-m2",
           "type": "image",
-          "url": "./media/080_2026-06-19_13-04-42.jpg",
-          "caption": "Intentando no reírnos mientras tomamos la foto"
+          "url": "./media/080_2026-06-19_13-04-42.webp",
+          "caption": "Intentando no reírnos mientras tomamos la foto",
+          "thumbUrl": "./media/thumbs/080_2026-06-19_13-04-42.webp"
         },
         {
           "id": "mem-8-m3",
           "type": "image",
-          "url": "./media/081_2026-06-19_13-04-51.jpg",
-          "caption": "Tapándote la carita entre carcajadas"
+          "url": "./media/081_2026-06-19_13-04-51.webp",
+          "caption": "Tapándote la carita entre carcajadas",
+          "thumbUrl": "./media/thumbs/081_2026-06-19_13-04-51.webp"
         },
         {
           "id": "mem-8-m4",
           "type": "image",
-          "url": "./media/082_2026-06-19_13-04-54.jpg",
-          "caption": "Abrazándote y haciéndote cosquillas"
+          "url": "./media/082_2026-06-19_13-04-54.webp",
+          "caption": "Abrazándote y haciéndote cosquillas",
+          "thumbUrl": "./media/thumbs/082_2026-06-19_13-04-54.webp"
         },
         {
           "id": "mem-8-m5",
           "type": "image",
-          "url": "./media/083_2026-06-19_13-07-18.jpg",
-          "caption": "Tu sonrisa que alegra todos mis días"
+          "url": "./media/083_2026-06-19_13-07-18.webp",
+          "caption": "Tu sonrisa que alegra todos mis días",
+          "thumbUrl": "./media/thumbs/083_2026-06-19_13-07-18.webp"
         },
         {
           "id": "mem-8-m6",
           "type": "image",
-          "url": "./media/084_2026-06-19_13-07-21.jpg",
-          "caption": "Jugando como niños en nuestra cama"
+          "url": "./media/084_2026-06-19_13-07-21.webp",
+          "caption": "Jugando como niños en nuestra cama",
+          "thumbUrl": "./media/thumbs/084_2026-06-19_13-07-21.webp"
         },
         {
           "id": "mem-8-m7",
           "type": "image",
-          "url": "./media/085_2026-06-19_13-07-27.jpg",
-          "caption": "Miradas llenas de complicidad y ternura"
+          "url": "./media/085_2026-06-19_13-07-27.webp",
+          "caption": "Miradas llenas de complicidad y ternura",
+          "thumbUrl": "./media/thumbs/085_2026-06-19_13-07-27.webp"
         },
         {
           "id": "mem-8-m8",
           "type": "image",
-          "url": "./media/086_2026-06-19_13-07-31.jpg",
-          "caption": "Siempre juntos, cuidándote en cada momento"
+          "url": "./media/086_2026-06-19_13-07-31.webp",
+          "caption": "Siempre juntos, cuidándote en cada momento",
+          "thumbUrl": "./media/thumbs/086_2026-06-19_13-07-31.webp"
         },
         {
           "id": "mem-8-m9",
           "type": "image",
-          "url": "./media/087_2026-06-19_13-07-34.jpg",
-          "caption": "La felicidad de nuestro hogar en una imagen"
+          "url": "./media/087_2026-06-19_13-07-34.webp",
+          "caption": "La felicidad de nuestro hogar en una imagen",
+          "thumbUrl": "./media/thumbs/087_2026-06-19_13-07-34.webp"
         },
         {
           "id": "mem-8-m10",
           "type": "video",
           "url": "./media/088_2026-06-22_11-33-26.mp4",
-          "caption": "Video: Un momento lleno de risas y amor"
+          "caption": "Video: Un momento lleno de risas y amor",
+          "thumbUrl": "./media/thumbs/088_2026-06-22_11-33-26.webp"
         },
         {
           "id": "mem-8-m11",
           "type": "video",
           "url": "./media/089_2026-06-22_11-41-46.mp4",
-          "caption": "Video: La alegría de esperar juntos a nuestra bebé"
+          "caption": "Video: La alegría de esperar juntos a nuestra bebé",
+          "thumbUrl": "./media/thumbs/089_2026-06-22_11-41-46.webp"
         }
       ]
     },
@@ -865,242 +1060,282 @@
         {
           "id": "mem-eco-m1",
           "type": "image",
-          "url": "./media/ecografias/eco_01.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #01"
+          "url": "./media/ecografias/eco_01.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #01",
+          "thumbUrl": "./media/thumbs/ecografias/eco_01.webp"
         },
         {
           "id": "mem-eco-m2",
           "type": "image",
-          "url": "./media/ecografias/eco_02.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #02"
+          "url": "./media/ecografias/eco_02.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #02",
+          "thumbUrl": "./media/thumbs/ecografias/eco_02.webp"
         },
         {
           "id": "mem-eco-m3",
           "type": "image",
-          "url": "./media/ecografias/eco_03.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #03"
+          "url": "./media/ecografias/eco_03.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #03",
+          "thumbUrl": "./media/thumbs/ecografias/eco_03.webp"
         },
         {
           "id": "mem-eco-m4",
           "type": "image",
-          "url": "./media/ecografias/eco_04.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #04"
+          "url": "./media/ecografias/eco_04.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #04",
+          "thumbUrl": "./media/thumbs/ecografias/eco_04.webp"
         },
         {
           "id": "mem-eco-m5",
           "type": "image",
-          "url": "./media/ecografias/eco_05.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #05"
+          "url": "./media/ecografias/eco_05.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #05",
+          "thumbUrl": "./media/thumbs/ecografias/eco_05.webp"
         },
         {
           "id": "mem-eco-m6",
           "type": "image",
-          "url": "./media/ecografias/eco_06.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #06"
+          "url": "./media/ecografias/eco_06.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #06",
+          "thumbUrl": "./media/thumbs/ecografias/eco_06.webp"
         },
         {
           "id": "mem-eco-m7",
           "type": "image",
-          "url": "./media/ecografias/eco_07.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #07"
+          "url": "./media/ecografias/eco_07.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #07",
+          "thumbUrl": "./media/thumbs/ecografias/eco_07.webp"
         },
         {
           "id": "mem-eco-m8",
           "type": "image",
-          "url": "./media/ecografias/eco_08.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #08"
+          "url": "./media/ecografias/eco_08.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #08",
+          "thumbUrl": "./media/thumbs/ecografias/eco_08.webp"
         },
         {
           "id": "mem-eco-m9",
           "type": "image",
-          "url": "./media/ecografias/eco_09.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #09"
+          "url": "./media/ecografias/eco_09.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #09",
+          "thumbUrl": "./media/thumbs/ecografias/eco_09.webp"
         },
         {
           "id": "mem-eco-m10",
           "type": "image",
-          "url": "./media/ecografias/eco_10.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #10"
+          "url": "./media/ecografias/eco_10.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #10",
+          "thumbUrl": "./media/thumbs/ecografias/eco_10.webp"
         },
         {
           "id": "mem-eco-m11",
           "type": "image",
-          "url": "./media/ecografias/eco_11.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #11"
+          "url": "./media/ecografias/eco_11.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #11",
+          "thumbUrl": "./media/thumbs/ecografias/eco_11.webp"
         },
         {
           "id": "mem-eco-m12",
           "type": "image",
-          "url": "./media/ecografias/eco_12.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #12"
+          "url": "./media/ecografias/eco_12.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #12",
+          "thumbUrl": "./media/thumbs/ecografias/eco_12.webp"
         },
         {
           "id": "mem-eco-m13",
           "type": "image",
-          "url": "./media/ecografias/eco_13.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #13"
+          "url": "./media/ecografias/eco_13.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #13",
+          "thumbUrl": "./media/thumbs/ecografias/eco_13.webp"
         },
         {
           "id": "mem-eco-m14",
           "type": "image",
-          "url": "./media/ecografias/eco_14.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #14"
+          "url": "./media/ecografias/eco_14.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #14",
+          "thumbUrl": "./media/thumbs/ecografias/eco_14.webp"
         },
         {
           "id": "mem-eco-m15",
           "type": "image",
-          "url": "./media/ecografias/eco_15.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #15"
+          "url": "./media/ecografias/eco_15.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #15",
+          "thumbUrl": "./media/thumbs/ecografias/eco_15.webp"
         },
         {
           "id": "mem-eco-m16",
           "type": "image",
-          "url": "./media/ecografias/eco_16.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #16"
+          "url": "./media/ecografias/eco_16.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #16",
+          "thumbUrl": "./media/thumbs/ecografias/eco_16.webp"
         },
         {
           "id": "mem-eco-m17",
           "type": "image",
-          "url": "./media/ecografias/eco_17.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #17"
+          "url": "./media/ecografias/eco_17.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #17",
+          "thumbUrl": "./media/thumbs/ecografias/eco_17.webp"
         },
         {
           "id": "mem-eco-m18",
           "type": "image",
-          "url": "./media/ecografias/eco_18.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #18"
+          "url": "./media/ecografias/eco_18.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #18",
+          "thumbUrl": "./media/thumbs/ecografias/eco_18.webp"
         },
         {
           "id": "mem-eco-m19",
           "type": "image",
-          "url": "./media/ecografias/eco_19.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #19"
+          "url": "./media/ecografias/eco_19.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #19",
+          "thumbUrl": "./media/thumbs/ecografias/eco_19.webp"
         },
         {
           "id": "mem-eco-m20",
           "type": "image",
-          "url": "./media/ecografias/eco_20.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #20"
+          "url": "./media/ecografias/eco_20.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #20",
+          "thumbUrl": "./media/thumbs/ecografias/eco_20.webp"
         },
         {
           "id": "mem-eco-m21",
           "type": "image",
-          "url": "./media/ecografias/eco_21.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #21"
+          "url": "./media/ecografias/eco_21.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #21",
+          "thumbUrl": "./media/thumbs/ecografias/eco_21.webp"
         },
         {
           "id": "mem-eco-m22",
           "type": "image",
-          "url": "./media/ecografias/eco_22.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #22"
+          "url": "./media/ecografias/eco_22.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #22",
+          "thumbUrl": "./media/thumbs/ecografias/eco_22.webp"
         },
         {
           "id": "mem-eco-m23",
           "type": "image",
-          "url": "./media/ecografias/eco_23.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #23"
+          "url": "./media/ecografias/eco_23.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #23",
+          "thumbUrl": "./media/thumbs/ecografias/eco_23.webp"
         },
         {
           "id": "mem-eco-m24",
           "type": "image",
-          "url": "./media/ecografias/eco_24.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #24"
+          "url": "./media/ecografias/eco_24.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #24",
+          "thumbUrl": "./media/thumbs/ecografias/eco_24.webp"
         },
         {
           "id": "mem-eco-m25",
           "type": "image",
-          "url": "./media/ecografias/eco_25.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #25"
+          "url": "./media/ecografias/eco_25.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #25",
+          "thumbUrl": "./media/thumbs/ecografias/eco_25.webp"
         },
         {
           "id": "mem-eco-m26",
           "type": "image",
-          "url": "./media/ecografias/eco_26.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #26"
+          "url": "./media/ecografias/eco_26.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #26",
+          "thumbUrl": "./media/thumbs/ecografias/eco_26.webp"
         },
         {
           "id": "mem-eco-m27",
           "type": "image",
-          "url": "./media/ecografias/eco_27.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #27"
+          "url": "./media/ecografias/eco_27.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #27",
+          "thumbUrl": "./media/thumbs/ecografias/eco_27.webp"
         },
         {
           "id": "mem-eco-m28",
           "type": "image",
-          "url": "./media/ecografias/eco_28.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #28"
+          "url": "./media/ecografias/eco_28.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #28",
+          "thumbUrl": "./media/thumbs/ecografias/eco_28.webp"
         },
         {
           "id": "mem-eco-m29",
           "type": "image",
-          "url": "./media/ecografias/eco_29.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #29"
+          "url": "./media/ecografias/eco_29.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #29",
+          "thumbUrl": "./media/thumbs/ecografias/eco_29.webp"
         },
         {
           "id": "mem-eco-m30",
           "type": "image",
-          "url": "./media/ecografias/eco_30.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #30"
+          "url": "./media/ecografias/eco_30.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #30",
+          "thumbUrl": "./media/thumbs/ecografias/eco_30.webp"
         },
         {
           "id": "mem-eco-m31",
           "type": "image",
-          "url": "./media/ecografias/eco_31.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #31"
+          "url": "./media/ecografias/eco_31.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #31",
+          "thumbUrl": "./media/thumbs/ecografias/eco_31.webp"
         },
         {
           "id": "mem-eco-m32",
           "type": "image",
-          "url": "./media/ecografias/eco_32.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #32"
+          "url": "./media/ecografias/eco_32.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #32",
+          "thumbUrl": "./media/thumbs/ecografias/eco_32.webp"
         },
         {
           "id": "mem-eco-m33",
           "type": "image",
-          "url": "./media/ecografias/eco_33.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #33"
+          "url": "./media/ecografias/eco_33.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #33",
+          "thumbUrl": "./media/thumbs/ecografias/eco_33.webp"
         },
         {
           "id": "mem-eco-m34",
           "type": "image",
-          "url": "./media/ecografias/eco_34.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #34"
+          "url": "./media/ecografias/eco_34.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #34",
+          "thumbUrl": "./media/thumbs/ecografias/eco_34.webp"
         },
         {
           "id": "mem-eco-m35",
           "type": "image",
-          "url": "./media/ecografias/eco_35.jpg",
-          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #35"
+          "url": "./media/ecografias/eco_35.webp",
+          "caption": "Ecografía obstétrica de Vaiolet: Fotograma #35",
+          "thumbUrl": "./media/thumbs/ecografias/eco_35.webp"
         },
         {
           "id": "mem-eco-m36",
           "type": "image",
-          "url": "./media/ecografias/eco_36.jpg",
-          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (36)"
+          "url": "./media/ecografias/eco_36.webp",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (36)",
+          "thumbUrl": "./media/thumbs/ecografias/eco_36.webp"
         },
         {
           "id": "mem-eco-m37",
           "type": "image",
-          "url": "./media/ecografias/eco_37.jpg",
-          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (37)"
+          "url": "./media/ecografias/eco_37.webp",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (37)",
+          "thumbUrl": "./media/thumbs/ecografias/eco_37.webp"
         },
         {
           "id": "mem-eco-m38",
           "type": "image",
-          "url": "./media/ecografias/eco_38.jpg",
-          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (38)"
+          "url": "./media/ecografias/eco_38.webp",
+          "caption": "Mamá Vanessa en la consulta médica durante la ecografía (38)",
+          "thumbUrl": "./media/thumbs/ecografias/eco_38.webp"
         },
         {
           "id": "mem-eco-m39",
           "type": "image",
-          "url": "./media/ecografias/eco_39.jpg",
-          "caption": "Primer test de embarazo positivo: El inicio del milagro (17 mar 2026)"
+          "url": "./media/ecografias/eco_39.webp",
+          "caption": "Primer test de embarazo positivo: El inicio del milagro (17 mar 2026)",
+          "thumbUrl": "./media/thumbs/ecografias/eco_39.webp"
         },
         {
           "id": "mem-eco-m40",
           "type": "image",
-          "url": "./media/ecografias/eco_40.jpg",
-          "caption": "Acariciando la barriguita donde crece nuestra princesa Vaiolet"
+          "url": "./media/ecografias/eco_40.webp",
+          "caption": "Acariciando la barriguita donde crece nuestra princesa Vaiolet",
+          "thumbUrl": "./media/thumbs/ecografias/eco_40.webp"
         }
       ]
     },
@@ -1122,158 +1357,184 @@
         {
           "id": "mem-9-m1",
           "type": "image",
-          "url": "./media/090_2026-07-02_23-41-39.jpg",
-          "caption": "Papá dándole el primer beso de la noche a Vaiolet"
+          "url": "./media/090_2026-07-02_23-41-39.webp",
+          "caption": "Papá dándole el primer beso de la noche a Vaiolet",
+          "thumbUrl": "./media/thumbs/090_2026-07-02_23-41-39.webp"
         },
         {
           "id": "mem-9-m2",
           "type": "image",
-          "url": "./media/091_2026-07-02_23-41-41.jpg",
-          "caption": "Sintiendo tus pataditas desde afuera, mi princesa"
+          "url": "./media/091_2026-07-02_23-41-41.webp",
+          "caption": "Sintiendo tus pataditas desde afuera, mi princesa",
+          "thumbUrl": "./media/thumbs/091_2026-07-02_23-41-41.webp"
         },
         {
           "id": "mem-9-m3",
           "type": "image",
-          "url": "./media/092_2026-07-02_23-41-43.jpg",
-          "caption": "Besando la barriguita donde crece nuestro mayor tesoro"
+          "url": "./media/092_2026-07-02_23-41-43.webp",
+          "caption": "Besando la barriguita donde crece nuestro mayor tesoro",
+          "thumbUrl": "./media/thumbs/092_2026-07-02_23-41-43.webp"
         },
         {
           "id": "mem-9-m4",
           "type": "image",
-          "url": "./media/093_2026-07-02_23-41-45.jpg",
-          "caption": "Escuchando el latido de nuestro futuro juntos"
+          "url": "./media/093_2026-07-02_23-41-45.webp",
+          "caption": "Escuchando el latido de nuestro futuro juntos",
+          "thumbUrl": "./media/thumbs/093_2026-07-02_23-41-45.webp"
         },
         {
           "id": "mem-9-m5",
           "type": "image",
-          "url": "./media/094_2026-07-02_23-41-46.jpg",
-          "caption": "Acurrucados los tres en nuestra cama"
+          "url": "./media/094_2026-07-02_23-41-46.webp",
+          "caption": "Acurrucados los tres en nuestra cama",
+          "thumbUrl": "./media/thumbs/094_2026-07-02_23-41-46.webp"
         },
         {
           "id": "mem-9-m6",
           "type": "image",
-          "url": "./media/095_2026-07-02_23-41-47.jpg",
-          "caption": "Vanessa escondiendo la risa entre mis brazos"
+          "url": "./media/095_2026-07-02_23-41-47.webp",
+          "caption": "Vanessa escondiendo la risa entre mis brazos",
+          "thumbUrl": "./media/thumbs/095_2026-07-02_23-41-47.webp"
         },
         {
           "id": "mem-9-m7",
           "type": "image",
-          "url": "./media/096_2026-07-02_23-41-47.jpg",
-          "caption": "Abrazando a las dos mujeres de mi vida"
+          "url": "./media/096_2026-07-02_23-41-47.webp",
+          "caption": "Abrazando a las dos mujeres de mi vida",
+          "thumbUrl": "./media/thumbs/096_2026-07-02_23-41-47.webp"
         },
         {
           "id": "mem-9-m8",
           "type": "image",
-          "url": "./media/097_2026-07-02_23-41-48.jpg",
-          "caption": "Susurrándote cuánto te amamos"
+          "url": "./media/097_2026-07-02_23-41-48.webp",
+          "caption": "Susurrándote cuánto te amamos",
+          "thumbUrl": "./media/thumbs/097_2026-07-02_23-41-48.webp"
         },
         {
           "id": "mem-9-m9",
           "type": "image",
-          "url": "./media/098_2026-07-02_23-41-49.jpg",
-          "caption": "Tus manos y las mías en un solo abrazo"
+          "url": "./media/098_2026-07-02_23-41-49.webp",
+          "caption": "Tus manos y las mías en un solo abrazo",
+          "thumbUrl": "./media/thumbs/098_2026-07-02_23-41-49.webp"
         },
         {
           "id": "mem-9-m10",
           "type": "image",
-          "url": "./media/099_2026-07-02_23-41-50.jpg",
-          "caption": "La paz de tenerlas a las dos conmigo"
+          "url": "./media/099_2026-07-02_23-41-50.webp",
+          "caption": "La paz de tenerlas a las dos conmigo",
+          "thumbUrl": "./media/thumbs/099_2026-07-02_23-41-50.webp"
         },
         {
           "id": "mem-9-m11",
           "type": "image",
-          "url": "./media/100_2026-07-02_23-41-50.jpg",
-          "caption": "Entre risas y caricias a medianoche"
+          "url": "./media/100_2026-07-02_23-41-50.webp",
+          "caption": "Entre risas y caricias a medianoche",
+          "thumbUrl": "./media/thumbs/100_2026-07-02_23-41-50.webp"
         },
         {
           "id": "mem-9-m12",
           "type": "image",
-          "url": "./media/101_2026-07-02_23-41-51.jpg",
-          "caption": "Tu rostro iluminado por la maternidad"
+          "url": "./media/101_2026-07-02_23-41-51.webp",
+          "caption": "Tu rostro iluminado por la maternidad",
+          "thumbUrl": "./media/thumbs/101_2026-07-02_23-41-51.webp"
         },
         {
           "id": "mem-9-m13",
           "type": "image",
-          "url": "./media/102_2026-07-02_23-41-52.jpg",
-          "caption": "Cada gesto tuyo me enamora más"
+          "url": "./media/102_2026-07-02_23-41-52.webp",
+          "caption": "Cada gesto tuyo me enamora más",
+          "thumbUrl": "./media/thumbs/102_2026-07-02_23-41-52.webp"
         },
         {
           "id": "mem-9-m14",
           "type": "image",
-          "url": "./media/103_2026-07-02_23-41-56.jpg",
-          "caption": "Riendo sin parar juntos en la cama"
+          "url": "./media/103_2026-07-02_23-41-56.webp",
+          "caption": "Riendo sin parar juntos en la cama",
+          "thumbUrl": "./media/thumbs/103_2026-07-02_23-41-56.webp"
         },
         {
           "id": "mem-9-m15",
           "type": "image",
-          "url": "./media/104_2026-07-02_23-41-56.jpg",
-          "caption": "Cuidando el sueño de mamá y de Vaiolet"
+          "url": "./media/104_2026-07-02_23-41-56.webp",
+          "caption": "Cuidando el sueño de mamá y de Vaiolet",
+          "thumbUrl": "./media/thumbs/104_2026-07-02_23-41-56.webp"
         },
         {
           "id": "mem-9-m16",
           "type": "image",
-          "url": "./media/105_2026-07-02_23-41-57.jpg",
-          "caption": "Más unidos y enamorados que el primer día"
+          "url": "./media/105_2026-07-02_23-41-57.webp",
+          "caption": "Más unidos y enamorados que el primer día",
+          "thumbUrl": "./media/thumbs/105_2026-07-02_23-41-57.webp"
         },
         {
           "id": "mem-9-m17",
           "type": "image",
-          "url": "./media/106_2026-07-02_23-41-58.jpg",
-          "caption": "Nuestras noches favoritas hablando de cuando nazcas"
+          "url": "./media/106_2026-07-02_23-41-58.webp",
+          "caption": "Nuestras noches favoritas hablando de cuando nazcas",
+          "thumbUrl": "./media/thumbs/106_2026-07-02_23-41-58.webp"
         },
         {
           "id": "mem-9-m18",
           "type": "image",
-          "url": "./media/107_2026-07-02_23-41-58.jpg",
-          "caption": "Abrazos que curan cualquier cansancio"
+          "url": "./media/107_2026-07-02_23-41-58.webp",
+          "caption": "Abrazos que curan cualquier cansancio",
+          "thumbUrl": "./media/thumbs/107_2026-07-02_23-41-58.webp"
         },
         {
           "id": "mem-9-m19",
           "type": "image",
-          "url": "./media/108_2026-07-02_23-42-09.jpg",
-          "caption": "Papá completamente enamorado de la pancita"
+          "url": "./media/108_2026-07-02_23-42-09.webp",
+          "caption": "Papá completamente enamorado de la pancita",
+          "thumbUrl": "./media/thumbs/108_2026-07-02_23-42-09.webp"
         },
         {
           "id": "mem-9-m20",
           "type": "image",
-          "url": "./media/109_2026-07-02_23-42-10.jpg",
-          "caption": "Un beso lleno de promesas para nuestra hija"
+          "url": "./media/109_2026-07-02_23-42-10.webp",
+          "caption": "Un beso lleno de promesas para nuestra hija",
+          "thumbUrl": "./media/thumbs/109_2026-07-02_23-42-10.webp"
         },
         {
           "id": "mem-9-m21",
           "type": "image",
-          "url": "./media/110_2026-07-02_23-42-12.jpg",
-          "caption": "Acariciando tu vientre con infinita ternura"
+          "url": "./media/110_2026-07-02_23-42-12.webp",
+          "caption": "Acariciando tu vientre con infinita ternura",
+          "thumbUrl": "./media/thumbs/110_2026-07-02_23-42-12.webp"
         },
         {
           "id": "mem-9-m22",
           "type": "image",
-          "url": "./media/111_2026-07-02_23-42-13.jpg",
-          "caption": "Tres corazones latiendo al mismo ritmo"
+          "url": "./media/111_2026-07-02_23-42-13.webp",
+          "caption": "Tres corazones latiendo al mismo ritmo",
+          "thumbUrl": "./media/thumbs/111_2026-07-02_23-42-13.webp"
         },
         {
           "id": "mem-9-m23",
           "type": "image",
-          "url": "./media/112_2026-07-02_23-42-14.jpg",
-          "caption": "La sonrisa más tierna de mamá"
+          "url": "./media/112_2026-07-02_23-42-14.webp",
+          "caption": "La sonrisa más tierna de mamá",
+          "thumbUrl": "./media/thumbs/112_2026-07-02_23-42-14.webp"
         },
         {
           "id": "mem-9-m24",
           "type": "image",
-          "url": "./media/113_2026-07-02_23-42-17.jpg",
-          "caption": "Cobijados por el amor de nuestra familia"
+          "url": "./media/113_2026-07-02_23-42-17.webp",
+          "caption": "Cobijados por el amor de nuestra familia",
+          "thumbUrl": "./media/thumbs/113_2026-07-02_23-42-17.webp"
         },
         {
           "id": "mem-9-m25",
           "type": "image",
-          "url": "./media/114_2026-07-02_23-42-18.jpg",
-          "caption": "Mirándote con admiración por dar vida a Vaiolet"
+          "url": "./media/114_2026-07-02_23-42-18.webp",
+          "caption": "Mirándote con admiración por dar vida a Vaiolet",
+          "thumbUrl": "./media/thumbs/114_2026-07-02_23-42-18.webp"
         },
         {
           "id": "mem-9-m26",
           "type": "image",
-          "url": "./media/115_2026-07-02_23-42-19.jpg",
-          "caption": "Cerrando una noche mágica los tres juntos"
+          "url": "./media/115_2026-07-02_23-42-19.webp",
+          "caption": "Cerrando una noche mágica los tres juntos",
+          "thumbUrl": "./media/thumbs/115_2026-07-02_23-42-19.webp"
         }
       ]
     },
@@ -1295,38 +1556,44 @@
         {
           "id": "mem-10-m1",
           "type": "image",
-          "url": "./media/116_2026-08-12_10-36-25.jpg",
-          "caption": "Descansando juntos bajo nuestra luz favorita"
+          "url": "./media/116_2026-08-12_10-36-25.webp",
+          "caption": "Descansando juntos bajo nuestra luz favorita",
+          "thumbUrl": "./media/thumbs/116_2026-08-12_10-36-25.webp"
         },
         {
           "id": "mem-10-m2",
           "type": "image",
-          "url": "./media/117_2026-08-12_10-36-37.jpg",
-          "caption": "Las manos de papá protegiendo a Vaiolet"
+          "url": "./media/117_2026-08-12_10-36-37.webp",
+          "caption": "Las manos de papá protegiendo a Vaiolet",
+          "thumbUrl": "./media/thumbs/117_2026-08-12_10-36-37.webp"
         },
         {
           "id": "mem-10-m3",
           "type": "image",
-          "url": "./media/118_2026-08-12_10-36-41.jpg",
-          "caption": "La felicidad reflejada en la sonrisa de mamá"
+          "url": "./media/118_2026-08-12_10-36-41.webp",
+          "caption": "La felicidad reflejada en la sonrisa de mamá",
+          "thumbUrl": "./media/thumbs/118_2026-08-12_10-36-41.webp"
         },
         {
           "id": "mem-10-m4",
           "type": "image",
-          "url": "./media/119_2026-08-16_22-12-11.jpg",
-          "caption": "Acariciando la pancita antes de dormir"
+          "url": "./media/119_2026-08-16_22-12-11.webp",
+          "caption": "Acariciando la pancita antes de dormir",
+          "thumbUrl": "./media/thumbs/119_2026-08-16_22-12-11.webp"
         },
         {
           "id": "mem-10-m5",
           "type": "image",
-          "url": "./media/120_2026-08-16_22-13-23.jpg",
-          "caption": "Sintiendo cómo creces día tras día, princesa"
+          "url": "./media/120_2026-08-16_22-13-23.webp",
+          "caption": "Sintiendo cómo creces día tras día, princesa",
+          "thumbUrl": "./media/thumbs/120_2026-08-16_22-13-23.webp"
         },
         {
           "id": "mem-10-m6",
           "type": "image",
-          "url": "./media/121_2026-08-16_22-13-37.jpg",
-          "caption": "Nuestras manos unidas rodeando tu vida"
+          "url": "./media/121_2026-08-16_22-13-37.webp",
+          "caption": "Nuestras manos unidas rodeando tu vida",
+          "thumbUrl": "./media/thumbs/121_2026-08-16_22-13-37.webp"
         }
       ]
     },
@@ -1348,22 +1615,41 @@
         {
           "id": "mem-11-m1",
           "type": "image",
-          "url": "./media/122_2026-10-17_15-09-03.jpg",
-          "caption": "Papá y mamá abrazando tu pancita de 39 semanas"
+          "url": "./media/122_2026-10-17_15-09-03.webp",
+          "caption": "Papá y mamá abrazando tu pancita de 39 semanas",
+          "thumbUrl": "./media/thumbs/122_2026-10-17_15-09-03.webp"
         },
         {
           "id": "mem-11-m2",
           "type": "image",
-          "url": "./media/123_2026-10-17_15-09-08.jpg",
-          "caption": "Una familia lista para el encuentro más hermoso"
+          "url": "./media/123_2026-10-17_15-09-08.webp",
+          "caption": "Una familia lista para el encuentro más hermoso",
+          "thumbUrl": "./media/thumbs/123_2026-10-17_15-09-08.webp"
         },
         {
           "id": "mem-11-m3",
           "type": "image",
-          "url": "./media/124_2026-10-17_15-09-10.jpg",
-          "caption": "Cualquier día, a cualquier hora... ¡Bienvenida Vaiolet!"
+          "url": "./media/124_2026-10-17_15-09-10.webp",
+          "caption": "Cualquier día, a cualquier hora... ¡Bienvenida Vaiolet!",
+          "thumbUrl": "./media/thumbs/124_2026-10-17_15-09-10.webp"
         }
       ]
+    },
+    {
+      "id": "mem-vaiolet-nacimiento",
+      "title": "¡Bienvenida al mundo, nuestra princesa Vaiolet!",
+      "date": "2026-10-24",
+      "category": "vaiolet",
+      "isFavorite": true,
+      "location": "Pereira, Risaralda",
+      "description": "El capítulo más esperado de nuestras vidas comenzó por fin. Después de 40 semanas de dulce espera, tuvimos a nuestra pequeña Vaiolet en brazos y nuestro mundo cambió para siempre.",
+      "tags": [
+        "Nacimiento",
+        "Vaiolet",
+        "Familia",
+        "Octubre 2026"
+      ],
+      "media": []
     }
   ],
   "lettersSection": {
@@ -1411,11 +1697,21 @@
       "dateWritten": "2026-07-11",
       "sealColor": "#be1243",
       "content": "¡Feliz Aniversario mi vida!\n\nParece que fue ayer cuando empezamos a escribir esta historia y hoy miro todo lo que hemos construido y me quedo sin aliento. Gracias por cada sonrisa, por tu ternura, por tu paciencia infinita y por hacerme el hombre más feliz de la tierra.\n\nBrindo por muchos 11 de julio más, por envejecer juntos de la mano y por ver crecer a nuestra hermosa familia. Te amo más de lo que las palabras alcanzan a expresar."
+    },
+    {
+      "id": "let-5",
+      "title": "Bienvenida a nuestros brazos, Vaiolet",
+      "author": "Maicol & Vanessa",
+      "recipient": "Vaiolet",
+      "openWhen": "Ábreme para recordar el día en que nos convertimos en tres",
+      "dateWritten": "2026-10-24",
+      "sealColor": "#ec4899",
+      "content": "Nuestra amada Vaiolet,\n\nPor fin estás aquí, en nuestros brazos, llenando cada rincón de este hogar con tu respiración suave y tus manitas pequeñas. Todo el miedo, el cansancio y la espera se transformaron en la certeza más pura de nuestras vidas: eres nuestro mayor milagro.\n\nPrometemos cuidarte, escucharte, celebrar cada uno de tus pasos y recordarte siempre lo inmensamente amada que eres desde tu primer segundo en este mundo.\n\nCon todo nuestro corazón,\nMamá Vanessa y Papá Maicol."
     }
   ],
   "footer": {
-    "quote": "\"Esperando con todo el amor a nuestra pequeña Vaiolet\"",
-    "description": "Nuestra historia comenzó el 11 de julio de 2025. Cada día que pasa es un regalo y el mejor capítulo aún está por comenzar con la llegada de nuestra princesa.",
+    "quote": "\"Caminando juntos de la mano: Maicol, Vanessa y Vaiolet\"",
+    "description": "Nuestra historia comenzó el 11 de julio de 2025 y floreció con la llegada de nuestra princesa Vaiolet. Cada día en familia es nuestro mayor tesoro.",
     "badgeText": "Hecho con amor infinito para nuestra familia"
   },
   "appearance": {

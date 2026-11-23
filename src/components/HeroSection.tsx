@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, Baby, Hourglass, Edit3 } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Heart, Calendar, Baby, Hourglass, Sparkles, Edit3 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { calculateElapsedTime, calculateNextAnniversary } from '../utils/timeCalculations';
-import type { ElapsedTime, CountdownTime } from '../utils/timeCalculations';
-import type { HeroTexts } from '../types';
+import {
+  calculateElapsedTime,
+  calculateNextAnniversary,
+  calculateDaughterProgress,
+} from '../utils/timeCalculations';
+import type { HeroTexts, DaughterInfo } from '../types';
 
 interface HeroSectionProps {
   partner1: string;
   partner2: string;
   startDate: string;
   heroTexts: HeroTexts;
+  daughter: DaughterInfo;
   isLiveEditMode?: boolean;
   onEditSection?: () => void;
 }
@@ -19,22 +23,63 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   partner2,
   startDate,
   heroTexts,
+  daughter,
   isLiveEditMode = false,
   onEditSection,
 }) => {
-  const [elapsed, setElapsed] = useState<ElapsedTime>(() => calculateElapsedTime(startDate));
-  const [anniversary, setAnniversary] = useState<CountdownTime>(() => calculateNextAnniversary(startDate));
+  const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
-    setElapsed(calculateElapsedTime(startDate));
-    setAnniversary(calculateNextAnniversary(startDate));
-
     const timer = setInterval(() => {
-      setElapsed(calculateElapsedTime(startDate));
-      setAnniversary(calculateNextAnniversary(startDate));
+      setNow(new Date());
     }, 1000);
     return () => clearInterval(timer);
-  }, [startDate]);
+  }, []);
+
+  const elapsed = useMemo(
+    () => calculateElapsedTime(startDate, now),
+    [startDate, now]
+  );
+
+  const anniversary = useMemo(
+    () => calculateNextAnniversary(startDate, now),
+    [startDate, now]
+  );
+
+  const daughterProgress = useMemo(
+    () =>
+      calculateDaughterProgress(
+        daughter.status,
+        daughter.refDate,
+        daughter.gestationWeeksAtRefDate,
+        daughter.estimatedDueDate,
+        daughter.birthDate,
+        now
+      ),
+    [
+      daughter.status,
+      daughter.refDate,
+      daughter.gestationWeeksAtRefDate,
+      daughter.estimatedDueDate,
+      daughter.birthDate,
+      now,
+    ]
+  );
+
+  const bornAgeHeadline = useMemo(() => {
+    const years = daughterProgress.years ?? 0;
+    const months = daughterProgress.months ?? 0;
+    const days = daughterProgress.days ?? 0;
+    const totalDays = daughterProgress.totalDays ?? 0;
+
+    if (years > 0) {
+      return `${years} ${years === 1 ? 'año' : 'años'} y ${months} ${months === 1 ? 'mes' : 'meses'} de amor`;
+    }
+    if (months > 0) {
+      return `${months} ${months === 1 ? 'mes' : 'meses'} y ${days} ${days === 1 ? 'día' : 'días'} juntos`;
+    }
+    return `${totalDays} ${totalDays === 1 ? 'día' : 'días'} llenándonos de vida`;
+  }, [daughterProgress]);
 
   return (
     <section id="tiempo" className="relative pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 overflow-hidden">
@@ -190,16 +235,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Baby className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-rose-600 block mb-0.5 flex items-center gap-1.5">
-                <span>{heroTexts.daughterCardBadge}</span>
-                <Hourglass className="w-3 h-3 animate-spin text-rose-400" />
-              </span>
-              <p className="text-xs sm:text-sm font-semibold text-stone-800">
-                {heroTexts.daughterCardTitle}
-              </p>
-              <span className="text-[11px] text-stone-500 mt-1 block group-hover:text-rose-600 transition-colors">
-                {heroTexts.daughterCardSubtitle}
-              </span>
+              {daughter.status === 'born' ? (
+                <>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-rose-600 mb-0.5 flex items-center gap-1.5">
+                    <span>
+                      {heroTexts.daughterBornCardBadge ||
+                        `¡${daughter.name} ya está con nosotros!`}
+                    </span>
+                    <Sparkles className="w-3 h-3 text-rose-500" />
+                  </span>
+                  <p className="text-xs sm:text-sm font-semibold text-stone-800">
+                    {bornAgeHeadline}
+                  </p>
+                  <span className="text-[11px] text-stone-500 mt-1 block group-hover:text-rose-600 transition-colors">
+                    {heroTexts.daughterBornCardSubtitle ||
+                      'Ver su edad en vivo, hitos y fotos →'}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-rose-600 mb-0.5 flex items-center gap-1.5">
+                    <span>{heroTexts.daughterCardBadge}</span>
+                    <Hourglass className="w-3 h-3 animate-spin text-rose-400" />
+                  </span>
+                  <p className="text-xs sm:text-sm font-semibold text-stone-800">
+                    {heroTexts.daughterCardTitle}
+                  </p>
+                  <span className="text-[11px] text-stone-500 mt-1 block group-hover:text-rose-600 transition-colors">
+                    {heroTexts.daughterCardSubtitle}
+                  </span>
+                </>
+              )}
             </div>
           </a>
         </div>

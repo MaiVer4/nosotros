@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   Baby,
   Sparkles,
@@ -10,18 +10,30 @@ import {
   Upload,
   Video,
   Loader2,
+  Camera,
+  MapPin,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import type { DaughterInfo, MediaItem } from '../types';
-import { calculateDaughterProgress } from '../utils/timeCalculations';
+import {
+  calculateDaughterProgress,
+  formatSpanishDate,
+  parseLocalDate,
+} from '../utils/timeCalculations';
 import { processMediaFile, getVideoThumbnailUrl } from '../utils/mediaProcessor';
+import { VaioletMilestones } from './VaioletMilestones';
 
 interface VaioletSectionProps {
   daughter: DaughterInfo;
   onUpdateDaughter: (updated: DaughterInfo) => void;
-  onSelectMedia: (media: MediaItem) => void;
+  onSelectMedia: (
+    items: MediaItem[],
+    index: number,
+    context?: { title?: string; date?: string }
+  ) => void;
   isLiveEditMode?: boolean;
+  isAdminUnlocked?: boolean;
   onEditSection?: () => void;
 }
 
@@ -30,54 +42,68 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
   onUpdateDaughter,
   onSelectMedia,
   isLiveEditMode = false,
+  isAdminUnlocked = false,
   onEditSection,
 }) => {
-  const [progress, setProgress] = useState(() =>
-    calculateDaughterProgress(
-      daughter.status,
-      daughter.refDate,
-      daughter.gestationWeeksAtRefDate,
-      daughter.estimatedDueDate,
-      daughter.birthDate
-    )
+  const [now, setNow] = useState<Date>(() => new Date());
+  const [galleryTab, setGalleryTab] = useState<'born' | 'ultrasound'>(() =>
+    daughter.status === 'born' ? 'born' : 'ultrasound'
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formBirthDate, setFormBirthDate] = useState(
-    daughter.birthDate || new Date().toISOString().slice(0, 16)
-  );
+  const [formBirthDate, setFormBirthDate] = useState(daughter.birthDate || '');
   const [formWeight, setFormWeight] = useState(daughter.birthWeight || '3.25 kg');
   const [formLength, setFormLength] = useState(daughter.birthLength || '49 cm');
+  const [formCity, setFormCity] = useState(
+    daughter.birthCity || 'Pereira, Risaralda'
+  );
   const [formNote, setFormNote] = useState(
     daughter.birthNote ||
-      '¡El día más feliz del universo! Nuestra princesa Vaiolet llegó para cambiar nuestras vidas.'
+      '¡El día más feliz del universo! Nuestra princesa Vaiolet llegó para iluminar nuestras vidas.'
   );
   const [isUploadingQuick, setIsUploadingQuick] = useState(false);
   const quickUploadRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    setProgress(
+    const timer = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const progress = useMemo(
+    () =>
       calculateDaughterProgress(
         daughter.status,
         daughter.refDate,
         daughter.gestationWeeksAtRefDate,
         daughter.estimatedDueDate,
-        daughter.birthDate
-      )
+        daughter.birthDate,
+        now
+      ),
+    [
+      daughter.status,
+      daughter.refDate,
+      daughter.gestationWeeksAtRefDate,
+      daughter.estimatedDueDate,
+      daughter.birthDate,
+      now,
+    ]
+  );
+
+  const openBirthModal = () => {
+    setFormBirthDate(
+      daughter.birthDate || new Date().toISOString().slice(0, 16)
     );
-    const timer = setInterval(() => {
-      setProgress(
-        calculateDaughterProgress(
-          daughter.status,
-          daughter.refDate,
-          daughter.gestationWeeksAtRefDate,
-          daughter.estimatedDueDate,
-          daughter.birthDate
-        )
-      );
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [daughter]);
+    setFormWeight(daughter.birthWeight || '3.25 kg');
+    setFormLength(daughter.birthLength || '49 cm');
+    setFormCity(daughter.birthCity || 'Pereira, Risaralda');
+    setFormNote(
+      daughter.birthNote ||
+        '¡El día más feliz del universo! Nuestra princesa Vaiolet llegó para iluminar nuestras vidas.'
+    );
+    setIsModalOpen(true);
+  };
 
   const handleRegisterBirth = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,9 +113,11 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
       birthDate: formBirthDate,
       birthWeight: formWeight,
       birthLength: formLength,
+      birthCity: formCity,
       birthNote: formNote,
     };
     onUpdateDaughter(updated);
+    setGalleryTab('born');
     setIsModalOpen(false);
 
     confetti({
@@ -102,13 +130,17 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
 
   const handleRevertToExpecting = () => {
     if (confirm('¿Quieres volver al modo de dulce espera (embarazo)?')) {
-      const updated: DaughterInfo = {
+      onUpdateDaughter({
         ...daughter,
         status: 'expecting',
-      };
-      onUpdateDaughter(updated);
+      });
     }
   };
+
+  const bornImages = daughter.bornImages || [];
+  const ultrasoundImages = daughter.ultrasoundImages || [];
+  const activeGalleryList =
+    galleryTab === 'born' ? bornImages : ultrasoundImages;
 
   const handleQuickUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -125,10 +157,17 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
           caption: 'Nuevo recuerdo de ' + daughter.name,
         });
       }
-      onUpdateDaughter({
-        ...daughter,
-        ultrasoundImages: [...(daughter.ultrasoundImages || []), ...added],
-      });
+      if (galleryTab === 'born') {
+        onUpdateDaughter({
+          ...daughter,
+          bornImages: [...bornImages, ...added],
+        });
+      } else {
+        onUpdateDaughter({
+          ...daughter,
+          ultrasoundImages: [...ultrasoundImages, ...added],
+        });
+      }
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Error al subir archivo.');
     } finally {
@@ -138,18 +177,35 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
   };
 
   const handleInlineCaptionChange = (idx: number, caption: string) => {
-    const list = [...(daughter.ultrasoundImages || [])];
+    const list = [...activeGalleryList];
     list[idx] = { ...list[idx], caption };
-    onUpdateDaughter({ ...daughter, ultrasoundImages: list });
+    if (galleryTab === 'born') {
+      onUpdateDaughter({ ...daughter, bornImages: list });
+    } else {
+      onUpdateDaughter({ ...daughter, ultrasoundImages: list });
+    }
   };
 
   const handleInlineDeleteMedia = (idx: number) => {
     if (!confirm('¿Eliminar esta foto/video de la galería?')) return;
-    const list = (daughter.ultrasoundImages || []).filter((_, i) => i !== idx);
-    onUpdateDaughter({ ...daughter, ultrasoundImages: list });
+    const list = activeGalleryList.filter((_, i) => i !== idx);
+    if (galleryTab === 'born') {
+      onUpdateDaughter({ ...daughter, bornImages: list });
+    } else {
+      onUpdateDaughter({ ...daughter, ultrasoundImages: list });
+    }
   };
 
   const barPct = daughter.customProgressPercentage ?? progress.percentage ?? 98;
+  const formattedBirthTime = useMemo(() => {
+    if (!daughter.birthDate || !daughter.birthDate.includes('T')) return null;
+    const parsed = parseLocalDate(daughter.birthDate);
+    if (Number.isNaN(parsed.getTime())) return null;
+    return parsed.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }, [daughter.birthDate]);
 
   return (
     <section id="vaiolet" className="py-12 sm:py-16 px-4">
@@ -162,7 +218,7 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
               className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-900 hover:bg-rose-600 text-white text-xs font-semibold shadow-md transition-all"
             >
               <Edit3 className="w-3.5 h-3.5" />
-              <span>Editar Sección {daughter.name}, Checklist y Galería</span>
+              <span>Editar Sección {daughter.name}, Hitos y Galería</span>
             </button>
           </div>
         )}
@@ -219,7 +275,7 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={openBirthModal}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-xs sm:text-sm shadow-md transition-all select-none"
                 >
                   <Sparkles className="w-4 h-4" />
@@ -270,80 +326,142 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
         ) : (
           /* MODO YA NACIÓ */
           <div className="p-5 sm:p-10 rounded-3xl bg-white smooth-card border-2 border-rose-200 mb-8 sm:mb-12">
-            <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <div className="flex flex-wrap justify-between items-center gap-2 mb-4 sm:mb-6">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500 text-white text-[11px] font-bold shadow-sm">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>
                   {daughter.bornBadgeText || '¡Nuestra Princesa ya está en casa!'}
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={handleRevertToExpecting}
-                className="text-xs text-stone-400 hover:text-stone-600 flex items-center gap-1 transition-colors"
-              >
-                <ArrowLeft className="w-3 h-3" />
-                <span>Modo dulce espera</span>
-              </button>
+              <div className="flex items-center gap-3">
+                {(isLiveEditMode || isAdminUnlocked) && (
+                  <button
+                    type="button"
+                    onClick={openBirthModal}
+                    className="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1 transition-colors"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    <span>Editar datos de nacimiento</span>
+                  </button>
+                )}
+                {isAdminUnlocked && (
+                  <button
+                    type="button"
+                    onClick={handleRevertToExpecting}
+                    className="text-xs text-stone-400 hover:text-stone-600 flex items-center gap-1 transition-colors"
+                  >
+                    <ArrowLeft className="w-3 h-3" />
+                    <span>Modo dulce espera</span>
+                  </button>
+                )}
+              </div>
             </div>
 
             <h3 className="font-serif text-2xl sm:text-4xl font-bold text-stone-800 mb-2">
               {daughter.bornHeadline || `Bienvenida al mundo, ${daughter.name} 🌸`}
             </h3>
-            <p className="text-xs sm:text-sm text-stone-600 max-w-xl mb-6 sm:mb-8">
+            <p className="text-xs sm:text-sm text-stone-600 max-w-2xl mb-6 sm:mb-8">
               {daughter.birthNote}
             </p>
 
-            {/* Age counter */}
-            <div className="p-4 sm:p-6 rounded-2xl bg-rose-50/60 border border-rose-100 mb-6 sm:mb-8">
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-stone-400 block text-center mb-3 sm:mb-4">
+            {/* Full Calendar Age Counter */}
+            <div className="p-4 sm:p-6 rounded-2xl bg-rose-50/70 border border-rose-100 mb-6 sm:mb-8">
+              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-stone-500 block text-center mb-3 sm:mb-4">
                 Tiempo de vida de nuestra pequeña {daughter.name}
               </span>
-              <div className="flex justify-center items-center gap-4 sm:gap-6 text-center">
-                <div>
-                  <span className="font-serif text-3xl sm:text-5xl font-bold text-rose-600">
-                    {progress.totalDays ?? 0}
+              <div
+                className={`grid ${
+                  (progress.years ?? 0) > 0
+                    ? 'grid-cols-3 sm:grid-cols-6'
+                    : 'grid-cols-5'
+                } gap-2 sm:gap-3 max-w-2xl mx-auto text-center`}
+              >
+                {(progress.years ?? 0) > 0 && (
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                    <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 block">
+                      {progress.years}
+                    </span>
+                    <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
+                      {progress.years === 1 ? 'Año' : 'Años'}
+                    </span>
+                  </div>
+                )}
+                <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                  <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 block">
+                    {progress.months ?? 0}
                   </span>
-                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500 block mt-0.5 sm:mt-1">
-                    Días
+                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
+                    {progress.months === 1 ? 'Mes' : 'Meses'}
                   </span>
                 </div>
-                <div className="text-2xl text-stone-300 font-serif">:</div>
-                <div>
-                  <span className="font-serif text-3xl sm:text-5xl font-bold text-rose-600">
-                    {progress.hours ?? 0}
+                <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                  <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 block">
+                    {progress.days ?? 0}
                   </span>
-                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500 block mt-0.5 sm:mt-1">
+                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
+                    {progress.days === 1 ? 'Día' : 'Días'}
+                  </span>
+                </div>
+                <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                  <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 tabular-nums block">
+                    {String(progress.hours ?? 0).padStart(2, '0')}
+                  </span>
+                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
                     Horas
                   </span>
                 </div>
-                <div className="text-2xl text-stone-300 font-serif">:</div>
-                <div>
-                  <span className="font-serif text-3xl sm:text-5xl font-bold text-rose-600">
-                    {progress.minutes ?? 0}
+                <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                  <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 tabular-nums block">
+                    {String(progress.minutes ?? 0).padStart(2, '0')}
                   </span>
-                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500 block mt-0.5 sm:mt-1">
-                    Minutos
+                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
+                    Min
                   </span>
                 </div>
+                <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-rose-100 shadow-sm">
+                  <span className="font-serif text-2xl sm:text-4xl font-bold text-rose-600 tabular-nums block">
+                    {String(progress.seconds ?? 0).padStart(2, '0')}
+                  </span>
+                  <span className="text-[10px] sm:text-xs uppercase font-medium text-stone-500">
+                    Seg
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-4 text-center text-xs text-rose-800/85 font-medium flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                <span>
+                  ✨ <strong>{progress.totalDays ?? 0}</strong> días de vida ({progress.totalWeeks ?? 0} semanas)
+                </span>
+                <span className="text-rose-300 hidden sm:inline">•</span>
+                {progress.isMonthlyToday ? (
+                  <span className="text-rose-600 font-bold">
+                    🎉 ¡Hoy cumple {(progress.years ?? 0) * 12 + (progress.months ?? 0)}{' '}
+                    {(progress.years ?? 0) * 12 + (progress.months ?? 0) === 1
+                      ? 'mes'
+                      : 'meses'}!
+                  </span>
+                ) : (
+                  <span>
+                    🎀 Faltan <strong>{progress.daysToNextMonthly ?? 0}</strong>{' '}
+                    {progress.daysToNextMonthly === 1 ? 'día' : 'días'} para su mes #
+                    {progress.nextMonthlyNumber ?? 1}
+                  </span>
+                )}
               </div>
             </div>
 
             {/* Birth Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center">
               <div className="p-3 sm:p-4 rounded-xl bg-stone-50 border border-stone-200/80">
                 <span className="text-[10px] sm:text-xs font-medium text-stone-400 block mb-0.5">
                   Fecha de llegada
                 </span>
-                <span className="font-serif text-sm sm:text-lg font-bold text-stone-800">
-                  {daughter.birthDate
-                    ? new Date(daughter.birthDate).toLocaleDateString('es-ES', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })
-                    : 'Hoy'}
+                <span className="font-serif text-sm sm:text-base font-bold text-stone-800 block">
+                  {daughter.birthDate ? formatSpanishDate(daughter.birthDate) : 'Hoy'}
                 </span>
+                {formattedBirthTime && (
+                  <span className="text-[10px] text-stone-400">{formattedBirthTime}</span>
+                )}
               </div>
               <div className="p-3 sm:p-4 rounded-xl bg-stone-50 border border-stone-200/80">
                 <span className="text-[10px] sm:text-xs font-medium text-stone-400 block mb-0.5">
@@ -353,7 +471,7 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
                   {daughter.birthWeight || '3.25 kg'}
                 </span>
               </div>
-              <div className="p-3 sm:p-4 rounded-xl bg-stone-50 border border-stone-200/80 col-span-2 sm:col-span-1">
+              <div className="p-3 sm:p-4 rounded-xl bg-stone-50 border border-stone-200/80">
                 <span className="text-[10px] sm:text-xs font-medium text-stone-400 block mb-0.5">
                   Estatura
                 </span>
@@ -361,124 +479,217 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
                   {daughter.birthLength || '49 cm'}
                 </span>
               </div>
+              <div className="p-3 sm:p-4 rounded-xl bg-stone-50 border border-stone-200/80">
+                <span className="text-[10px] sm:text-xs font-medium text-stone-400 block mb-0.5">
+                  Lugar
+                </span>
+                <span className="font-serif text-sm sm:text-base font-bold text-stone-800 inline-flex items-center justify-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                  <span>{daughter.birthCity || 'En familia'}</span>
+                </span>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Gallery */}
-        <div>
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-3 sm:mb-4">
-            <h4 className="font-serif text-lg sm:text-xl font-bold text-stone-800 flex items-center gap-2">
-              <span>{daughter.galleryTitle || 'Galería de la Dulce Espera'}</span>
-              <span className="text-[11px] font-sans font-normal text-stone-400">
-                (Toca para agrandar)
-              </span>
-            </h4>
+        {/* Milestones & Cumplemeses Diary */}
+        {(daughter.status === 'born' || (daughter.milestones && daughter.milestones.length > 0)) && (
+          <VaioletMilestones
+            daughterName={daughter.name}
+            milestones={daughter.milestones || []}
+            canEdit={isLiveEditMode || isAdminUnlocked}
+            onChangeMilestones={(updatedMilestones) =>
+              onUpdateDaughter({ ...daughter, milestones: updatedMilestones })
+            }
+            onSelectMedia={onSelectMedia}
+          />
+        )}
 
-            {isLiveEditMode && (
-              <div>
-                <input
-                  ref={quickUploadRef}
-                  type="file"
-                  accept="image/*,video/*"
-                  multiple
-                  onChange={handleQuickUpload}
-                  className="hidden"
-                />
+        {/* Dual Gallery: Born vs Ultrasound */}
+        <div>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h4 className="font-serif text-lg sm:text-xl font-bold text-stone-800 flex items-center gap-2">
+                <span>
+                  {galleryTab === 'born'
+                    ? daughter.bornGalleryTitle ||
+                      `Álbum de ${daughter.name}: Recién Nacida & Crecimiento`
+                    : daughter.galleryTitle || 'Galería de Ecografías & Dulce Espera'}
+                </span>
+                <span className="text-[11px] font-sans font-normal text-stone-400">
+                  (Toca para agrandar)
+                </span>
+              </h4>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center p-1 rounded-full bg-stone-100 border border-stone-200/70 text-xs font-medium">
                 <button
                   type="button"
-                  disabled={isUploadingQuick}
-                  onClick={() => quickUploadRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold shadow-sm"
+                  onClick={() => setGalleryTab('born')}
+                  className={`px-3 py-1 rounded-full transition-all ${
+                    galleryTab === 'born'
+                      ? 'bg-white text-rose-600 shadow-sm font-semibold'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
                 >
-                  {isUploadingQuick ? (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <Upload className="w-3.5 h-3.5" />
-                  )}
-                  <span>Subir Foto a {daughter.name}</span>
+                  👶 Recién Nacida ({bornImages.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGalleryTab('ultrasound')}
+                  className={`px-3 py-1 rounded-full transition-all ${
+                    galleryTab === 'ultrasound'
+                      ? 'bg-white text-rose-600 shadow-sm font-semibold'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  🩺 Ecografías ({ultrasoundImages.length})
                 </button>
               </div>
-            )}
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {daughter.ultrasoundImages?.map((media, idx) => {
-              const ytThumb = getVideoThumbnailUrl(media.url);
-
-              return (
-                <motion.div
-                  key={media.id || idx}
-                  whileTap={isLiveEditMode ? undefined : { scale: 0.98 }}
-                  className="group relative p-2.5 sm:p-3 bg-white rounded-2xl polaroid-card hover:border-rose-300 transition-colors"
-                >
-                  <div
-                    onClick={() => onSelectMedia(media)}
-                    className="relative aspect-square rounded-xl overflow-hidden bg-stone-100 cursor-pointer"
+              {(isLiveEditMode || isAdminUnlocked) && (
+                <div>
+                  <input
+                    ref={quickUploadRef}
+                    type="file"
+                    accept="image/*,video/*"
+                    multiple
+                    onChange={handleQuickUpload}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    disabled={isUploadingQuick}
+                    onClick={() => quickUploadRef.current?.click()}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold shadow-sm"
                   >
-                    {media.type === 'video' ? (
-                      ytThumb ? (
-                        <img
-                          src={ytThumb}
-                          alt={media.caption || 'Video'}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <video
-                          src={media.url}
-                          className="w-full h-full object-cover"
-                          muted
-                        />
-                      )
+                    {isUploadingQuick ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     ) : (
-                      <img
-                        src={media.url}
-                        alt={media.caption || `Foto de ${daughter.name}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
+                      <Upload className="w-3.5 h-3.5" />
                     )}
-
-                    {media.type === 'video' && (
-                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
-                        <Video className="w-8 h-8" />
-                      </div>
-                    )}
-                  </div>
-
-                  {isLiveEditMode ? (
-                    <div className="mt-2.5 flex items-center gap-1.5">
-                      <input
-                        type="text"
-                        value={media.caption || ''}
-                        onChange={(e) =>
-                          handleInlineCaptionChange(idx, e.target.value)
-                        }
-                        placeholder="Texto de la foto..."
-                        className="flex-1 px-2 py-1 rounded-lg border border-rose-200 text-xs bg-rose-50/40 focus:outline-none focus:ring-1 focus:ring-rose-400"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleInlineDeleteMedia(idx)}
-                        title="Eliminar foto"
-                        className="p-1.5 rounded-lg bg-red-50 text-red-500 hover:bg-red-100"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ) : (
-                    <p className="font-handwriting text-sm sm:text-base text-stone-700 text-center mt-2.5 line-clamp-2">
-                      {media.caption}
-                    </p>
-                  )}
-                </motion.div>
-              );
-            })}
+                    <span>Subir Foto a {daughter.name}</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
+
+          {activeGalleryList.length === 0 ? (
+            <div className="p-8 sm:p-10 rounded-3xl bg-white border border-dashed border-rose-200 text-center">
+              <Camera className="w-9 h-9 text-rose-300 mx-auto mb-2.5" />
+              <h5 className="font-serif text-base sm:text-lg font-bold text-stone-800 mb-1">
+                Aquí irá la galería de {daughter.name} recién nacida
+              </h5>
+              <p className="text-xs text-stone-500 max-w-md mx-auto mb-4">
+                Sube sus primeras fotos desde el botón de Admin o colócalas en{' '}
+                <code className="bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded">
+                  public/media/vaiolet/
+                </code>{' '}
+                y ejecuta <code className="bg-stone-100 px-1.5 py-0.5 rounded">npm run scan:gallery</code>.
+              </p>
+              {(isLiveEditMode || isAdminUnlocked) && (
+                <button
+                  type="button"
+                  onClick={() => quickUploadRef.current?.click()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold shadow-sm"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Subir primeras fotos ahora</span>
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              {activeGalleryList.map((media, idx) => {
+                const ytThumb = getVideoThumbnailUrl(media.url);
+                const previewSrc = media.thumbUrl || media.url;
+
+                return (
+                  <motion.div
+                    key={media.id || idx}
+                    whileTap={isLiveEditMode ? undefined : { scale: 0.98 }}
+                    className="group relative p-2.5 sm:p-3 bg-white rounded-2xl polaroid-card hover:border-rose-300 transition-colors"
+                  >
+                    <div
+                      onClick={() =>
+                        onSelectMedia(activeGalleryList, idx, {
+                          title:
+                            galleryTab === 'born'
+                              ? `Álbum de ${daughter.name}`
+                              : 'Ecografías & Dulce Espera',
+                        })
+                      }
+                      className="relative aspect-square rounded-xl overflow-hidden bg-stone-100 cursor-pointer"
+                    >
+                      {media.type === 'video' ? (
+                        media.thumbUrl || ytThumb ? (
+                          <img
+                            src={media.thumbUrl || ytThumb || ''}
+                            alt={media.caption || 'Video'}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <video
+                            src={media.url}
+                            className="w-full h-full object-cover"
+                            preload="metadata"
+                            muted
+                            playsInline
+                          />
+                        )
+                      ) : (
+                        <img
+                          src={previewSrc}
+                          alt={media.caption || `Foto de ${daughter.name}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      )}
+
+                      {media.type === 'video' && (
+                        <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
+                          <Video className="w-8 h-8" />
+                        </div>
+                      )}
+                    </div>
+
+                    {isLiveEditMode ? (
+                      <div className="mt-2.5 flex items-center gap-1.5">
+                        <input
+                          type="text"
+                          value={media.caption || ''}
+                          onChange={(e) =>
+                            handleInlineCaptionChange(idx, e.target.value)
+                          }
+                          placeholder="Texto de la foto..."
+                          className="flex-1 px-2 py-1 rounded-lg border border-rose-200 text-xs bg-rose-50/40 focus:outline-none focus:ring-1 focus:ring-rose-400"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleInlineDeleteMedia(idx)}
+                          title="Eliminar foto"
+                          className="p-1.5 rounded-lg bg-red-50 text-red-500 hover:bg-red-100"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="font-handwriting text-sm sm:text-base text-stone-700 text-center mt-2.5 line-clamp-2">
+                        {media.caption}
+                      </p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Modal: Registrar Nacimiento */}
+      {/* Modal: Registrar / Editar Nacimiento */}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/60 backdrop-blur-xs">
@@ -498,10 +709,10 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
               </button>
 
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-800 mb-1">
-                💖 ¡Registrar Llegada de {daughter.name}!
+                💖 Datos de Llegada de {daughter.name}
               </h3>
               <p className="text-xs text-stone-500 mb-4">
-                Ingresa los datos del día más feliz de sus vidas.
+                Registra o actualiza los datos del día más feliz de sus vidas.
               </p>
 
               <form onSubmit={handleRegisterBirth} className="space-y-3.5">
@@ -543,6 +754,19 @@ export const VaioletSection: React.FC<VaioletSectionProps> = ({
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase text-stone-500 mb-1">
+                    Ciudad / Clínica
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="ej. Pereira, Risaralda"
+                    value={formCity}
+                    onChange={(e) => setFormCity(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                  />
                 </div>
 
                 <div>

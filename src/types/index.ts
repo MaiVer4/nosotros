@@ -2,6 +2,7 @@ export type MediaItem = {
   id?: string;
   type: 'image' | 'video';
   url: string;
+  thumbUrl?: string;
   caption?: string;
 };
 
@@ -25,6 +26,19 @@ export type ChecklistItem = {
   description: string;
 };
 
+export type BabyMilestone = {
+  id: string;
+  monthNumber?: number;
+  title: string;
+  date?: string; // YYYY-MM-DD
+  achieved: boolean;
+  weight?: string;
+  height?: string;
+  note: string;
+  icon?: string;
+  mediaUrl?: string;
+};
+
 export type CategoryItem = {
   id: string;
   label: string;
@@ -42,6 +56,8 @@ export type HeroTexts = {
   daughterCardBadge: string;
   daughterCardTitle: string;
   daughterCardSubtitle: string;
+  daughterBornCardBadge?: string;
+  daughterBornCardSubtitle?: string;
 };
 
 export type DaughterInfo = {
@@ -66,11 +82,14 @@ export type DaughterInfo = {
   // If born:
   bornBadgeText?: string;
   bornHeadline?: string;
-  birthDate?: string | null; // ISO string e.g. '2026-10-20T14:30:00'
-  birthWeight?: string; // e.g. '3.2 kg'
+  birthDate?: string | null; // ISO string e.g. '2026-10-24T12:00:00'
+  birthWeight?: string; // e.g. '3.25 kg'
   birthLength?: string; // e.g. '49 cm'
   birthCity?: string;
   birthNote?: string;
+  bornImages?: MediaItem[];
+  bornGalleryTitle?: string;
+  milestones?: BabyMilestone[];
 };
 
 export type LoveLetter = {
@@ -113,14 +132,15 @@ export type GitHubSyncConfig = {
   repo: string;
   branch: string;
   token: string;
+  sessionOnly?: boolean;
 };
 
 export type RelationshipConfig = {
   partner1: string; // "Maicol"
   partner2: string; // "Vanessa"
   relationshipStartDate: string; // ISO string '2025-07-11T00:00:00'
-  secretPin: string; // "1107"
-  adminPassword: string; // "admin1107"
+  secretPin: string; // Hashed 'sha256:...' or legacy plain
+  adminPassword: string; // Hashed 'sha256:...' or legacy plain
   hero: HeroTexts;
   daughter: DaughterInfo;
   timelineSection: TimelineSectionConfig;

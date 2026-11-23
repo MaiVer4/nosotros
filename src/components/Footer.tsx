@@ -10,6 +10,8 @@ interface FooterProps {
   onEditSection?: () => void;
 }
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const Footer: React.FC<FooterProps> = ({
   partner1,
   partner2,
@@ -17,7 +19,6 @@ export const Footer: React.FC<FooterProps> = ({
   isLiveEditMode = false,
   onEditSection,
 }) => {
-  const year = new Date().getFullYear();
 
   return (
     <footer className="py-12 px-4 border-t border-rose-100 bg-white/60 backdrop-blur-sm text-center relative">
@@ -53,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-200/80 text-[11px] text-rose-700 font-medium">
           <Sparkles className="w-3.5 h-3.5 text-rose-400" />
           <span>
-            {footerConfig?.badgeText || 'Hecho con amor infinito para nuestra familia'} • {year}
+            {footerConfig?.badgeText || 'Hecho con amor infinito para nuestra familia'} • {CURRENT_YEAR}
           </span>
         </div>
       </div>
