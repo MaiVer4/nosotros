@@ -1,25 +1,31 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  MapPin, 
-  Heart, 
-  Search, 
-  Sparkles, 
-  Grid, 
-  GitCommit, 
-  Video, 
+import {
+  MapPin,
+  Heart,
+  Search,
+  Sparkles,
+  Grid,
+  GitCommit,
+  Video,
   Image as ImageIcon,
   Edit3,
   Trash2,
-  Plus
+  Plus,
+  ArrowUpDown,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Memory, MediaItem, TimelineSectionConfig } from '../types';
 import { getVideoThumbnailUrl } from '../utils/mediaProcessor';
+import { formatSpanishDate, parseLocalDate } from '../utils/timeCalculations';
 
 interface TimelineSectionProps {
   memories: Memory[];
   timelineConfig: TimelineSectionConfig;
-  onSelectMedia: (media: MediaItem) => void;
+  onSelectMedia: (
+    items: MediaItem[],
+    index: number,
+    context?: { title?: string; date?: string }
+  ) => void;
   onToggleFavorite: (id: string) => void;
   isLiveEditMode?: boolean;
   onEditSection?: () => void;
@@ -27,6 +33,8 @@ interface TimelineSectionProps {
   onDeleteMemory?: (id: string) => void;
   onAddMemory?: () => void;
 }
+
+const MAX_COLLAPSED_MEDIA = 6;
 
 export const TimelineSection: React.FC<TimelineSectionProps> = ({
   memories,
@@ -42,6 +50,10 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'timeline' | 'grid'>('timeline');
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
+  const [expandedMediaIds, setExpandedMediaIds] = useState<
+    Record<string, boolean>
+  >({});
 
   const categories = timelineConfig?.categories?.length
     ? timelineConfig.categories
@@ -51,6 +63,7 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
         { id: 'hito', label: 'Hitos' },
         { id: 'embarazo', label: 'Embarazo' },
         { id: 'vaiolet', label: 'Vaiolet 🌸' },
+        { id: 'cumplemes', label: 'Cumplemeses 🎀' },
         { id: 'viaje', label: 'Viajes' },
         { id: 'favoritos', label: 'Favoritos ⭐' },
       ];
@@ -69,14 +82,27 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
           const matchesTitle = mem.title.toLowerCase().includes(q);
           const matchesDesc = mem.description.toLowerCase().includes(q);
           const matchesLoc = mem.location?.toLowerCase().includes(q);
-          const matchesTags = mem.tags?.some((t) => t.toLowerCase().includes(q));
+          const matchesTags = mem.tags?.some((t) =>
+            t.toLowerCase().includes(q)
+          );
           return matchesTitle || matchesDesc || matchesLoc || matchesTags;
         }
 
         return true;
       })
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }, [memories, selectedCategory, searchTerm]);
+      .sort((a, b) => {
+        const diff =
+          parseLocalDate(a.date).getTime() - parseLocalDate(b.date).getTime();
+        return sortOrder === 'desc' ? -diff : diff;
+      });
+  }, [memories, selectedCategory, searchTerm, sortOrder]);
+
+  const toggleExpandMedia = (memoryId: string) => {
+    setExpandedMediaIds((prev) => ({
+      ...prev,
+      [memoryId]: !prev[memoryId],
+    }));
+  };
 
   return (
     <section id="historia" className="py-12 sm:py-16 px-4">
@@ -111,17 +137,20 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-[11px] font-semibold uppercase tracking-wider mb-2.5">
             <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-            <span>{timelineConfig?.sectionBadge || 'Nuestra Historia en Recuerdos'}</span>
+            <span>
+              {timelineConfig?.sectionBadge || 'Nuestra Historia en Recuerdos'}
+            </span>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-800 tracking-tight mb-2">
             {timelineConfig?.sectionTitle || 'Línea del Tiempo'}
           </h2>
           <p className="font-handwriting text-xl sm:text-2xl text-rose-600 px-2">
-            {timelineConfig?.sectionSubtitle || 'Cada instante, cada fotografía y cada paso que hemos dado juntos'}
+            {timelineConfig?.sectionSubtitle ||
+              'Cada instante, cada fotografía y cada paso que hemos dado juntos'}
           </p>
         </div>
 
-        {/* Controls: Search, View Mode and Filter Pills */}
+        {/* Controls: Search, Sort, View Mode and Filter Pills */}
         <div className="mb-8 space-y-3 sm:space-y-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             {/* Search */}
@@ -136,32 +165,49 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
               />
             </div>
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center p-1 rounded-full bg-stone-100 border border-stone-200/60 text-xs font-medium w-full sm:w-auto justify-center">
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
+              {/* Sort Order Toggle */}
               <button
                 type="button"
-                onClick={() => setViewMode('timeline')}
-                className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
-                  viewMode === 'timeline'
-                    ? 'bg-white text-rose-600 shadow-sm font-semibold'
-                    : 'text-stone-500 hover:text-stone-800'
-                }`}
+                onClick={() =>
+                  setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))
+                }
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-stone-200/80 text-xs font-medium text-stone-600 hover:border-rose-300 hover:text-rose-600 transition-colors whitespace-nowrap"
+                title="Cambiar orden cronológico"
               >
-                <GitCommit className="w-3.5 h-3.5" />
-                <span>Línea del Tiempo</span>
+                <ArrowUpDown className="w-3.5 h-3.5 text-rose-400" />
+                <span>
+                  {sortOrder === 'desc' ? 'Más recientes' : 'Más antiguos'}
+                </span>
               </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('grid')}
-                className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
-                  viewMode === 'grid'
-                    ? 'bg-white text-rose-600 shadow-sm font-semibold'
-                    : 'text-stone-500 hover:text-stone-800'
-                }`}
-              >
-                <Grid className="w-3.5 h-3.5" />
-                <span>Muro de Fotos</span>
-              </button>
+
+              {/* View Mode Toggle */}
+              <div className="flex items-center p-1 rounded-full bg-stone-100 border border-stone-200/60 text-xs font-medium flex-1 sm:flex-none justify-center">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('timeline')}
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
+                    viewMode === 'timeline'
+                      ? 'bg-white text-rose-600 shadow-sm font-semibold'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  <GitCommit className="w-3.5 h-3.5" />
+                  <span>Línea del Tiempo</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('grid')}
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-rose-600 shadow-sm font-semibold'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  <Grid className="w-3.5 h-3.5" />
+                  <span>Muro de Fotos</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -189,20 +235,26 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
         {filteredMemories.length === 0 ? (
           <div className="p-10 text-center bg-white rounded-3xl border border-dashed border-rose-200">
             <Heart className="w-8 h-8 text-rose-300 mx-auto mb-2" />
-            <p className="font-serif text-base text-stone-700">No encontramos recuerdos para este filtro</p>
-            <p className="text-xs text-stone-400 mt-0.5">Prueba con otra palabra clave o agrega un nuevo recuerdo</p>
+            <p className="font-serif text-base text-stone-700">
+              No encontramos recuerdos para este filtro
+            </p>
+            <p className="text-xs text-stone-400 mt-0.5">
+              Prueba con otra palabra clave o agrega un nuevo recuerdo
+            </p>
           </div>
         ) : viewMode === 'timeline' ? (
           /* VISTA: LÍNEA DE TIEMPO VERTICAL */
           <div className="relative border-l-2 border-rose-200 ml-3 sm:ml-32 space-y-8 sm:space-y-12">
             <AnimatePresence mode="popLayout">
               {filteredMemories.map((mem) => {
-                const dateObj = new Date(mem.date);
-                const formattedDate = dateObj.toLocaleDateString('es-ES', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                });
+                const formattedDate = formatSpanishDate(mem.date);
+                const isExpanded = Boolean(expandedMediaIds[mem.id]);
+                const hasOverflow = mem.media.length > MAX_COLLAPSED_MEDIA;
+                const visibleMedia =
+                  hasOverflow && !isExpanded
+                    ? mem.media.slice(0, MAX_COLLAPSED_MEDIA)
+                    : mem.media;
+                const hiddenCount = mem.media.length - MAX_COLLAPSED_MEDIA;
 
                 return (
                   <motion.div
@@ -231,7 +283,6 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
 
                     {/* Memory Card */}
                     <div className="p-4 sm:p-6 rounded-3xl smooth-card border border-stone-200/90 relative">
-                      {/* Live Edit Mode Actions Bar on top of card */}
                       {isLiveEditMode && (
                         <div className="mb-3 p-2 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between gap-2">
                           <span className="text-[11px] font-bold text-rose-800">
@@ -264,9 +315,10 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
 
                       <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
                         <div>
-                          {/* Mobile Date Header */}
                           <div className="sm:hidden flex items-center gap-2 mb-1">
-                            <span className="text-xs font-bold text-rose-600">{formattedDate}</span>
+                            <span className="text-xs font-bold text-rose-600">
+                              {formattedDate}
+                            </span>
                             <span className="text-stone-300">•</span>
                             <span className="text-[10px] uppercase tracking-wider text-stone-400">
                               {mem.category}
@@ -284,7 +336,6 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                           )}
                         </div>
 
-                        {/* Favorite Button */}
                         <motion.button
                           whileTap={{ scale: 0.85 }}
                           type="button"
@@ -296,7 +347,9 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                           }`}
                         >
                           <Heart
-                            className={`w-4 h-4 sm:w-5 sm:h-5 ${mem.isFavorite ? 'fill-rose-500' : ''}`}
+                            className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                              mem.isFavorite ? 'fill-rose-500' : ''
+                            }`}
                           />
                         </motion.button>
                       </div>
@@ -305,56 +358,100 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                         {mem.description}
                       </p>
 
-                      {/* Media preview */}
+                      {/* Media preview (collapsible) */}
                       {mem.media.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-3 sm:mb-4">
-                          {mem.media.map((med, idx) => {
-                            const ytThumb = getVideoThumbnailUrl(med.url);
+                        <div className="mb-3 sm:mb-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                            {visibleMedia.map((med, idx) => {
+                              const ytThumb = getVideoThumbnailUrl(med.url);
+                              const previewSrc = med.thumbUrl || med.url;
+                              const isLastCollapsedTile =
+                                hasOverflow &&
+                                !isExpanded &&
+                                idx === visibleMedia.length - 1;
 
-                            return (
-                              <motion.div
-                                key={med.id || idx}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => onSelectMedia(med)}
-                                className="group/media relative rounded-2xl overflow-hidden aspect-video bg-stone-100 cursor-pointer border border-stone-200"
-                              >
-                                {med.type === 'video' ? (
-                                  ytThumb ? (
+                              return (
+                                <motion.div
+                                  key={med.id || idx}
+                                  whileTap={{ scale: 0.98 }}
+                                  onClick={() => {
+                                    if (isLastCollapsedTile) {
+                                      toggleExpandMedia(mem.id);
+                                    } else {
+                                      onSelectMedia(mem.media, idx, {
+                                        title: mem.title,
+                                        date: formattedDate,
+                                      });
+                                    }
+                                  }}
+                                  className="group/media relative rounded-2xl overflow-hidden aspect-video bg-stone-100 cursor-pointer border border-stone-200"
+                                >
+                                  {med.type === 'video' ? (
+                                    med.thumbUrl || ytThumb ? (
+                                      <img
+                                        src={med.thumbUrl || ytThumb || ''}
+                                        alt={med.caption || mem.title}
+                                        className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full relative">
+                                        <video
+                                          src={med.url}
+                                          preload="metadata"
+                                          muted
+                                          playsInline
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                    )
+                                  ) : (
                                     <img
-                                      src={ytThumb}
+                                      src={previewSrc}
                                       alt={med.caption || mem.title}
                                       className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
                                       loading="lazy"
                                     />
-                                  ) : (
-                                    <div className="w-full h-full relative">
-                                      <video
-                                        src={med.url}
-                                        className="w-full h-full object-cover"
-                                      />
+                                  )}
+
+                                  {med.type === 'video' && !isLastCollapsedTile && (
+                                    <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
+                                      <Video className="w-7 h-7" />
                                     </div>
-                                  )
-                                ) : (
-                                  <img
-                                    src={med.url}
-                                    alt={med.caption || mem.title}
-                                    className="w-full h-full object-cover group-hover/media:scale-105 transition-transform duration-300"
-                                    loading="lazy"
-                                  />
-                                )}
+                                  )}
 
-                                {med.type === 'video' && (
-                                  <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
-                                    <Video className="w-7 h-7" />
-                                  </div>
-                                )}
+                                  {isLastCollapsedTile ? (
+                                    <div className="absolute inset-0 bg-stone-900/65 flex flex-col items-center justify-center text-white p-3">
+                                      <span className="font-serif text-2xl font-bold">
+                                        +{hiddenCount}
+                                      </span>
+                                      <span className="text-xs font-medium text-rose-100">
+                                        fotos y videos más
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/media:opacity-100 transition-opacity flex items-end p-2.5 text-white text-[11px]">
+                                      <span>{med.caption || 'Ver archivo'}</span>
+                                    </div>
+                                  )}
+                                </motion.div>
+                              );
+                            })}
+                          </div>
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/media:opacity-100 transition-opacity flex items-end p-2.5 text-white text-[11px]">
-                                  <span>{med.caption || 'Ver archivo'}</span>
-                                </div>
-                              </motion.div>
-                            );
-                          })}
+                          {hasOverflow && (
+                            <div className="mt-2.5 flex justify-center">
+                              <button
+                                type="button"
+                                onClick={() => toggleExpandMedia(mem.id)}
+                                className="px-3.5 py-1 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-semibold transition-colors"
+                              >
+                                {isExpanded
+                                  ? 'Mostrar menos'
+                                  : `Ver los ${mem.media.length} archivos`}
+                              </button>
+                            </div>
+                          )}
                         </div>
                       )}
 
@@ -386,13 +483,13 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
             <AnimatePresence mode="popLayout">
               {filteredMemories.map((mem) => {
                 const primaryMedia = mem.media[0];
-                const dateObj = new Date(mem.date);
-                const formattedDate = dateObj.toLocaleDateString('es-ES', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                });
-                const ytThumb = primaryMedia ? getVideoThumbnailUrl(primaryMedia.url) : null;
+                const formattedDate = formatSpanishDate(mem.date);
+                const ytThumb = primaryMedia
+                  ? getVideoThumbnailUrl(primaryMedia.url)
+                  : null;
+                const previewSrc = primaryMedia
+                  ? primaryMedia.thumbUrl || primaryMedia.url
+                  : '';
 
                 return (
                   <motion.div
@@ -405,7 +502,6 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                     className="p-3.5 sm:p-4 bg-white rounded-3xl polaroid-card flex flex-col justify-between relative"
                   >
                     <div>
-                      {/* Live Edit Mode Actions */}
                       {isLiveEditMode && (
                         <div className="mb-2 p-1.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between gap-1">
                           {onEditMemory && (
@@ -432,14 +528,20 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
 
                       {/* Media Thumbnail */}
                       <div
-                        onClick={() => primaryMedia && onSelectMedia(primaryMedia)}
+                        onClick={() =>
+                          mem.media.length > 0 &&
+                          onSelectMedia(mem.media, 0, {
+                            title: mem.title,
+                            date: formattedDate,
+                          })
+                        }
                         className="relative aspect-square rounded-2xl overflow-hidden bg-stone-100 mb-3 cursor-pointer group"
                       >
                         {primaryMedia ? (
                           primaryMedia.type === 'video' ? (
-                            ytThumb ? (
+                            primaryMedia.thumbUrl || ytThumb ? (
                               <img
-                                src={ytThumb}
+                                src={primaryMedia.thumbUrl || ytThumb || ''}
                                 alt={mem.title}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                 loading="lazy"
@@ -447,13 +549,15 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                             ) : (
                               <video
                                 src={primaryMedia.url}
+                                preload="metadata"
                                 className="w-full h-full object-cover"
                                 muted
+                                playsInline
                               />
                             )
                           ) : (
                             <img
-                              src={primaryMedia.url}
+                              src={previewSrc}
                               alt={mem.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               loading="lazy"
@@ -471,6 +575,12 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                           </div>
                         )}
 
+                        {mem.media.length > 1 && (
+                          <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-black/65 text-white text-[10px] font-semibold">
+                            📷 {mem.media.length}
+                          </span>
+                        )}
+
                         <div className="absolute top-2 right-2">
                           <motion.button
                             whileTap={{ scale: 0.85 }}
@@ -482,7 +592,9 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
                             className="p-1.5 rounded-full bg-white/90 text-stone-400 hover:text-rose-500 shadow-sm"
                           >
                             <Heart
-                              className={`w-3.5 h-3.5 ${mem.isFavorite ? 'text-rose-500 fill-rose-500' : ''}`}
+                              className={`w-3.5 h-3.5 ${
+                                mem.isFavorite ? 'text-rose-500 fill-rose-500' : ''
+                              }`}
                             />
                           </motion.button>
                         </div>

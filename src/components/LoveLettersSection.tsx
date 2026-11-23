@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Heart, Sparkles, X, Edit3, Trash2, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { LoveLetter, LettersSectionConfig } from '../types';
+import { formatSpanishDate } from '../utils/timeCalculations';
 
 interface LoveLettersSectionProps {
   letters: LoveLetter[];
@@ -173,11 +174,7 @@ export const LoveLettersSection: React.FC<LoveLettersSectionProps> = ({
                 </h3>
                 <span className="text-[11px] sm:text-xs text-stone-400 mt-1 block">
                   Escrita con amor el{' '}
-                  {new Date(activeLetter.dateWritten).toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
+                  {formatSpanishDate(activeLetter.dateWritten, 'long')}
                 </span>
               </div>
 

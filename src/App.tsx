@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { RelationshipConfig, Memory, MediaItem, AdminTabId } from './types';
 import { initialRelationshipConfig } from './data/relationshipData';
 import {
@@ -19,6 +19,13 @@ import { AddMemoryModal } from './components/AddMemoryModal';
 import { FloatingHearts } from './components/FloatingHearts';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { AdminDashboard } from './components/AdminDashboard';
+
+interface LightboxState {
+  items: MediaItem[];
+  index: number;
+  contextTitle?: string;
+  contextDate?: string;
+}
 
 export const App: React.FC = () => {
   // Master site configuration
@@ -56,22 +63,9 @@ export const App: React.FC = () => {
   const [focusLetterId, setFocusLetterId] = useState<string | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // Lightbox State
-  const [activeMediaIndex, setActiveMediaIndex] = useState<number | null>(null);
-
-  // Flattened media list for lightbox navigation
-  const allMediaList = useMemo<MediaItem[]>(() => {
-    const list: MediaItem[] = [];
-    if (config.daughter.ultrasoundImages) {
-      list.push(...config.daughter.ultrasoundImages);
-    }
-    config.memories.forEach((mem) => {
-      list.push(...mem.media);
-    });
-    return list;
-  }, [config.daughter.ultrasoundImages, config.memories]);
-
-  const activeMedia = activeMediaIndex !== null ? allMediaList[activeMediaIndex] : null;
+  // Scoped Lightbox State
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+  const activeMedia = lightbox ? lightbox.items[lightbox.index] ?? null : null;
 
   // Save config handler (persists to IndexedDB & marks unpublished changes)
   const handleUpdateConfig = (
@@ -80,11 +74,7 @@ export const App: React.FC = () => {
   ) => {
     setConfig(updated);
     saveConfigToLocalDB(updated, markUnpublished);
-    if (markUnpublished) {
-      setHasUnsavedChanges(true);
-    } else {
-      setHasUnsavedChanges(false);
-    }
+    setHasUnsavedChanges(markUnpublished);
   };
 
   const handleResetToDefaults = async () => {
@@ -187,26 +177,34 @@ export const App: React.FC = () => {
     });
   };
 
-  // Lightbox operations
-  const handleSelectMedia = (selected: MediaItem) => {
-    const index = allMediaList.findIndex((m) => m.url === selected.url);
-    if (index !== -1) {
-      setActiveMediaIndex(index);
-    } else {
-      setActiveMediaIndex(0);
-    }
+  // Lightbox operations (scoped to active album/memory)
+  const handleSelectMedia = (
+    items: MediaItem[],
+    index: number,
+    context?: { title?: string; date?: string }
+  ) => {
+    if (!items || items.length === 0) return;
+    const safeIdx = Math.max(0, Math.min(index, items.length - 1));
+    setLightbox({
+      items,
+      index: safeIdx,
+      contextTitle: context?.title,
+      contextDate: context?.date,
+    });
   };
 
   const handlePrevMedia = () => {
-    if (activeMediaIndex !== null && activeMediaIndex > 0) {
-      setActiveMediaIndex(activeMediaIndex - 1);
-    }
+    setLightbox((prev) =>
+      prev && prev.index > 0 ? { ...prev, index: prev.index - 1 } : prev
+    );
   };
 
   const handleNextMedia = () => {
-    if (activeMediaIndex !== null && activeMediaIndex < allMediaList.length - 1) {
-      setActiveMediaIndex(activeMediaIndex + 1);
-    }
+    setLightbox((prev) =>
+      prev && prev.index < prev.items.length - 1
+        ? { ...prev, index: prev.index + 1 }
+        : prev
+    );
   };
 
   // If locked for visitor, show LockScreen
@@ -253,6 +251,7 @@ export const App: React.FC = () => {
           partner2={config.partner2}
           startDate={config.relationshipStartDate}
           heroTexts={config.hero}
+          daughter={config.daughter}
           isLiveEditMode={isLiveEditMode}
           onEditSection={() => handleOpenSectionInAdmin('portada')}
         />
@@ -265,6 +264,7 @@ export const App: React.FC = () => {
           }
           onSelectMedia={handleSelectMedia}
           isLiveEditMode={isLiveEditMode}
+          isAdminUnlocked={isAdminUnlocked}
           onEditSection={() => handleOpenSectionInAdmin('vaiolet')}
         />
 
@@ -305,16 +305,21 @@ export const App: React.FC = () => {
       {/* Fullscreen Lightbox Modal */}
       <MediaLightbox
         media={activeMedia}
-        onClose={() => setActiveMediaIndex(null)}
+        onClose={() => setLightbox(null)}
         onPrev={handlePrevMedia}
         onNext={handleNextMedia}
-        hasPrev={activeMediaIndex !== null && activeMediaIndex > 0}
-        hasNext={activeMediaIndex !== null && activeMediaIndex < allMediaList.length - 1}
+        hasPrev={Boolean(lightbox && lightbox.index > 0)}
+        hasNext={Boolean(lightbox && lightbox.index < lightbox.items.length - 1)}
+        currentIndex={lightbox?.index}
+        totalCount={lightbox?.items.length}
+        contextTitle={lightbox?.contextTitle}
+        contextDate={lightbox?.contextDate}
       />
 
       {/* Add Memory Modal */}
       <AddMemoryModal
         isOpen={isAddModalOpen}
+        categories={config.timelineSection.categories}
         onClose={() => setIsAddModalOpen(false)}
         onAddMemory={handleAddMemory}
       />
@@ -328,17 +333,20 @@ export const App: React.FC = () => {
       />
 
       {/* Comprehensive 100% Admin Dashboard */}
-      <AdminDashboard
-        isOpen={isAdminDashboardOpen}
-        config={config}
-        initialTab={adminTab}
-        focusMemoryId={focusMemoryId}
-        focusLetterId={focusLetterId}
-        hasUnsavedGitHubChanges={hasUnsavedChanges}
-        onUpdateConfig={handleUpdateConfig}
-        onResetToDefaults={handleResetToDefaults}
-        onClose={() => setIsAdminDashboardOpen(false)}
-      />
+      {isAdminDashboardOpen && (
+        <AdminDashboard
+          key={`${adminTab}-${focusMemoryId || ''}-${focusLetterId || ''}`}
+          isOpen={isAdminDashboardOpen}
+          config={config}
+          initialTab={adminTab}
+          focusMemoryId={focusMemoryId}
+          focusLetterId={focusLetterId}
+          hasUnsavedGitHubChanges={hasUnsavedChanges}
+          onUpdateConfig={handleUpdateConfig}
+          onResetToDefaults={handleResetToDefaults}
+          onClose={() => setIsAdminDashboardOpen(false)}
+        />
+      )}
     </div>
   );
 };
